@@ -1,9 +1,17 @@
+$chart-bp: 40em;
+
 .charts {
   @include font-size($xxs);
 }
 
 .chart-container {
+  display: inline-block;
+  margin: 0;
   width: 100%;
+
+  @include susy-media($chart-bp) {
+    width: 32%;
+  }
 }
 
 .axis {

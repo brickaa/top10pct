@@ -11,7 +11,7 @@ $white: rgb(255, 255, 255);
 $small: new-breakpoint(min-width 460px max-width 810px);
 $medium: new-breakpoint(min-width 811px max-width 1080px);
 $large: new-breakpoint(min-width 1081px);
-$sidebar-break: new-breakpoint(min-width 768px);
+$sidebar-break: 768px;
 $default-mobile: new-breakpoint(max-width 480px);
 
 // Box Sizing

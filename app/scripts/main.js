@@ -7,7 +7,7 @@
 
   function drawChart(dataFile, location) {
     var margin = {top: 20, right: 20, bottom: 30, left: 60},
-        width = parseInt(d3.select('#charts').style('width'), 10) - margin.left - margin.right,
+        width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
     /* 
@@ -17,7 +17,16 @@
      * axis - sets up axis
      */ 
 
-    var yValue = function(d) { return d.atRiskPct; };
+    if (location === 'graphicAtRisk') {    
+      var yValue = function(d) { return d.atRiskPct; },
+          yLabel = '"At Risk"';
+    } else if (location === 'graphicEcoDis') {   
+      var yValue = function(d) { return d.ecoDisPct; },
+          yLabel = '"Economically Disadvantaged"'; // data -> value    
+    } else if (location === 'graphicCollegeReady') {
+      var yValue = function(d) { return d.collegeReadyBothPct; },
+          yLabel = '"College Ready"';
+    }
 
     // setup x 
     var xValue = function(d) { return d.enrolled2015PctSeniors;}, // data -> value
@@ -81,15 +90,15 @@
           .call(yAxis
             .scale(yScale)
             .orient('left')
-            .ticks(10, '%'))
-          .append('text')
-            .attr('class', 'label')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', -(margin.left - 10))
-            .attr('x', 0)
-            .attr('dy', '.71em')
-            .style('text-anchor', 'end')
-            .text('Percent of Students "At Risk"');
+            .ticks(10, '%'));
+          // .append('text')
+          //   .attr('class', 'label')
+          //   .attr('transform', 'rotate(-90)')
+          //   .attr('y', -(margin.left - 10))
+          //   .attr('x', 0)
+          //   .attr('dy', '.71em')
+          //   .style('text-anchor', 'end')
+          //   .text('Percent of Students' + yLabel);
 
       // draw dots
       svg.selectAll('.dot')
@@ -123,14 +132,14 @@
               .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
 
       legend.append('rect')
-        .attr('x', width - 18)
-        .attr('width', 18)
-        .attr('height', 18)
+        .attr('x', width - 10)
+        .attr('width', 10)
+        .attr('height', 10)
         .style('fill', color);
 
       legend.append('text')
-        .attr('x', width - 24)
-        .attr('y', 9)
+        .attr('x', width - 14)
+        .attr('y', 4)
         .attr('dy', '.35em')
         .style('text-anchor', 'end')
         .text(function(d) { return d; });
@@ -139,7 +148,7 @@
 
       function resize() {
           // update width
-          width = parseInt(d3.select('#charts').style('width'), 10);
+          width = parseInt(d3.select('.chart-container').style('width'), 10);
           width = width - margin.left - margin.right;
 
           d3.select('#' + location).select('svg')
@@ -164,11 +173,11 @@
               .attr('cx', xMap);
 
           legend.select('rect')
-            .attr('x', width - 18)
-            .attr('width', 18);
+            .attr('x', width - 10)
+            .attr('width', 10);
 
           legend.select('text')
-            .attr('x', width - 24);    
+            .attr('x', width - 14);    
       }
     });
   }
@@ -176,6 +185,7 @@
   function load() {
     drawChart('feeder100.csv', 'graphicAtRisk');
     drawChart('feeder100.csv', 'graphicEcoDis');
+    drawChart('feeder100.csv', 'graphicCollegeReady');
   }
   window.onload = load;
 })();
