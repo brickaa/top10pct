@@ -10,8 +10,8 @@
   console.log(windowWidth);
   
   function drawScatter(dataFile, graphic, location, label) {
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = 550 - margin.left - margin.right,
+    var margin = {top: 20, right: 20, bottom: 30, left: 60},
+        width = parseInt(d3.select('#charts').style('width'), 10) - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
     /* 
@@ -46,7 +46,7 @@
     var svg = d3.select(location).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
-      .append('g')
+        .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // add the tooltip area to the webpage
@@ -77,12 +77,12 @@
             .scale(xScale)
             .orient('bottom')
             .ticks(5, '%'))
-        .append('text')
-          .attr('class', 'label')
-          .attr('x', width)
-          .attr('y', 25)
-          .style('text-anchor', 'end')
-          .text('Percent of Seniors Enrolled');
+          .append('text')
+            .attr('class', 'label')
+            .attr('x', 0)
+            .attr('y', 28)
+            .style('text-anchor', 'start')
+            .text('Percent of Seniors Enrolled');
 
       // y-axis
       svg.append('g')
@@ -91,24 +91,25 @@
             .scale(yScale)
             .orient('left')
             .ticks(10, '%'))
-        .append('text')
-          .attr('class', 'label')
-          .attr('transform', 'rotate(-90)')
-          .attr('y', -38)
-          .attr('dy', '.71em')
-          .style('text-anchor', 'end')
-          .text('Percent of School' + label);
+          .append('text')
+            .attr('class', 'label')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', -(margin.left - 10))
+            .attr('x', 0);
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Percent of School' + label);
 
       // draw dots
       svg.selectAll('.dot')
           .data(data)
-        .enter().append('circle')
-          .attr('class', 'dot')
-          .attr('r', 1)
-          .attr('cx', xMap)
-          .attr('cy', yMap)
-          .style('fill', function(d) { return color(d.Color);}) 
-          .on('mouseover', function(d) {
+          .enter().append('circle')
+            .attr('class', 'dot')
+            .attr('r', 1)
+            .attr('cx', xMap)
+            .attr('cy', yMap)
+            .style('fill', function(d) { return color(d.Color);}) 
+            .on('mouseover', function(d) {
               tooltip.transition()
                    .duration(200)
                    .style('opacity', .9);
@@ -118,37 +119,71 @@
                    .style('top', (d3.event.pageY - 28) + 'px');
           })
           .on('mouseout', function(d) {
-              tooltip.transition()
-                   .duration(500)
-                   .style('opacity', 0);
+            tooltip.transition()
+                 .duration(500)
+                 .style('opacity', 0);
           });
 
       // draw legend
       var legend = svg.selectAll('.legend')
           .data(color.domain())
-        .enter().append('g')
-          .attr('class', 'legend')
-          .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
+            .enter().append('g')
+              .attr('class', 'legend')
+              .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
 
       legend.append('rect')
-          .attr('x', width - 18)
-          .attr('width', 18)
-          .attr('height', 18)
-          .style('fill', color);
+        .attr('x', width - 18)
+        .attr('width', 18)
+        .attr('height', 18)
+        .style('fill', color);
 
       legend.append('text')
-          .attr('x', width - 24)
-          .attr('y', 9)
-          .attr('dy', '.35em')
-          .style('text-anchor', 'end')
-          .text(function(d) { return d; });
+        .attr('x', width - 24)
+        .attr('y', 9)
+        .attr('dy', '.35em')
+        .style('text-anchor', 'end')
+        .text(function(d) { return d; });
+
+      d3.select(window).on('resize', resize); 
+
+      function resize() {
+          // update width
+          width = parseInt(d3.select('#charts').style('width'), 10);
+          width = width - margin.left - margin.right;
+
+          d3.select(location).select('svg')
+              .attr('width', width + margin.left + margin.right);
+
+          // resize the chart
+          xScale.range([0, width]);
+          xMap = function(d) { return xScale(xValue(d));}; // data -> display
+          xAxis = d3.svg.axis().scale(xScale).orient('bottom');
+
+          // update axes
+          svg.select('g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + height + ')')
+            .call(xAxis
+              .scale(xScale)
+              .orient('bottom')
+              .ticks(5, '%'));
+
+          svg.selectAll('.dot')
+              .attr('class', 'dot')
+              .attr('cx', xMap);
+
+          legend.select('rect')
+            .attr('x', width - 18)
+            .attr('width', 18);
+
+          legend.select('text')
+            .attr('x', width - 24);    
+      }
     });
   }
 
   function load() {
-    drawScatter('feeder100.csv', 'atRisk', '#graphicAtRisk', '"At Risk"');
     drawScatter('feeder100.csv', 'ecoDis', '#graphicEcoDis', 'Economically Disadvantaged');
-
   }
   window.onload = load;
 })();

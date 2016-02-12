@@ -1,8 +1,13 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-<div class="charts">
-  <div id="graphicAtRisk"></div>
-  <div id="graphicEcoDis"></div>
+<div id="charts" class="charts">
+  <div class="chart-container">
+    <div id="graphicAtRisk"></div>
+  </div>
+
+  <div class="chart-container">
+    <div id="graphicEcoDis"></div>
+  </div>
 </div>
 {% endblock %}
