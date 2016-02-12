@@ -40,6 +40,8 @@
     "yargs": "^3.32.0"
   },
   "dependencies": {
+    "d3": "^3.5.15",
+    "jquery": "^2.2.0",
     "newsapps-styles": "^1.1.0",
     "susy": "^2.2.5"
   },

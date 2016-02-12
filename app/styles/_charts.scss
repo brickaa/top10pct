@@ -1,0 +1,20 @@
+.charts {
+  @include font-size($xxs);
+  width: 100%;
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.axis path {
+  fill: none;
+}
+
+.x.axis path {
+  stroke: black;
+}
+
+.y.axis path {
+  stroke: black;
+}
