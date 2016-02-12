@@ -5,11 +5,7 @@
 (function() {
   'use strict';
 
-  var windowWidth = $(window).width;
-
-  console.log(windowWidth);
-  
-  function drawScatter(dataFile, graphic, location, label) {
+  function drawChart(dataFile, location) {
     var margin = {top: 20, right: 20, bottom: 30, left: 60},
         width = parseInt(d3.select('#charts').style('width'), 10) - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
@@ -21,11 +17,7 @@
      * axis - sets up axis
      */ 
 
-    if (graphic === 'atRisk') {
-      var yValue = function(d) { return d.atRiskPct;}; // data -> value
-    } else if (graphic === 'ecoDis') {
-      var yValue = function(d) { return d.ecoDisPct;}; // data -> value
-    }
+    var yValue = function(d) { return d.atRiskPct; };
 
     // setup x 
     var xValue = function(d) { return d.enrolled2015PctSeniors;}, // data -> value
@@ -39,14 +31,14 @@
         yAxis = d3.svg.axis().scale(yScale).orient('left');
 
     // setup fill color
-    var cValue = function(d) { return d.Manufacturer;},
-        color = d3.scale.category10();
+    var color = d3.scale.category10();
 
     // add the graph canvas to the body of the webpage
-    var svg = d3.select(location).append('svg')
+    var svg = d3.select('#' + location).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
+        .attr('id', location)
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // add the tooltip area to the webpage
@@ -60,14 +52,12 @@
       // change string (from CSV) into number format
       data.forEach(function(d) {
         d.enrolled2015PctSeniors = +d.enrolled2015PctSeniors;
-        d.ecoDisPct = +d.ecoDisPct;
         d.atRiskPct = +d.atRiskPct;
       });
 
       // don't want dots overlapping axis, so add in buffer to data domain
       xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
       yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
-
 
       // x-axis
       svg.append('g')
@@ -84,6 +74,7 @@
             .style('text-anchor', 'start')
             .text('Percent of Seniors Enrolled');
 
+      console.log(svg.attr('id'));
       // y-axis
       svg.append('g')
           .attr('class', 'y axis')
@@ -98,7 +89,7 @@
             .attr('x', 0)
             .attr('dy', '.71em')
             .style('text-anchor', 'end')
-            .text('Percent of School' + label);
+            .text('Percent of Students "At Risk"');
 
       // draw dots
       svg.selectAll('.dot')
@@ -144,14 +135,14 @@
         .style('text-anchor', 'end')
         .text(function(d) { return d; });
 
-      d3.select(window).on('resize', resize); 
+      d3.select(window).on('resize.' + location, resize); 
 
       function resize() {
           // update width
           width = parseInt(d3.select('#charts').style('width'), 10);
           width = width - margin.left - margin.right;
 
-          d3.select(location).select('svg')
+          d3.select('#' + location).select('svg')
               .attr('width', width + margin.left + margin.right);
 
           // resize the chart
@@ -183,7 +174,8 @@
   }
 
   function load() {
-    drawScatter('feeder100.csv', 'ecoDis', '#graphicEcoDis', 'Economically Disadvantaged');
+    drawChart('feeder100.csv', 'graphicAtRisk');
+    drawChart('feeder100.csv', 'graphicEcoDis');
   }
   window.onload = load;
 })();
