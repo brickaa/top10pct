@@ -95,7 +95,7 @@
             .attr('class', 'label')
             .attr('transform', 'rotate(-90)')
             .attr('y', -(margin.left - 10))
-            .attr('x', 0);
+            .attr('x', 0)
             .attr('dy', '.71em')
             .style('text-anchor', 'end')
             .text('Percent of School' + label);
