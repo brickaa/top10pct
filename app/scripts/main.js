@@ -81,40 +81,39 @@
             .attr('x', 0)
             .attr('y', 28)
             .style('text-anchor', 'start')
-            .text('Percent of Seniors Enrolled');
+            .text('Percent of Seniors Enrolled at UT-Austin');
 
-      console.log(svg.attr('id'));
       // y-axis
       svg.append('g')
           .attr('class', 'y axis')
           .call(yAxis
             .scale(yScale)
             .orient('left')
-            .ticks(10, '%'));
-          // .append('text')
-          //   .attr('class', 'label')
-          //   .attr('transform', 'rotate(-90)')
-          //   .attr('y', -(margin.left - 10))
-          //   .attr('x', 0)
-          //   .attr('dy', '.71em')
-          //   .style('text-anchor', 'end')
-          //   .text('Percent of Students' + yLabel);
+            .ticks(10, '%'))
+          .append('text')
+            .attr('class', 'label')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', -(margin.left - 10))
+            .attr('x', 0)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Percent of School ' + yLabel);
 
       // draw dots
       svg.selectAll('.dot')
           .data(data)
           .enter().append('circle')
             .attr('class', 'dot')
-            .attr('r', 1)
+            .attr('r', 1.5)
             .attr('cx', xMap)
             .attr('cy', yMap)
-            .style('fill', function(d) { return color(d.Color);}) 
+            .style('fill', function(d) { return color(d.Color);})
             .on('mouseover', function(d) {
               tooltip.transition()
                    .duration(200)
-                   .style('opacity', .9);
-              tooltip.html(d.value + '<br/> (' + xValue(d) 
-              + ', ' + yValue(d) + ')')
+                   .style('opacity', 0.9);
+              tooltip.html(d.value + '<br/> (' + xValue(d) +
+               ', ' + yValue(d) + ')')
                    .style('left', (d3.event.pageX + 5) + 'px')
                    .style('top', (d3.event.pageY - 28) + 'px');
           })
@@ -131,20 +130,33 @@
               .attr('class', 'legend')
               .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
 
+      // var legendHeader = svg.selectAll('.legend--header')
+      //     .enter().append('g')
+      //       .attr('class', 'legend--header');
+
+      // legendHeader.append('text')
+      //   .attr('x', width)
+      //   .attr('y', 60)
+      //   .attr('dy', '2em')
+      //   .style('text-anchor', 'end')
+      //   .text('School Demographics');
+
       legend.append('rect')
         .attr('x', width - 10)
         .attr('width', 10)
         .attr('height', 10)
+        .attr('y', 92)
         .style('fill', color);
 
       legend.append('text')
         .attr('x', width - 14)
-        .attr('y', 4)
-        .attr('dy', '.35em')
+        .attr('y', 82)
+        .attr('dy', '2em')
         .style('text-anchor', 'end')
-        .text(function(d) { return d; });
+        .text(function(d) { return d + ' Majority'; });
 
-      d3.select(window).on('resize.' + location, resize); 
+      d3.select(window).on('resize.' + location, resize).transition();
+      d3.select('#all').on('click.' + location, updateData('feeder100')); 
 
       function resize() {
           // update width
@@ -152,7 +164,7 @@
           width = width - margin.left - margin.right;
 
           d3.select('#' + location).select('svg')
-              .attr('width', width + margin.left + margin.right);
+            .attr('width', width + margin.left + margin.right);
 
           // resize the chart
           xScale.range([0, width]);
@@ -169,8 +181,11 @@
               .ticks(5, '%'));
 
           svg.selectAll('.dot')
-              .attr('class', 'dot')
-              .attr('cx', xMap);
+            .attr('class', 'dot')
+            .attr('cx', xMap);
+
+          // legendHeader.select('text')
+          //   .attr('x', width);
 
           legend.select('rect')
             .attr('x', width - 10)
@@ -180,12 +195,75 @@
             .attr('x', width - 14);    
       }
     });
+
+    d3.selectAll('button').on('click', updateData());
+
+    // ** Update data section (Called from the onclick)
+    function updateData(changeData) {
+
+        // Get the data again
+        d3.csv('/assets/data/'+ changeData + '.csv', function(error, data) {
+          data.forEach(function(d) {
+            d.enrolled2015PctSeniors = +d.enrolled2015PctSeniors;
+            d.atRiskPct = +d.atRiskPct;
+          });
+
+        // Scale the range of the data again 
+        xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
+        yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
+
+        // Select the section we want to apply our changes to
+        var svg = d3.select('#' + location).transition();
+        
+        // Make the changes
+        svg.select('.y.axis').transition().duration(600).call(yAxis);
+        svg.select('.x.axis').transition().duration(600).call(xAxis);
+
+        svg.selectAll('.dot')
+          .duration(400)
+          .attr('class', 'dot')
+          .attr('cx', xMap);
+
+      });
+    }
+  
   }
 
-  function load() {
-    drawChart('feeder100.csv', 'graphicAtRisk');
-    drawChart('feeder100.csv', 'graphicEcoDis');
-    drawChart('feeder100.csv', 'graphicCollegeReady');
+  function load(data) {
+    drawChart(data + '.csv', 'graphicAtRisk');
+    drawChart(data + '.csv', 'graphicEcoDis');
+    drawChart(data + '.csv', 'graphicCollegeReady');
   }
-  window.onload = load;
+
+  function reLoad(data) {
+    $('#graphicAtRisk').empty();
+    $('#graphicEcoDis').empty();
+    $('#graphicCollegeReady').empty();
+
+    load(data);
+  }
+
+  $('#all').click(function() {
+    reLoad('feeder100');
+  });
+
+  $('#austin').click(function() {
+    reLoad('feederAustin100');
+  });
+
+  $('#dallas').click(function() {
+    reLoad('feederDallas100');
+  });
+
+  $('#houston').click(function() {
+    reLoad('feederHouston100');
+  });
+
+  $('#sanantonio').click(function() {
+    reLoad('feederSanAntonio100');
+  });
+
+  window.onload = load('feeder100');
+
+
 })();

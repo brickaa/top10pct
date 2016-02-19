@@ -24,8 +24,11 @@ $chart-bp: 40em;
 
 .x.axis path {
   stroke: black;
+  stroke-width: 2;
+
 }
 
 .y.axis path {
   stroke: black;
+  stroke-width: 2;
 }

@@ -1,6 +1,20 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
+<!-- <select id="loadData">
+  <option value="feeder100">All</option>
+  <option value="feederAustin100">Austin</option>
+  <option value="feederDallas100">Dallas</option>
+  <option value="feederHouston100">Houston</option>
+  <option value="feederSanAntonio100">San Antonio</option>
+</select> -->
+
+<button id="all" class="ghost-button">All</button>
+<button id="austin" class="ghost-button">Austin</button>
+<button id="dallas" class="ghost-button">Dallas</button>
+<button id="houston" class="ghost-button">Houston</button>
+<button id="sanantonio" class="ghost-button">San Antonio</button>
+
 <div id="charts" class="charts">
   <div class="chart-container">
     <div id="graphicAtRisk"></div>
