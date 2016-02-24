@@ -11,7 +11,7 @@
         height = 300 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+        .rangePoints([0, width], 0.1);
 
     var y = d3.scale.linear()
         .rangeRound([height, 0]);
@@ -25,8 +25,8 @@
         .orient('left');
 
     var line = d3.svg.line()
-        .interpolate('cardinal')
-        .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
+        .interpolate('basis')
+        .x(function (d) { return x(d.label); })
         .y(function (d) { return y(d.value); });
 
     var color = d3.scale.ordinal()
@@ -87,71 +87,77 @@
         .attr('class', 'line')
         .attr('d', function (d) { return line(d.values); })
         .style('stroke', function (d) { return color(d.name); })
-        .style('stroke-width', '4px')
-        .style('fill', 'none')
+        .style('stroke-width', '2px')
+        .style('fill', 'none');
 
       series.selectAll('.point')
-        .data(function (d) { return d.values; })
-        .enter().append('circle')
-         .attr('class', 'point')
-         .attr('cx', function (d) { return x(d.label) + x.rangeBand()/2; })
-         .attr('cy', function (d) { return y(d.value); })
-         .attr('r', '5px')
-         .style('fill', function (d) { return color(d.name); })
-         .style('stroke', 'grey')
-         .style('stroke-width', '2px')
-         .on('mouseover', function (d) { showPopover.call(this, d); })
-         .on('mouseout',  function (d) { removePopovers(); })
+        .data(function (d) { return d.values; });
 
-      var legend = svg.selectAll('.legend')
-          .data(varNames.slice().reverse())
-        .enter().append('g')
-          .attr('class', 'legend')
-          .attr('transform', function (d, i) { return 'translate(55,' + i * 20 + ')'; });
+      // var legend = svg.selectAll('.legend')
+      //     .data(varNames.slice().reverse())
+      //   .enter().append('g')
+      //     .attr('class', 'legend')
+      //     .attr('transform', function (d, i) { return 'translate(55,' + i * 20 + ')'; });
 
-      legend.append('rect')
-          .attr('x', width - 10)
-          .attr('width', 10)
-          .attr('height', 10)
-          .style('fill', color)
-          .style('stroke', 'grey');
+      // legend.append('rect')
+      //     .attr('x', width - 10)
+      //     .attr('width', 10)
+      //     .attr('height', 10)
+      //     .style('fill', color)
+      //     .style('stroke', 'grey');
 
-      legend.append('text')
-          .attr('x', width - 12)
-          .attr('y', 6)
-          .attr('dy', '.35em')
-          .style('text-anchor', 'end')
-          .text(function (d) { return d; });
+      // legend.append('text')
+      //     .attr('x', width - 12)
+      //     .attr('y', 6)
+      //     .attr('dy', '.35em')
+      //     .style('text-anchor', 'end')
+      //     .text(function (d) { return d; });
 
-      function removePopovers () {
-        $('.popover').each(function() {
-          $(this).remove();
-        }); 
-      }
+      d3.select(window).on('resize.' + chartLocation, resize).transition();
 
-      function showPopover (d) {
-        $(this).popover({
-          title: d.name,
-          placement: 'auto top',
-          container: 'chartLocation',
-          trigger: 'manual',
-          html : true,
-          content: function() { 
-            return 'Year: ' + d.label + 
-                   '<br/>Rounds: ' + d3.format(',')(d.value ? d.value: d.y1 - d.y0); }
-        });
-        $(this).popover('show')
-      }
-
-      d3.select(window).on('resize.' + location, resize).transition();
-      
       function resize() {
+          console.log('resize');
           // update width
-          width = parseInt(d3.select('.chart-container').style('width'), 10);
-          width = width - margin.left - margin.right;
+          width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
 
-          d3.select('#' + location).select('svg')
+          d3.select(chartLocation).select('svg')
             .attr('width', width + margin.left + margin.right);
+
+          // // resize the chart
+          x.rangePoints([0, width], 0.1);
+
+          xAxis = d3.svg.axis()
+              .scale(x)
+              .orient('bottom');
+
+          // xScale.range([0, width]);
+          // xMap = function(d) { return xScale(xValue(d));}; // data -> display
+          // xAxis = d3.svg.axis().scale(xScale).orient('bottom');
+
+          // // update axes
+
+          svg.select('g')
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0,' + height + ')')
+              .call(xAxis);
+
+          series.select('path')
+            .attr('class', 'line')
+            .attr('d', function (d) { return line(d.values); })
+            .style('stroke', function (d) { return color(d.name); })
+            .style('stroke-width', '2px')
+            .style('fill', 'none');
+          // svg.select('g')
+          //   .attr('class', 'x axis')
+          //   .attr('transform', 'translate(0,' + height + ')')
+          //   .call(xAxis
+          //     .scale(xScale)
+          //     .orient('bottom')
+          //     .ticks(5, '%'));
+
+          // svg.selectAll('.dot')
+          //   .attr('class', 'dot')
+          //   .attr('cx', xMap);
    
       }
     });
@@ -159,5 +165,6 @@
 
   buildChart('#white', '/assets/data/UT_Undergrad_Demographics_Pct_White.csv');
   buildChart('#black', '/assets/data/UT_Undergrad_Demographics_Pct_Black.csv');
+  buildChart('#hispanic', '/assets/data/UT_Undergrad_Demographics_Pct_Hispanic.csv');
 
 })();
