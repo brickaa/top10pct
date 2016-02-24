@@ -130,12 +130,7 @@
               .scale(x)
               .orient('bottom');
 
-          // xScale.range([0, width]);
-          // xMap = function(d) { return xScale(xValue(d));}; // data -> display
-          // xAxis = d3.svg.axis().scale(xScale).orient('bottom');
-
-          // // update axes
-
+          // update xAxis, data
           svg.select('g')
               .attr('class', 'x axis')
               .attr('transform', 'translate(0,' + height + ')')
@@ -147,17 +142,6 @@
             .style('stroke', function (d) { return color(d.name); })
             .style('stroke-width', '2px')
             .style('fill', 'none');
-          // svg.select('g')
-          //   .attr('class', 'x axis')
-          //   .attr('transform', 'translate(0,' + height + ')')
-          //   .call(xAxis
-          //     .scale(xScale)
-          //     .orient('bottom')
-          //     .ticks(5, '%'));
-
-          // svg.selectAll('.dot')
-          //   .attr('class', 'dot')
-          //   .attr('cx', xMap);
    
       }
     });
