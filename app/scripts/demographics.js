@@ -9,9 +9,9 @@
     var margin = {top: 20, right: 20, bottom: 30, left: 60},
         width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
-            
+
     var x = d3.scale.ordinal()
-        .rangePoints([0, width]);
+        .rangeRoundBands([0, width], .1);
 
     var y = d3.scale.linear()
         .rangeRound([height, 0]);
@@ -22,19 +22,11 @@
 
     var yAxis = d3.svg.axis()
         .scale(y)
-        .orient('left')
-        .tickFormat(function (d) {
-          var mapper = {
-            '1990': '1990',
-            '1991': 'That is long',
-            'Other': 'Other is long'
-          };
-          return mapper[d];
-        });
+        .orient('left');
 
     var line = d3.svg.line()
         .interpolate('cardinal')
-        .x(function (d) { return x(d.label); })
+        .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
         .y(function (d) { return y(d.value); });
 
     var color = d3.scale.ordinal()
@@ -102,7 +94,7 @@
         .data(function (d) { return d.values; })
         .enter().append('circle')
          .attr('class', 'point')
-         .attr('cx', function (d) { return x(d.label); })
+         .attr('cx', function (d) { return x(d.label) + x.rangeBand()/2; })
          .attr('cy', function (d) { return y(d.value); })
          .attr('r', '5px')
          .style('fill', function (d) { return color(d.name); })
@@ -167,7 +159,5 @@
 
   buildChart('#white', '/assets/data/UT_Undergrad_Demographics_Pct_White.csv');
   buildChart('#black', '/assets/data/UT_Undergrad_Demographics_Pct_Black.csv');
-  buildChart('#hispanic', '/assets/data/UT_Undergrad_Demographics_Pct_Hispanic.csv');
-
 
 })();
