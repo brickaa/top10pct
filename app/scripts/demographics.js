@@ -70,7 +70,7 @@
 
       svg.append('g')
           .attr('class', 'y axis')
-          .call(yAxis)
+          .call(yAxis.ticks('5', '%'))
         .append('text')
           .attr('transform', 'rotate(-90)')
           .attr('y', 6)
