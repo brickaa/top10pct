@@ -56,14 +56,12 @@
 
       x.domain(data.map(function (d) { return d.Year; }));
       
-      y.domain([
-        d3.min(seriesData, function (c) { 
-          return d3.min(c.values, function (d) { return d.value; });
-        }),
-        d3.max(seriesData, function (c) { 
-          return d3.max(c.values, function (d) { return d.value; });
-        })
-      ]);
+      y.domain([0,1]);
+      // y.domain([0,
+      //   d3.max(seriesData, function (c) { 
+      //     return d3.max(c.values, function (d) { return d.value; });
+      //   })
+      // ]);
 
       svg.append('g')
           .attr('class', 'x axis')
@@ -93,7 +91,6 @@
         .style('fill', 'none');
 
       d3.select(window).on('resize.' + chartLocation, resize).transition();
-
       function resize() {
           console.log('resize');
           // update width
@@ -123,11 +120,75 @@
             .style('fill', 'none');
    
       }
+
+      function rescale() {   
+
+          y.domain([0,
+            d3.max(seriesData, function (c) { 
+              return d3.max(c.values, function (d) { return d.value; });
+            })
+          ]);
+          
+          y.rangeRound([height, 0], 0.1);
+
+          yAxis = d3.svg.axis()
+              .scale(y)
+              .orient('left');
+
+          // update yAxis, data
+          svg.select('.y.axis')
+              .transition().duration(500).ease('sin-in-out')
+              .call(yAxis.ticks('5', '%'));
+
+          series.select('path')
+            .attr('class', 'line')
+            .attr('d', function (d) { return line(d.values); })
+            .style('stroke', function (d) { return color(d.name); })
+            .style('stroke-width', '2px')
+            .style('fill', 'none');
+
+              
+      }
+
+      function rescaleAgain() {   
+          
+          y.domain([0,1]);
+          
+          y.rangeRound([height, 0], 0.1);
+
+          yAxis = d3.svg.axis()
+              .scale(y)
+              .orient('left');
+
+          // update yAxis, data
+          svg.select('.y.axis')
+              .transition().duration(500).ease('sin-in-out')
+              .call(yAxis.ticks('5', '%'));
+
+          series.select('path')
+            .attr('class', 'line')
+            .attr('d', function (d) { return line(d.values); })
+            .style('stroke', function (d) { return color(d.name); })
+            .style('stroke-width', '2px')
+            .style('fill', 'none');
+
+              
+      }
+
+      $('#rescale').click(function() {
+        rescale();
+      });
+
+      $('#rescaleAgain').click(function() {
+        rescaleAgain();
+      });
+
     });
   }
 
   buildChart('#white', '/assets/data/UT_Undergrad_Demographics_Pct_White.csv');
   buildChart('#black', '/assets/data/UT_Undergrad_Demographics_Pct_Black.csv');
   buildChart('#hispanic', '/assets/data/UT_Undergrad_Demographics_Pct_Hispanic.csv');
+
 
 })();
