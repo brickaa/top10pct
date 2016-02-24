@@ -41,6 +41,7 @@
     d3.csv(dataSource, function (error, data) {
 
       var labelVar = 'Year';
+
       var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
       color.domain(varNames);
 
@@ -48,12 +49,13 @@
         return {
           name: name,
           values: data.map(function (d) {
-            return {name: name, label: d[labelVar], value: +d[name]};
+            return {name: name, label: d.Year, value: +d[name]};
           })
         };
       });
 
       x.domain(data.map(function (d) { return d.Year; }));
+      
       y.domain([
         d3.min(seriesData, function (c) { 
           return d3.min(c.values, function (d) { return d.value; });
@@ -89,29 +91,6 @@
         .style('stroke', function (d) { return color(d.name); })
         .style('stroke-width', '2px')
         .style('fill', 'none');
-
-      series.selectAll('.point')
-        .data(function (d) { return d.values; });
-
-      // var legend = svg.selectAll('.legend')
-      //     .data(varNames.slice().reverse())
-      //   .enter().append('g')
-      //     .attr('class', 'legend')
-      //     .attr('transform', function (d, i) { return 'translate(55,' + i * 20 + ')'; });
-
-      // legend.append('rect')
-      //     .attr('x', width - 10)
-      //     .attr('width', 10)
-      //     .attr('height', 10)
-      //     .style('fill', color)
-      //     .style('stroke', 'grey');
-
-      // legend.append('text')
-      //     .attr('x', width - 12)
-      //     .attr('y', 6)
-      //     .attr('dy', '.35em')
-      //     .style('text-anchor', 'end')
-      //     .text(function (d) { return d; });
 
       d3.select(window).on('resize.' + chartLocation, resize).transition();
 
