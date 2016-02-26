@@ -1,6 +1,6 @@
 // import './includes/adLoader';
 
-/* global d3, $ */
+/* global d3, $, Waypoint */
 
 (function() {
   'use strict';
@@ -54,14 +54,15 @@
         };
       });
 
-      x.domain(data.map(function (d) { return d.Year; }));
-      
+      console.log(seriesData);
+
+      var line1 = [];
+      var line2 = [];
+      line1.push(seriesData[1]);
+      line2.push(seriesData[0]);
+
+      x.domain(data.map(function (d) { return d.Year; })); 
       y.domain([0,1]);
-      // y.domain([0,
-      //   d3.max(seriesData, function (c) { 
-      //     return d3.max(c.values, function (d) { return d.value; });
-      //   })
-      // ]);
 
       svg.append('g')
           .attr('class', 'x axis')
@@ -79,7 +80,7 @@
           .text('Percent');
 
       var series = svg.selectAll('.series')
-          .data(seriesData)
+          .data(line1)
         .enter().append('g')
           .attr('class', 'series');
 
@@ -90,89 +91,96 @@
         .style('stroke-width', '2px')
         .style('fill', 'none');
 
-      d3.select(window).on('resize.' + chartLocation, resize).transition();
+      var series2 = svg.selectAll('.series')
+          .data(line2)
+        .enter().append('g')
+          .attr('class', 'series');
+
+      series2.append('path')
+        .attr('class', 'line')
+        .attr('d', function (d) { return line(d.values); })
+        .style('stroke', function (d) { return color(d.name); })
+        .style('stroke-width', '2px')
+        .style('fill', 'none');
+
+      // d3.select(window).on('resize.' + chartLocation, resize).transition();
       function resize() {
-          console.log('resize');
-          // update width
-          width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
+        // update width
+        width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
 
-          d3.select(chartLocation).select('svg')
-            .attr('width', width + margin.left + margin.right);
+        d3.select(chartLocation).select('svg')
+          .attr('width', width + margin.left + margin.right);
 
-          // // resize the chart
-          x.rangePoints([0, width], 0.1);
+        // // resize the chart
+        x.rangePoints([0, width], 0.1);
 
-          xAxis = d3.svg.axis()
-              .scale(x)
-              .orient('bottom');
+        xAxis = d3.svg.axis()
+            .scale(x)
+            .orient('bottom');
 
-          // update xAxis, data
-          svg.select('g')
-              .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + height + ')')
-              .call(xAxis);
+        // update xAxis, data
+        svg.select('g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + height + ')')
+            .call(xAxis);
 
-          series.select('path')
-            .attr('class', 'line')
-            .attr('d', function (d) { return line(d.values); })
-            .style('stroke', function (d) { return color(d.name); })
-            .style('stroke-width', '2px')
-            .style('fill', 'none');
+        series.select('path')
+          .attr('class', 'line')
+          .attr('d', function (d) { return line(d.values); })
+          .style('stroke', function (d) { return color(d.name); })
+          .style('stroke-width', '2px')
+          .style('fill', 'none');
    
       }
 
       function rescale() {   
+        y.domain([0,
+          d3.max(seriesData, function (c) { 
+            return d3.max(c.values, function (d) { return d.value; });
+          })
+        ]);
+        
+        y.rangeRound([height, 0], 0.1);
 
-          y.domain([0,
-            d3.max(seriesData, function (c) { 
-              return d3.max(c.values, function (d) { return d.value; });
-            })
-          ]);
-          
-          y.rangeRound([height, 0], 0.1);
+        yAxis = d3.svg.axis()
+            .scale(y)
+            .orient('left');
 
-          yAxis = d3.svg.axis()
-              .scale(y)
-              .orient('left');
+        // update yAxis, data
+        svg.select('.y.axis')
+            .transition().duration(1000).ease('sin-in-out')
+            .call(yAxis.ticks('5', '%'));
 
-          // update yAxis, data
-          svg.select('.y.axis')
-              .transition().duration(500).ease('sin-in-out')
-              .call(yAxis.ticks('5', '%'));
-
-          series.select('path')
-            .attr('class', 'line')
-            .attr('d', function (d) { return line(d.values); })
-            .style('stroke', function (d) { return color(d.name); })
-            .style('stroke-width', '2px')
-            .style('fill', 'none');
-
-              
+        series.select('path')
+          .transition().duration(1000)
+          .attr('class', 'line')
+          .attr('d', function (d) { return line(d.values); })
+          .style('stroke', function (d) { return color(d.name); })
+          .style('stroke-width', '2px')
+          .style('fill', 'none');            
       }
 
-      function rescaleAgain() {   
-          
-          y.domain([0,1]);
-          
-          y.rangeRound([height, 0], 0.1);
+      function rescaleAgain() {            
+        y.domain([0,1]);
+        
+        y.rangeRound([height, 0], 0.1);
 
-          yAxis = d3.svg.axis()
-              .scale(y)
-              .orient('left');
+        yAxis = d3.svg.axis()
+            .scale(y)
+            .orient('left');
 
-          // update yAxis, data
-          svg.select('.y.axis')
-              .transition().duration(500).ease('sin-in-out')
-              .call(yAxis.ticks('5', '%'));
+        // update yAxis, data
+        svg.select('.y.axis')
+            .transition().duration(1000).ease('sin-in-out')
+            .call(yAxis.ticks('5', '%'));
 
-          series.select('path')
-            .attr('class', 'line')
-            .attr('d', function (d) { return line(d.values); })
-            .style('stroke', function (d) { return color(d.name); })
-            .style('stroke-width', '2px')
-            .style('fill', 'none');
-
-              
+        series1.select('path')
+          .transition().duration(1000)
+          .attr('class', 'line')
+          .attr('d', function (d) { return line(d.values); })
+          .style('stroke', function (d) { return color(d.name); })
+          .style('stroke-width', '2px')
+          .style('fill', 'none');        
       }
 
       $('#rescale').click(function() {
@@ -183,12 +191,57 @@
         rescaleAgain();
       });
 
+      var sticky = new Waypoint.Sticky({
+        element: $('.basic-sticky-example')[0]
+      });
+
+      var inview = new Waypoint.Inview({
+        element: $('#waypoint1')[0],
+        // context: document.getElementById('test-wrapper'),
+        entered: function(direction) {
+          if (direction === 'down') {
+            $('#explainer1').fadeOut(500);
+            $('#explainer2').delay(500).fadeIn(500);
+            $('#explainer3').hide();
+            $('#explainer4').hide();
+            $('#explainer5').hide();
+
+            // rescale();
+          } else if (direction === 'up') {
+            $('#explainer2').fadeOut(500);
+            $('#explainer1').delay(500).fadeIn(500);
+            $('#explainer3').hide();
+            $('#explainer4').hide();
+            $('#explainer5').hide();
+            // rescaleAgain();
+          }
+        }
+      });
+
+      var inview2 = new Waypoint.Inview({
+        element: $('#waypoint2')[0],
+        // context: document.getElementById('test-wrapper'),
+        entered: function(direction) {
+          if (direction === 'down') {
+            $('#explainer2').fadeOut(500);
+            $('#explainer1').hide();
+            $('#explainer3').delay(500).fadeIn(500);
+            rescale();
+          } else if (direction === 'up') {
+            $('#explainer3').fadeOut(500);
+            $('#explainer1').hide();
+            $('#explainer2').delay(500).fadeIn(500);
+            rescaleAgain();
+          }
+        }
+      });
     });
   }
 
   buildChart('#white', '/assets/data/UT_Undergrad_Demographics_Pct_White.csv');
   buildChart('#black', '/assets/data/UT_Undergrad_Demographics_Pct_Black.csv');
   buildChart('#hispanic', '/assets/data/UT_Undergrad_Demographics_Pct_Hispanic.csv');
+
 
 
 })();

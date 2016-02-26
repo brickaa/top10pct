@@ -2,29 +2,57 @@
 
 {% block content %}
 
-<button id="rescale">Rescale</button>
-<button id="rescaleAgain">Rescale Again</button>
+<div class="test-wrapper">
 
-<div id="charts" class="charts">
-  <div class="chart-container">
-    <header>
-      <h2>White</h2>
-    </header>
-    <div id="white"></div>
+<!-- <button id="rescale">Zoom View</button>
+<button id="rescaleAgain">Show out of 100%</button> -->
+  <div class="basic-sticky-example">
+    <div class="charts--explainer">
+      <p id="explainer1" class="charts--explainer_text">In 1990, <strong>52 percent</strong> of Texans age 17 to 19 were white, <strong>13 percent</strong> were black and <strong>32 percent</strong> were Hispanic.</p>
+      
+      <p id="explainer2" class="charts--explainer_text">But you probably couldn't tell only half of Texans in that age group was white looking at the freshmen undergradute class at the University of Texas in Austin &mdash; because in 1990, <strong>83.5 percent</strong> of freshmen students were white, <strong>4 percent</strong> were black and <strong>12.5 percent were Hispanic.</p>
+
+      <p id="explainer3" class="charts--explainer_text">Fifteen years later, Hispanics are now the majority in the 17 to 19 year old age group at <strong>48 percent</strong>, while the proportion of blacks is still <strong>13 percent</strong> and the white population has decreased to <strong>33 percent</strong>.</p>
+
+      <p id="explainer4" class="charts--explainer_text">And you can see a slight shift in the student body at UT &mdash; as <strong>73 percent</strong> of the 2015 freshman class is white, while <strong>22 percent</strong> is Hispanic.</p>
+
+      <p id="explainer5" class="charts--explainer_text">But the proportion of black students has hardly changed &mdash; increasing from <strong>4 to 5 percent</strong> over 15 years.</p>
+    </div>
+    <div class="legend">
+      <div class="legend--color_box color-light-blue"></div>
+      <p class="legend--key">Percent of UT freshman class</p>
+      <div class="legend--color_box color-orange"></div>
+      <p class="legend--key">Percent of statewide 17-19 year old population</p>
+    </div>
+
+    <div id="charts" class="charts">
+      <div class="chart-container">
+        <header>
+          <h2>White</h2>
+        </header>
+        <div id="white"></div>
+      </div>
+
+      <div class="chart-container">
+        <header>
+          <h2>Black</h2>
+        </header>
+        <div id="black"></div>
+      </div>
+
+      <div class="chart-container">
+        <header>
+          <h2>Hispanic</h2>
+        </header>
+        <div id="hispanic"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="chart-container">
-    <header>
-      <h2>Black</h2>
-    </header>
-    <div id="black"></div>
-  </div>
+  <div class="scroll-space"></div>
+  <div id="waypoint1"></div>
 
-  <div class="chart-container">
-    <header>
-      <h2>Hispanic</h2>
-    </header>
-    <div id="hispanic"></div>
-  </div>
+  <div class="scroll-space"></div>
+  <div id="waypoint2"></div>
 </div>
 {% endblock %}

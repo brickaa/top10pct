@@ -1,5 +1,11 @@
 $chart-bp: 40em;
 
+.test-wrapper {
+  background-color: white;
+  padding-top: 10em;
+  height: 1000em;
+}
+
 .charts {
   @include font-size($xxs);
 }
@@ -7,7 +13,8 @@ $chart-bp: 40em;
 .chart-container {
   display: inline-block;
   margin: 0;
-  width: 100%;
+  width: 32%;
+  // width: 100%;
 
   @include susy-media($chart-bp) {
     width: 32%;
@@ -34,6 +41,26 @@ $chart-bp: 40em;
 }
 
 
+// Line Charts
+
+.charts--explainer {
+  // position: fixed;
+
+  // &_text {
+  //   visibility: hidden;
+
+  //   &:first-child {
+  //     visibility: visible;
+  //   }
+  // }
+}
+
+// .waypoint-fixed {
+//   background: white;
+//   position: fixed;
+//   width: 100%;
+//   bottom: 0;
+// }
 
 .x.axis {
 
@@ -46,10 +73,51 @@ $chart-bp: 40em;
       }
     } 
   }
+}
 
-  // .tick:nth-of-type(2) {
-  //   text {
-  //     display: none;
-  //   }
-  // }
+.scroll-space {
+  height: 500px;
+}
+
+.stuck {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#explainer2,
+#explainer3,
+#explainer4,
+#explainer5 {
+  display: none;
+}
+
+.legend {
+
+  $light-blue: #90d3c8;
+  $orange: #ff6249;
+
+  margin: 1em 0;
+  width: 100%;
+
+  &--key {
+    @include font-size($base);
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &--color_box {
+    display: inline-block;
+    height: 1.3em;
+    margin: -.25em .25em 0 0;
+    width: 1.3em;
+
+    &.color-light-blue {
+      background: $light-blue;
+    }
+
+    &.color-orange {
+      background: $orange;
+    }
+  }
 }
