@@ -61,6 +61,9 @@
 
           x.domain([d3.min(data, function(d, i) { return d3.min(d.values[i].values, function (d) { return d.date; }); }),
                      d3.max(data, function(d, i) { return d3.max(d.values[i].values, function (d) { return d.date; }); })]);
+          
+          var yDomain;
+
           y.domain([0,1]);
 
           var dataUT = [],
@@ -70,7 +73,6 @@
           dataUT = data[0].values;
           dataTX = data[1].values;
 
-          dataRace.push(dataUT[index]);
           dataRace.push(dataTX[index]);
 
           svg.append('g')
@@ -91,14 +93,48 @@
 
           series.append('path')
               .attr('class', 'line')
-              .attr('d', function(d, i) { 
+              .attr('d', function(d) { 
                   return line(d.values);
               })
               .style('stroke', function(d, i) { return color(d.values[i].group); });
 
           d3.select(window).on('resize.' + race, resize).transition();
 
+          function addUT() {
+            dataRace.push(dataUT[index]);
+
+            console.log(yDomain);
+
+            if(yDomain && yDomain === 1) {
+              resetScale();
+            } else if (yDomain) {
+              rescale();
+            }
+            // if(yDomain !== 'undefined') {
+            //   console.log('undefined - test');
+            // } else if (yDomain !== 1) {
+            //   rescale();
+            // } else {
+            //   resetScale();
+            // }
+
+            var series = svg.selectAll('.group')
+                .data(dataRace, function(d, i) {
+                  return d.values[i].group;
+                })
+                .enter().append('g')
+                  .attr('class', 'group');
+
+            series.append('path')
+                .attr('class', 'line')
+                .attr('d', function(d) { 
+                    return line(d.values);
+                })
+                .style('stroke', function(d, i) { return color(d.values[i].group); });
+          }
+
           function resize() {
+            console.log(yDomain);
             // update width
             width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
 
@@ -107,66 +143,96 @@
 
             // // resize the chart
             x.range([0,width]);
+            y.domain([0, yDomain]);
 
             xAxis = d3.svg.axis()
-                .scale(x)
-                .orient('bottom');
+              .scale(x)
+              .orient('bottom');
 
             // update xAxis, data
             svg.select('g')
-                .attr('class', 'x axis')
-                .attr('transform', 'translate(0,' + height + ')')
-                .call(xAxis);
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0,' + height + ')')
+              .call(xAxis);
+
+            var series = svg.selectAll('.group');
 
             series.select('path')
               .attr('class', 'line')
-              .attr('d', function (d) { return line(d.values); })
-              .style('stroke', function(d, i) { return color(d.values[i].group); })
-              .style('stroke-width', '2px')
-              .style('fill', 'none');
+              .attr('d', function(d) { 
+                  return line(d.values);
+              })
+              .style('stroke', function(d, i) { return color(d.values[i].group); });
           }
 
+          function rescale() {
+            yDomain = d3.max(dataRace, function (c) { 
+              return d3.max(c.values, function (d) { return d.percent; });
+            });
 
-
-          function rescale() {   
-            y.domain([0,
-              d3.max(dataRace, function (c) { 
-                return d3.max(c.values, function (d) { return d.percent; });
-              })
-            ]);
+            y.domain([0, yDomain]);
 
             y.range([height, 0], 0.1);
 
             yAxis = d3.svg.axis()
-                .scale(y)
-                .orient('left');
+              .scale(y)
+              .orient('left');
 
             // update yAxis, data
             svg.select('.y.axis')
-                .transition().duration(1000).ease('sin-in-out')
-                .call(yAxis.ticks('5', '%'));
+              .transition().duration(1000).ease('sin-in-out')
+              .call(yAxis.ticks('5', '%'));
+
+            var series = svg.selectAll('.group');
 
             series.select('path')
-                .transition().duration(1000)
-                .attr('class', 'line')
-                .attr('d', function(d) { 
-                    return line(d.values);
-                })
-                .style('stroke', function(d, i) { return color(d.values[i].group); });
-
-            // series.select('path')
-            //   .transition().duration(1000)
-            //   .attr('class', 'line')
-            //   .attr('d', function (d) { return line(d.values); })
-            //   .style('stroke', function(d, i) { return color(d.values[i].group); })
-            //   .style('stroke-width', '2px')
-            //   .style('fill', 'none');            
+              .transition().duration(1000)
+              .attr('class', 'line')
+              .attr('d', function(d) { 
+                  return line(d.values);
+              })
+              .style('stroke', function(d, i) { return color(d.values[i].group); });         
           }
+
+          function resetScale() {
+            yDomain = 1;
+
+            y.domain([0,yDomain]);
+
+            y.range([height, 0], 0.1);
+
+            yAxis = d3.svg.axis()
+              .scale(y)
+              .orient('left');
+
+            // update yAxis, data
+            svg.select('.y.axis')
+              .transition().duration(1000).ease('sin-in-out')
+              .call(yAxis.ticks('5', '%'));
+
+            var series = svg.selectAll('.group');
+            
+            series.select('path')
+              .transition().duration(1000)
+              .attr('class', 'line')
+              .attr('d', function(d) { 
+                  return line(d.values);
+              })
+              .style('stroke', function(d, i) { return color(d.values[i].group); });          
+          }
+
 
         $('#rescale').click(function() {
           rescale();
         });
 
+        $('#reset').click(function() {
+          resetScale();
+        });
+
+        $('#addUT').click(function() {
+          addUT();
+        });
       });
 
   });
