@@ -125,6 +125,48 @@
               .style('stroke-width', '2px')
               .style('fill', 'none');
           }
+
+
+
+          function rescale() {   
+            y.domain([0,
+              d3.max(dataRace, function (c) { 
+                return d3.max(c.values, function (d) { return d.percent; });
+              })
+            ]);
+
+            y.range([height, 0], 0.1);
+
+            yAxis = d3.svg.axis()
+                .scale(y)
+                .orient('left');
+
+            // update yAxis, data
+            svg.select('.y.axis')
+                .transition().duration(1000).ease('sin-in-out')
+                .call(yAxis.ticks('5', '%'));
+
+            series.select('path')
+                .transition().duration(1000)
+                .attr('class', 'line')
+                .attr('d', function(d) { 
+                    return line(d.values);
+                })
+                .style('stroke', function(d, i) { return color(d.values[i].group); });
+
+            // series.select('path')
+            //   .transition().duration(1000)
+            //   .attr('class', 'line')
+            //   .attr('d', function (d) { return line(d.values); })
+            //   .style('stroke', function(d, i) { return color(d.values[i].group); })
+            //   .style('stroke-width', '2px')
+            //   .style('fill', 'none');            
+          }
+
+        $('#rescale').click(function() {
+          rescale();
+        });
+
       });
 
   });
