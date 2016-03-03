@@ -7,7 +7,7 @@
 <button id="rescale">Zoom View</button>
 <button id="reset">Show out of 100%</button> -->
 
-  <div class="basic-sticky-example">
+  <div id="waypoint1" class="basic-sticky-example">
     <div class="charts--explainer">
       <p id="explainer1" class="charts--explainer_text">In 1990, <strong>52 percent</strong> of Texans age 17 to 19 were white, <strong>13 percent</strong> were black and <strong>32 percent</strong> were Hispanic.</p>
       
@@ -19,11 +19,16 @@
 
       <p id="explainer5" class="charts--explainer_text">But the proportion of black students has hardly changed &mdash; increasing from <strong>4 to 5 percent</strong> over 15 years.</p>
     </div>
+
     <div class="legend">
-      <div class="legend--color_box color-light-blue"></div>
-      <p class="legend--key">Percent of statewide 17-19 year old population</p>
-      <div class="legend--color_box color-orange"></div>
-      <p class="legend--key">Percent of UT freshman class</p> 
+      <div class="legend_tx">
+        <div class="legend--color_box color-light-blue"></div>
+        <p class="legend--key">17-19 year olds in Texas</p>
+      </div>
+      <div class="legend_ut">
+        <div class="legend--color_box color-orange"></div>
+        <p class="legend--key">UT freshman class</p>
+      </div> 
     </div>
 
     <div id="charts" class="charts">
@@ -51,9 +56,6 @@
   </div>
 
   <div class="scroll-space"></div>
-  <div id="waypoint1"></div>
-
-  <div class="scroll-space"></div>
   <div id="waypoint2"></div>
 
   <div class="scroll-space"></div>
@@ -61,5 +63,8 @@
 
   <div class="scroll-space"></div>
   <div id="waypoint4"></div>
+
+  <div class="scroll-space"></div>
+  <div id="waypoint5"></div>
 </div>
 {% endblock %}

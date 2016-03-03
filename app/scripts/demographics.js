@@ -12,7 +12,7 @@
       var parseDate = d3.time.format('%Y%m%d').parse;
 
       var x = d3.time.scale()
-          .range([0,width]);
+          .range([0, width]);
           
       var y = d3.scale.linear()
           .range([height,0]);
@@ -75,30 +75,70 @@
 
           dataRace.push(dataTX[index]);
 
-          svg.append('g')
-              .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + height + ')')
-              .call(xAxis);
+          // svg.append('g')
+          //     .attr('class', 'x axis')
+          //     .attr('transform', 'translate(0,' + height + ')')
+          //     .call(xAxis);
 
           svg.append('g')
               .attr('class', 'y axis')
               .call(yAxis.ticks('5', '%'));
 
-          var series = svg.selectAll('.group')
-              .data(dataRace, function(d, i) {
-                return d.values[i].group;
-              })
-              .enter().append('g')
-                .attr('class', 'group');
-
-          series.append('path')
-              .attr('class', 'line')
-              .attr('d', function(d) { 
-                  return line(d.values);
-              })
-              .style('stroke', function(d, i) { return color(d.values[i].group); });
+          svg.selectAll('.bar')
+            .data(dataRace, function(d) {
+              return d.values[0].group;
+            })
+            .enter().append('rect')
+              .attr('class', 'bar')
+              .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); })
+              .attr('width', width/4)
+              .attr('y', function(d, i) { return y(d.values[i].percent); })
+              .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); })
+              .attr('fill', function(d, i) { return color(d.values[i].group); });
 
           d3.select(window).on('resize.' + race, resize).transition();
+
+          function addUTBar() {
+            dataRace.push(dataUT[index]);
+
+            svg.selectAll('.bar')
+              .data(dataRace, function(d) {
+                return d.values[1].group;
+              })
+              .enter().append('rect')
+                .attr('class', 'bar')
+                .attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
+                .attr('width', width/4)
+                .attr('y', function(d, i) { return y(d.values[i].percent); })
+                .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); })
+                .attr('fill', function(d, i) { return color(d.values[i].group); });
+
+          }
+
+          function addTXLine() {
+
+            if(yDomain && yDomain === 1) {
+              resetScale();
+            } else if (yDomain) {
+              rescale();
+            }
+
+            var series = svg.selectAll('.group')
+                .data(dataRace, function(d, i) {
+                  return d.values[i].group;
+                })
+                .enter().append('g')
+                  .attr('class', 'group');
+
+            series.append('path')
+                .attr('class', 'line')
+                .attr('d', function(d) { 
+                    return line(d.values);
+                })
+                .style('stroke', function(d, i) { return color(d.values[i].group); });
+
+
+          }
 
           function addUT() {
             dataRace.push(dataUT[index]);
@@ -125,7 +165,6 @@
           }
 
           function resize() {
-            console.log(yDomain);
             // update width
             width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
 
@@ -140,10 +179,10 @@
               .orient('bottom');
 
             // update xAxis, data
-            svg.select('g')
-              .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + height + ')')
-              .call(xAxis);
+            // svg.select('g')
+            //   .attr('class', 'x axis')
+            //   .attr('transform', 'translate(0,' + height + ')')
+            //   .call(xAxis);
 
             var series = svg.selectAll('.group');
 
@@ -153,6 +192,12 @@
                   return line(d.values);
               })
               .style('stroke', function(d, i) { return color(d.values[i].group); });
+          
+            var bars = svg.selectAll('rect');
+
+            bars.attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
+              .attr('width', width/4);
+            
           }
 
           function rescale() {
@@ -211,38 +256,12 @@
               .style('stroke', function(d, i) { return color(d.values[i].group); });          
           }
 
-
-          var sticky = new Waypoint.Sticky({
-            element: $('.basic-sticky-example')[0]
-          });
-
-          var text1 = $('#explainer1');
-          var text2 = $('#explainer2');
-          var text3 = $('#explainer3');
-          var text4 = $('#explainer4');
-          var text5 = $('#explainer5');
-
-          var inview = new Waypoint.Inview({
-            element: $('#waypoint1')[0],
-            enter: function(direction) {
-              if (direction === 'down') {
-                text1.animate({ opacity: 1});
-                addUT();
-              } else if (direction === 'up') {
-                text1.animate({ opacity: 0});
-              }
-            }
-          });
-
           var inview2 = new Waypoint.Inview({
             element: $('#waypoint2')[0],
-            enter: function(direction) {
+            exit: function(direction) {
               if (direction === 'down') {
-                text1.animate({ opacity: 0});
-                text2.animate({ opacity: 1});
+                addUTBar();
               } else if (direction === 'up') {
-                text1.animate({ opacity: 1});
-                text2.animate({ opacity: 0});
               }
             }
           });
@@ -262,5 +281,39 @@
 
   });
 
+  var text1 = $('#explainer1');
+  var text2 = $('#explainer2');
+  var text3 = $('#explainer3');
+  var text4 = $('#explainer4');
+  var text5 = $('#explainer5');
 
+  var sticky = new Waypoint.Sticky({
+    element: $('.basic-sticky-example')[0]
+  });
+
+  var inview = new Waypoint.Inview({
+    element: $('#waypoint1')[0],
+    exit: function(direction) {
+      if (direction === 'down') {
+        text1.animate({ opacity: 1});
+      } else if (direction === 'up') {
+        text1.animate({ opacity: 0});
+      }
+    }
+  });
+
+  var inview2 = new Waypoint.Inview({
+    element: $('#waypoint2')[0],
+    exit: function(direction) {
+      if (direction === 'down') {
+        text1.animate({ opacity: 0});
+        text2.animate({ opacity: 1});
+        console.log('exit 2');
+        $('.legend_ut').animate({ opacity: 1 });
+      } else if (direction === 'up') {
+        text1.animate({ opacity: 1});
+        text2.animate({ opacity: 0});
+      }
+    }
+  });
 })();
