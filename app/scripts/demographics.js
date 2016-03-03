@@ -173,6 +173,9 @@
           }
 
           function resize() {
+
+            Waypoint.refreshAll();
+            
             // update width
             width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
 
@@ -369,54 +372,54 @@
     element: $('.basic-sticky-example')[0]
   });
 
-  var inview = new Waypoint.Inview({
-    element: $('#waypoint1')[0],
-    enter: function(direction) {
-      if (direction === 'down') {
-        text1.animate({ opacity: 1});
-      } else if (direction === 'up') {
-        text1.animate({ opacity: 0});
-      }
-    }
-  });
+  // var inview = new Waypoint.Inview({
+  //   element: $('#waypoint1')[0],
+  //   enter: function(direction) {
+  //     if (direction === 'down') {
+  //       text1.animate({ opacity: 1});
+  //     } else if (direction === 'up') {
+  //       text1.animate({ opacity: 0});
+  //     }
+  //   }
+  // });
 
-  var inview2 = new Waypoint.Inview({
-    element: $('#waypoint2')[0],
-    enter: function(direction) {
-      if (direction === 'down') {
-        text1.animate({ opacity: 0});
-        text2.animate({ opacity: 1});
-        $('.legend_ut').animate({ opacity: 1 });
-      } else if (direction === 'up') {
-        text1.animate({ opacity: 1});
-        text2.animate({ opacity: 0});
-      }
-    }
-  });
+  // var inview2 = new Waypoint.Inview({
+  //   element: $('#waypoint2')[0],
+  //   enter: function(direction) {
+  //     if (direction === 'down') {
+  //       text1.animate({ opacity: 0});
+  //       text2.animate({ opacity: 1});
+  //       $('.legend_ut').animate({ opacity: 1 });
+  //     } else if (direction === 'up') {
+  //       text1.animate({ opacity: 1});
+  //       text2.animate({ opacity: 0});
+  //     }
+  //   }
+  // });
 
-  var inview3 = new Waypoint.Inview({
-    element: $('#waypoint3')[0],
-    enter: function(direction) {
-      if (direction === 'down') {
-        text2.animate({ opacity: 0});
-        text3.animate({ opacity: 1});
-      } else if (direction === 'up') {
-        text2.animate({ opacity: 1});
-        text3.animate({ opacity: 0});
-      }
-    }
-  });
+  // var inview3 = new Waypoint.Inview({
+  //   element: $('#waypoint3')[0],
+  //   enter: function(direction) {
+  //     if (direction === 'down') {
+  //       text2.animate({ opacity: 0});
+  //       text3.animate({ opacity: 1});
+  //     } else if (direction === 'up') {
+  //       text2.animate({ opacity: 1});
+  //       text3.animate({ opacity: 0});
+  //     }
+  //   }
+  // });
 
-  var inview2 = new Waypoint.Inview({
-    element: $('#waypoint2')[0],
-    enter: function(direction) {
-      if (direction === 'down') {
-        text3.animate({ opacity: 0});
-        text4.animate({ opacity: 1});
-      } else if (direction === 'up') {
-        text3.animate({ opacity: 1});
-        text4.animate({ opacity: 0});
-      }
-    }
-  });
+  // var inview2 = new Waypoint.Inview({
+  //   element: $('#waypoint2')[0],
+  //   enter: function(direction) {
+  //     if (direction === 'down') {
+  //       text3.animate({ opacity: 0});
+  //       text4.animate({ opacity: 1});
+  //     } else if (direction === 'up') {
+  //       text3.animate({ opacity: 1});
+  //       text4.animate({ opacity: 0});
+  //     }
+  //   }
+  // });
 })();
