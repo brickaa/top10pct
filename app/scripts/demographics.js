@@ -103,20 +103,11 @@
           function addUT() {
             dataRace.push(dataUT[index]);
 
-            console.log(yDomain);
-
             if(yDomain && yDomain === 1) {
               resetScale();
             } else if (yDomain) {
               rescale();
             }
-            // if(yDomain !== 'undefined') {
-            //   console.log('undefined - test');
-            // } else if (yDomain !== 1) {
-            //   rescale();
-            // } else {
-            //   resetScale();
-            // }
 
             var series = svg.selectAll('.group')
                 .data(dataRace, function(d, i) {
@@ -143,7 +134,6 @@
 
             // // resize the chart
             x.range([0,width]);
-            y.domain([0, yDomain]);
 
             xAxis = d3.svg.axis()
               .scale(x)
@@ -211,7 +201,7 @@
               .call(yAxis.ticks('5', '%'));
 
             var series = svg.selectAll('.group');
-            
+
             series.select('path')
               .transition().duration(1000)
               .attr('class', 'line')
@@ -221,6 +211,41 @@
               .style('stroke', function(d, i) { return color(d.values[i].group); });          
           }
 
+
+          var sticky = new Waypoint.Sticky({
+            element: $('.basic-sticky-example')[0]
+          });
+
+          var text1 = $('#explainer1');
+          var text2 = $('#explainer2');
+          var text3 = $('#explainer3');
+          var text4 = $('#explainer4');
+          var text5 = $('#explainer5');
+
+          var inview = new Waypoint.Inview({
+            element: $('#waypoint1')[0],
+            enter: function(direction) {
+              if (direction === 'down') {
+                text1.animate({ opacity: 1});
+                addUT();
+              } else if (direction === 'up') {
+                text1.animate({ opacity: 0});
+              }
+            }
+          });
+
+          var inview2 = new Waypoint.Inview({
+            element: $('#waypoint2')[0],
+            enter: function(direction) {
+              if (direction === 'down') {
+                text1.animate({ opacity: 0});
+                text2.animate({ opacity: 1});
+              } else if (direction === 'up') {
+                text1.animate({ opacity: 1});
+                text2.animate({ opacity: 0});
+              }
+            }
+          });
 
         $('#rescale').click(function() {
           rescale();

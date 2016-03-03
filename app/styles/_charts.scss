@@ -44,6 +44,11 @@ $chart-bp: 40em;
 // Line Charts
 
 .charts--explainer {
+
+  &_text {
+    opacity: 0;
+  }
+  
   // position: fixed;
 
   // &_text {
