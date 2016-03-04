@@ -1,9 +1,8 @@
 $chart-bp: 630px;
 
 .test-wrapper {
-  background-color: white;
-  padding-top: 10em;
-  height: 1000em;
+  background-color: #fff;
+  position: relative;
 }
 
 .charts {
@@ -11,6 +10,10 @@ $chart-bp: 630px;
     @include font-size($xxs);
   }
   
+}
+
+.chart-wrapper {
+  width: 100%;
 }
 
 .chart-container {
@@ -55,9 +58,9 @@ $chart-bp: 630px;
     @include font-size($m);
 
     &_text {
+      opacity: 0;
       position: absolute;
       top: 0;
-      opacity: 0;
     }
 
     &_text_highlight {
@@ -68,7 +71,6 @@ $chart-bp: 630px;
   &--header {
     @include font-size($base);
     text-align: center;
-    opacity: 0;
   }
 
 }
@@ -130,7 +132,6 @@ $chart-bp: 630px;
     }
   }
 
-  &_tx,
   &_ut {
     opacity: 0;
   }

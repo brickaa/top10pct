@@ -1,3 +1,5 @@
+{% from 'macros/demographic_charts.html' import demographics %}
+
 {% macro text(value) %}
 <p>{{ value }}</p>
 {% endmacro %}
@@ -31,6 +33,10 @@
 <aside class="ad-slot ad-slot__{{ value.type }}">
   <div id="gpt-ad-{{ value.type }}-{{ value.id }}"></div>
 </aside>
+{% endmacro %}
+
+{% macro demographic_charts(value) %}
+  {{ demographics() }}
 {% endmacro %}
 
 {% macro disclosure(value) %}

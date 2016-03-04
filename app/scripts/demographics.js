@@ -17,14 +17,6 @@
       width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
   
-  // function chartHeight() {
-  //  if (windowHeight <= 360) {
-  //    height = ((windowHeight - maxTextHeight) / 3) - margin.top - margin.bottom;
-  //  } else {
-  //    height = (windowHeight - maxTextHeight) - margin.top - margin.bottom;
-  //  }   
-  // }
-
   var parseDate = d3.time.format('%Y%m%d').parse;
 
   var x = d3.time.scale()
@@ -344,22 +336,26 @@
             .attr('stroke-dashoffset', 0);      
       }
 
+      addBars(dataRaceTX);
+      addYAxis();
+      removeXAxis();
+
       var inview1 = new Waypoint.Inview({
         element: $('#waypoint1')[0],
         enter: function(direction) {
           if (direction === 'down') {
             console.log('enter down 1');
-            addBars(dataRaceTX);
-            addYAxis();
-            removeXAxis();
+            // addBars(dataRaceTX);
+            // addYAxis();
+            // removeXAxis();
           } 
         },
         exit: function(direction) {
           if (direction === 'up') {
             console.log('exit up 1');
-            removeBars();
-            removeYAxis();
-            removeXAxis();
+            // removeBars();
+            // removeYAxis();
+            // removeXAxis();
           }
         }
       });
@@ -444,6 +440,26 @@
 
   var sticky = new Waypoint.Sticky({
     element: $('.basic-sticky-example')[0]
+  });
+
+  var inview6 = new Waypoint.Inview({
+    element: $('#waypoint6')[0],
+    enter: function(direction) {
+      if (direction === 'down') {
+        $('.stuck').css('position', 'absolute');
+        $('.stuck').css('bottom', '0');
+        $('.chart-wrapper').css('position', 'absolute');
+        $('.chart-wrapper').css('top', $('.stuck').height() - $(window).height());
+      }  
+    },
+    exit: function(direction) {
+      if (direction === 'up') {
+        $('.stuck').css('position', 'fixed');
+        $('.stuck').css('bottom', '');
+        $('.chart-wrapper').css('position', 'relative');
+        $('.chart-wrapper').css('top', '');
+      }
+    }
   });
 
   var inview1 = new Waypoint.Inview({
