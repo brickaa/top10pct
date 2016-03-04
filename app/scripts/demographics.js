@@ -5,17 +5,28 @@
 (function() {
   'use strict';
 
-  var windowHeight = $(window).height();
-
-  var maxTextHeight = Math.max.apply(null, $('.chart--explainer_text')
-    .map(function () { return $(this).height(); }).get());
-
+  var chartHeight;
   var explainerBox = $('#chart--explainer_box');
-  explainerBox.height(maxTextHeight);
+
+  function getHeights() {
+    var windowHeight = $(window).height();
+
+    var maxTextHeight = Math.max.apply(null, $('.chart--explainer_text')
+      .map(function () { return $(this).height(); }).get());
+
+    var legendHeight = $('.legend').height(),
+        chartHeader = $('.chart--header').height(),
+        chartTopHeight = maxTextHeight + legendHeight + chartHeader + 34;
+
+    explainerBox.height(maxTextHeight);
+    chartHeight = windowHeight - chartTopHeight;
+  }
+
+  getHeights();
 
   var margin = {top: 10, right: 10, bottom: 30, left: 30},
       width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom;
+      height = chartHeight - margin.top - margin.bottom;
   
   var parseDate = d3.time.format('%Y%m%d').parse;
 
@@ -221,8 +232,6 @@
           .scale(x)
           .orient('bottom');
 
-        addXAxis();
-
         // This checks if the chart has been rescaled
         // so resize() will draw paths on the correct yScale
         if(yDomain && yDomain === 1) {
@@ -231,7 +240,12 @@
           rescale();
         }
 
-        var series = svg.selectAll('.group');
+        // Check if series exists, if yes - resize xAxis
+        if (!svg.selectAll('.group').empty()) {
+          addXAxis();
+        }
+
+        var series = svg.selectAll('.group');    
 
         // Remove and redraw paths on resize
         series.select('path').remove();
