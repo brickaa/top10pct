@@ -1,13 +1,11 @@
 {% extends 'layouts/base.html' %}
 
 {% from 'macros/authors.html' import authors %}
+{% from 'macros/nav.html' import nav %}
 {% import 'macros/prose.html' as prose %}
 
-
 {% block header %}
-<header>
-  <h1>Header Block</h1>
-</header>
+  {{ nav() }}
 {% endblock %}
 
 {% block content %}
