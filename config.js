@@ -5,7 +5,7 @@ var config = {};
 
 config.deploy = {
   bucket: 'moose.texastribune.org',
-  key: 'antlers',
+  key: 'top10',
   profile: 'newsapps'
 };
 

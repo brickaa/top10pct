@@ -18,9 +18,12 @@
 
 {% block script %}
 <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/node_modules/waypoints/lib/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="/node_modules/waypoints/lib/shortcuts/sticky.min.js"></script>
+<script type="text/javascript" src="/node_modules/waypoints/lib/shortcuts/inview.min.js"></script>
 <script src="{{ data.PATH_PREFIX }}scripts/includes/bootstrap/js/bootstrap.min.js"></script>
 <script src="/node_modules/d3/d3.min.js"></script>
-<script src="{{ data.PATH_PREFIX }}scripts/main.js"></script>
+<script src="{{ data.PATH_PREFIX }}scripts/demographics.js"></script>
 {% endblock %}
 {% include 'includes/parsely.html' %}
 </body>

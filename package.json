@@ -2,7 +2,7 @@
   "private": true,
   "config": {
     "s3_bucket": "moose.texastribune.org",
-    "slug": "antlers"
+    "slug": "top10"
   },
   "devDependencies": {
     "archieml": "^0.3.1",
@@ -43,7 +43,8 @@
     "d3": "^3.5.15",
     "jquery": "^2.2.0",
     "newsapps-styles": "^1.1.0",
-    "susy": "^2.2.5"
+    "susy": "^2.2.5",
+    "waypoints": "^4.0.0"
   },
   "scripts": {
     "build": "gulp build --production",

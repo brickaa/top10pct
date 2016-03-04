@@ -5,187 +5,142 @@
 (function() {
   'use strict';
 
-  function drawChart(dataFile, location) {
-    var margin = {top: 20, right: 20, bottom: 30, left: 60},
-        width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+      var margin = {top: 20, right: 55, bottom: 30, left: 40},
+          width  = 1000 - margin.left - margin.right,
+          height = 500  - margin.top  - margin.bottom;
 
-    /* 
-     * value accessor - returns the value to encode for a given data object.
-     * scale - maps value to a visual display encoding, such as a pixel position.
-     * map function - maps from data value to display value
-     * axis - sets up axis
-     */ 
+      var x = d3.scale.ordinal()
+          .rangeRoundBands([0, width], .1);
 
-    if (location === 'graphicAtRisk') {    
-      var yValue = function(d) { return d.atRiskPct; },
-          yLabel = '"At Risk"';
-    } else if (location === 'graphicEcoDis') {   
-      var yValue = function(d) { return d.ecoDisPct; },
-          yLabel = '"Economically Disadvantaged"'; // data -> value    
-    } else if (location === 'graphicCollegeReady') {
-      var yValue = function(d) { return d.collegeReadyBothPct; },
-          yLabel = '"College Ready"';
-    }
+      var y = d3.scale.linear()
+          .rangeRound([height, 0]);
 
-    // setup x 
-    var xValue = function(d) { return d.enrolled2015PctSeniors;}, // data -> value
-        xScale = d3.scale.linear().range([0, width]), // value -> display
-        xMap = function(d) { return xScale(xValue(d));}, // data -> display
-        xAxis = d3.svg.axis().scale(xScale).orient('bottom');
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient('bottom');
 
-    // setup y
-    var yScale = d3.scale.linear().range([height, 0]), // value -> display
-        yMap = function(d) { return yScale(yValue(d));}, // data -> display
-        yAxis = d3.svg.axis().scale(yScale).orient('left');
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient('left');
 
-    // setup fill color
-    var color = d3.scale.category10();
+      var line = d3.svg.line()
+          .interpolate('cardinal')
+          .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
+          .y(function (d) { return y(d.value); });
 
-    // add the graph canvas to the body of the webpage
-    var svg = d3.select('#' + location).append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
+      var color = d3.scale.ordinal()
+          .range(['#001c9c','#101b4d','#475003','#9c8305','#d3c47c']);
+
+      var svg = d3.select('body').append('svg')
+          .attr('width',  width  + margin.left + margin.right)
+          .attr('height', height + margin.top  + margin.bottom)
         .append('g')
-        .attr('id', location)
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    // add the tooltip area to the webpage
-    var tooltip = d3.select('body').append('div')
-        .attr('class', 'tooltip')
-        .style('opacity', 0);
+      d3.csv('/assets/data/UT_Undergrad_Demographics_Pct_White.csv', function (error, data) {
 
-    // load data
-    d3.csv('/assets/data/' + dataFile, function(error, data) {
+        var labelVar = 'Year';
+        var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
+        color.domain(varNames);
 
-      // change string (from CSV) into number format
-      data.forEach(function(d) {
-        d.enrolled2015PctSeniors = +d.enrolled2015PctSeniors;
-        d.atRiskPct = +d.atRiskPct;
-      });
+        var seriesData = varNames.map(function (name) {
+          return {
+            name: name,
+            values: data.map(function (d) {
+              return {name: name, label: d[labelVar], value: +d[name]};
+            })
+          };
+        });
 
-      // don't want dots overlapping axis, so add in buffer to data domain
-      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
-      yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
-
-      // x-axis
-      svg.append('g')
-          .attr('class', 'x axis')
-          .attr('transform', 'translate(0,' + height + ')')
-          .call(xAxis
-            .scale(xScale)
-            .orient('bottom')
-            .ticks(5, '%'))
-          .append('text')
-            .attr('class', 'label')
-            .attr('x', 0)
-            .attr('y', 28)
-            .style('text-anchor', 'start')
-            .text('Percent of Seniors Enrolled');
-
-      console.log(svg.attr('id'));
-      // y-axis
-      svg.append('g')
-          .attr('class', 'y axis')
-          .call(yAxis
-            .scale(yScale)
-            .orient('left')
-            .ticks(10, '%'));
-          // .append('text')
-          //   .attr('class', 'label')
-          //   .attr('transform', 'rotate(-90)')
-          //   .attr('y', -(margin.left - 10))
-          //   .attr('x', 0)
-          //   .attr('dy', '.71em')
-          //   .style('text-anchor', 'end')
-          //   .text('Percent of Students' + yLabel);
-
-      // draw dots
-      svg.selectAll('.dot')
-          .data(data)
-          .enter().append('circle')
-            .attr('class', 'dot')
-            .attr('r', 1)
-            .attr('cx', xMap)
-            .attr('cy', yMap)
-            .style('fill', function(d) { return color(d.Color);}) 
-            .on('mouseover', function(d) {
-              tooltip.transition()
-                   .duration(200)
-                   .style('opacity', .9);
-              tooltip.html(d.value + '<br/> (' + xValue(d) 
-              + ', ' + yValue(d) + ')')
-                   .style('left', (d3.event.pageX + 5) + 'px')
-                   .style('top', (d3.event.pageY - 28) + 'px');
+        x.domain(data.map(function (d) { return d.Year; }));
+        y.domain([
+          d3.min(seriesData, function (c) { 
+            return d3.min(c.values, function (d) { return d.value; });
+          }),
+          d3.max(seriesData, function (c) { 
+            return d3.max(c.values, function (d) { return d.value; });
           })
-          .on('mouseout', function(d) {
-            tooltip.transition()
-                 .duration(500)
-                 .style('opacity', 0);
-          });
+        ]);
 
-      // draw legend
-      var legend = svg.selectAll('.legend')
-          .data(color.domain())
-            .enter().append('g')
-              .attr('class', 'legend')
-              .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
-
-      legend.append('rect')
-        .attr('x', width - 10)
-        .attr('width', 10)
-        .attr('height', 10)
-        .style('fill', color);
-
-      legend.append('text')
-        .attr('x', width - 14)
-        .attr('y', 4)
-        .attr('dy', '.35em')
-        .style('text-anchor', 'end')
-        .text(function(d) { return d; });
-
-      d3.select(window).on('resize.' + location, resize); 
-
-      function resize() {
-          // update width
-          width = parseInt(d3.select('.chart-container').style('width'), 10);
-          width = width - margin.left - margin.right;
-
-          d3.select('#' + location).select('svg')
-              .attr('width', width + margin.left + margin.right);
-
-          // resize the chart
-          xScale.range([0, width]);
-          xMap = function(d) { return xScale(xValue(d));}; // data -> display
-          xAxis = d3.svg.axis().scale(xScale).orient('bottom');
-
-          // update axes
-          svg.select('g')
+        svg.append('g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis
-              .scale(xScale)
-              .orient('bottom')
-              .ticks(5, '%'));
+            .call(xAxis);
 
-          svg.selectAll('.dot')
-              .attr('class', 'dot')
-              .attr('cx', xMap);
+        svg.append('g')
+            .attr('class', 'y axis')
+            .call(yAxis)
+          .append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 6)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Number of Rounds');
 
-          legend.select('rect')
+        var series = svg.selectAll('.series')
+            .data(seriesData)
+          .enter().append('g')
+            .attr('class', 'series');
+
+        series.append('path')
+          .attr('class', 'line')
+          .attr('d', function (d) { return line(d.values); })
+          .style('stroke', function (d) { return color(d.name); })
+          .style('stroke-width', '4px')
+          .style('fill', 'none')
+
+        series.selectAll('.point')
+          .data(function (d) { return d.values; })
+          .enter().append('circle')
+           .attr('class', 'point')
+           .attr('cx', function (d) { return x(d.label) + x.rangeBand()/2; })
+           .attr('cy', function (d) { return y(d.value); })
+           .attr('r', '5px')
+           .style('fill', function (d) { return color(d.name); })
+           .style('stroke', 'grey')
+           .style('stroke-width', '2px')
+           .on('mouseover', function (d) { showPopover.call(this, d); })
+           .on('mouseout',  function (d) { removePopovers(); })
+
+        var legend = svg.selectAll('.legend')
+            .data(varNames.slice().reverse())
+          .enter().append('g')
+            .attr('class', 'legend')
+            .attr('transform', function (d, i) { return 'translate(55,' + i * 20 + ')'; });
+
+        legend.append('rect')
             .attr('x', width - 10)
-            .attr('width', 10);
+            .attr('width', 10)
+            .attr('height', 10)
+            .style('fill', color)
+            .style('stroke', 'grey');
 
-          legend.select('text')
-            .attr('x', width - 14);    
-      }
-    });
-  }
+        legend.append('text')
+            .attr('x', width - 12)
+            .attr('y', 6)
+            .attr('dy', '.35em')
+            .style('text-anchor', 'end')
+            .text(function (d) { return d; });
 
-  function load() {
-    drawChart('feeder100.csv', 'graphicAtRisk');
-    drawChart('feeder100.csv', 'graphicEcoDis');
-    drawChart('feeder100.csv', 'graphicCollegeReady');
-  }
-  window.onload = load;
+        function removePopovers () {
+          $('.popover').each(function() {
+            $(this).remove();
+          }); 
+        }
+
+        function showPopover (d) {
+          $(this).popover({
+            title: d.name,
+            placement: 'auto top',
+            container: 'body',
+            trigger: 'manual',
+            html : true,
+            content: function() { 
+              return 'Year: ' + d.label + 
+                     '<br/>Rounds: ' + d3.format(',')(d.value ? d.value: d.y1 - d.y0); }
+          });
+          $(this).popover('show')
+        }
+      });
+
 })();
