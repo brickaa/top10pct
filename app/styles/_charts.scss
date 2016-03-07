@@ -1,33 +1,18 @@
 $chart-bp: 630px;
 
-.test-wrapper {
-  background-color: #fff;
+.demographics-wrapper {
+  background-color: $white;
   position: relative;
 }
 
 .charts {
   text {
     @include font-size($xxs);
-  }
-  
+  } 
 }
 
 .chart-wrapper {
   width: 100%;
-}
-
-.chart-container {
-  display: inline-block;
-  margin: 0;
-  width: 100%;
-
-  @include susy-media($chart-bp) {
-    width: 32%;
-  }
-
-  &_demographics {
-    width: 32%;
-  }
 }
 
 .axis {
@@ -54,25 +39,72 @@ $chart-bp: 630px;
 .chart {
   display: block;
 
-  &--explainer {
-    @include font-size($m);
+  &-container {
+    display: inline-block;
+    margin: 0;
+    width: 100%;
 
-    &_text {
+    @include susy-media($chart-bp) {
+      width: 32%;
+    }
+
+    &_demographics {
+      width: 32%;
+    }
+  }
+
+  &--topper {
+    position: relative;
+
+    &_explainer_box {
+      display: inline-block;
+    }
+
+    &_explainer {
+      @include font-size($base, .8);
+      display: inline-block;
+    }
+
+    &_explainer_text {
+      margin: .5em 0 1em;
+      max-width: 90%;
       opacity: 0;
       position: absolute;
       top: 0;
     }
 
-    &_text_highlight {
+    &_explainer_text_highlight {
       font-weight: 600;
-    } 
+    }
+  
+    &_scrollposition {
+      display: inline-block;
+      padding: 1em .5em 0 .25em;
+      vertical-align: top;
+
+      .fa {
+        display: block;
+        margin: 0 0 .25em;
+      }
+    }
+
   }
 
   &--header {
     @include font-size($base);
+    margin: 1em 0;
     text-align: center;
   }
 
+  &-scroll_prompt {
+    text-align: center;
+
+
+    .fa {
+      @include font-size($l);
+      padding: .5em 0;
+    }
+  }
 }
 
 
@@ -102,19 +134,29 @@ $chart-bp: 630px;
   position: fixed;
   top: 0;
   width: 100%;
+  max-width: $page-width - 3em;
 }
 
 .legend {
   $light-blue: #90d3c8;
   $orange: #ff6249;
 
-  margin: 1em 0;
+  bottom: 0;
+  display: inline-block;
+  text-align: center;
   width: 100%;
+
+  &_ut,
+  &_tx {
+    display: inline-block;
+    margin: .25em 1.5em .25em 0;
+  }
 
   &--key {
     @include font-size($base);
     display: inline-block;
     vertical-align: top;
+    line-height: 1.1;
   }
 
   &--color_box {

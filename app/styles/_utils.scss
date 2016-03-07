@@ -14,6 +14,9 @@ $large: new-breakpoint(min-width 1081px);
 $sidebar-break: 768px;
 $default-mobile: new-breakpoint(max-width 480px);
 
+// Max page width
+$page-width: 50em;
+
 // Box Sizing
 html {
   box-sizing: border-box;
@@ -53,14 +56,17 @@ $xs: 12;
 $xxs: 9;
 
 
-@mixin font-size($f, $pct:1, $bp:$default-mobile) {
+@mixin font-size($f, $pct:1, $bp:480px) {
   font-size: $f+px; // for IE8
   font-size: $f/$base+rem;
 
   @if $pct != 1 {
-    @include media($bp) {
-      font-size: $f*$pct+px; // for IE8
-      font-size: $f*$pct/$base+rem;
+    font-size: $f*$pct+px; // for IE8
+    font-size: $f*$pct/$base+rem;
+
+    @include susy-media($bp) {
+      font-size: $f+px; // for IE8
+      font-size: $f/$base+rem;
     }
   }
 }

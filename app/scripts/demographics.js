@@ -6,20 +6,22 @@
   'use strict';
 
   var chartHeight;
-  var explainerBox = $('#chart--explainer_box');
+  var chartTopper = $('#chart--topper');
+  var chartBottom = $('.chart--bottom');
 
   function getHeights() {
     var windowHeight = $(window).height();
 
-    var maxTextHeight = Math.max.apply(null, $('.chart--explainer_text')
+    var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
       .map(function () { return $(this).height(); }).get());
 
     var legendHeight = $('.legend').height(),
         chartHeader = $('.chart--header').height(),
+        chartBottomHeight = chartBottom.height(),
         chartTopHeight = maxTextHeight + legendHeight + chartHeader + 34;
 
-    explainerBox.height(maxTextHeight);
-    chartHeight = windowHeight - chartTopHeight;
+    chartTopper.height(maxTextHeight + legendHeight);
+    chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * .95;
   }
 
   getHeights();
@@ -214,10 +216,10 @@
       }
 
       function resize() {
-        var maxTextHeight = Math.max.apply(null, $('.chart--explainer_text')
+        var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
           .map(function () { return $(this).height(); }).get());
 
-        explainerBox.height(maxTextHeight);
+        chartTopper.height(maxTextHeight);
 
         // update width
         width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
@@ -452,8 +454,14 @@
   var text4 = $('#explainer4');
   var text5 = $('#explainer5');
 
+  var pos1 = $('#explainerPos1');
+  var pos2 = $('#explainerPos2');
+  var pos3 = $('#explainerPos3');
+  var pos4 = $('#explainerPos4');
+  var pos5 = $('#explainerPos5');
+
   var sticky = new Waypoint.Sticky({
-    element: $('.basic-sticky-example')[0]
+    element: $('.sticky-charts')[0]
   });
 
   var inview6 = new Waypoint.Inview({
@@ -480,16 +488,16 @@
     element: $('#waypoint1')[0],
     enter: function(direction) {
       if (direction === 'down') {
-        console.log('enter down 1');
         text1.animate({ opacity: 1});
+        pos1.removeClass('fa-circle-thin').addClass('fa-circle');
         $('.legend_tx').animate({ opacity: 1});
         $('.chart--header').animate({ opacity: 1});
       } 
     },
     exit: function(direction) {
       if (direction === 'up') {
-        console.log('exit up 1');
         text1.animate({ opacity: 0});
+        pos1.removeClass('fa-circle').addClass('fa-circle-thin');
         $('.legend_tx').animate({ opacity: 0});
         $('.chart--header').animate({ opacity: 0});
       }
@@ -500,9 +508,10 @@
     element: $('#waypoint2')[0],
     enter: function(direction) {
       if (direction === 'down') {
-        console.log('enter down 2');
         text1.animate({ opacity: 0});
         text2.animate({ opacity: 1});
+        pos1.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos2.removeClass('fa-circle-thin').addClass('fa-circle');
         $('.legend_ut').animate({ opacity: 1});
       }
     },
@@ -511,6 +520,8 @@
         console.log('exit up 2');
         text1.animate({ opacity: 1});
         text2.animate({ opacity: 0});
+        pos2.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos1.removeClass('fa-circle-thin').addClass('fa-circle');
         $('.legend_ut').animate({ opacity: 0});
       }
     }
@@ -520,16 +531,20 @@
     element: $('#waypoint3')[0],
     enter: function(direction) {
       if (direction === 'down') {
-        console.log('enter down 3');
         text2.animate({ opacity: 0});
         text3.animate({ opacity: 1});
+        pos2.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos3.removeClass('fa-circle-thin').addClass('fa-circle');
+        $('.legend_ut').animate({ opacity: 0});
       }
     },
     exit: function(direction) {
       if (direction === 'up') {
-        console.log('exit up 3');
         text2.animate({ opacity: 1});
         text3.animate({ opacity: 0});
+        pos3.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos2.removeClass('fa-circle-thin').addClass('fa-circle');
+        $('.legend_ut').animate({ opacity: 1});
       }
     }
   });
@@ -541,13 +556,18 @@
         console.log('enter down 4');
         text3.animate({ opacity: 0});
         text4.animate({ opacity: 1});
+        pos3.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos4.removeClass('fa-circle-thin').addClass('fa-circle');
+        $('.legend_ut').animate({ opacity: 1});
       }
     },
     exit: function(direction) {
       if (direction === 'up') {
-        console.log('exit up 4');
         text3.animate({ opacity: 1});
         text4.animate({ opacity: 0});
+        pos4.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos3.removeClass('fa-circle-thin').addClass('fa-circle');
+        $('.legend_ut').animate({ opacity: 0});
       }
     }
   });
@@ -556,16 +576,18 @@
     element: $('#waypoint5')[0],
     enter: function(direction) {
       if (direction === 'down') {
-        console.log('enter down 5');
         text4.animate({ opacity: 0});
         text5.animate({ opacity: 1});
+        pos4.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos5.removeClass('fa-circle-thin').addClass('fa-circle');
       }
     },
     exit: function(direction) {
       if (direction === 'up') {
-        console.log('exit up 5');
         text4.animate({ opacity: 1});
         text5.animate({ opacity: 0});
+        pos5.removeClass('fa-circle').addClass('fa-circle-thin');
+        pos4.removeClass('fa-circle-thin').addClass('fa-circle');
       }
     }
   });

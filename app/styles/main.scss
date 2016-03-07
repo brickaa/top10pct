@@ -8,3 +8,10 @@
 @import 'images';
 @import 'footer';
 @import 'charts';
+
+.main-body {
+  margin: 0 auto;
+  max-width: $page-width;
+  padding: 0 1.25em;
+  width: 100%;
+}
