@@ -68,7 +68,6 @@ var inview2 = new Waypoint.Inview({
   },
   exit: function(direction) {
     if (direction === 'up') {
-      console.log('exit up 2');
       text1.animate({ opacity: 1});
       text2.animate({ opacity: 0});
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
@@ -104,7 +103,6 @@ var inview4 = new Waypoint.Inview({
   element: $('#waypoint4')[0],
   enter: function(direction) {
     if (direction === 'down') {
-      console.log('enter down 4');
       text3.animate({ opacity: 0});
       text4.animate({ opacity: 1});
       pos3.removeClass('fa-circle').addClass('fa-circle-thin');

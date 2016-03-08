@@ -1,5 +1,5 @@
 const url = require('url');
-
+const path = require('path');
 const gulp = require('gulp');
 const u = require('gulp-util');
 const gulpLoadPlugins = require('gulp-load-plugins');
@@ -73,6 +73,7 @@ const fullPath = url.format({
   host: package.config.s3_bucket,
   pathname: package.config.slug
 }) + '/';
+
 data.PATH_FULL = fullPath;
 
 const env = nunjucks.configure('./app/templates', {
@@ -88,6 +89,12 @@ gulp.task('templates', () => {
   // All .html files are valid, unless they are found in templates
   return gulp.src(['./app/**/*.html', '!./app/templates/**/*'])
     .pipe(nunjuckify)
+    .pipe($.rename((file) => {
+      if (file.basename !== 'index') {
+        file.dirname = path.join(file.dirname, file.basename);
+        file.basename = 'index';
+      }
+    }))
     .pipe(gulp.dest('./.tmp'))
     .pipe($.if(args.production, $.htmlmin({collapseWhitespace: true})))
     .pipe($.if(args.production, gulp.dest('./dist')))
@@ -132,7 +139,13 @@ gulp.task('images', () => {
 gulp.task('fonts', function () {
   return gulp.src('./app/assets/fonts/**/*')
     .pipe(gulp.dest('./dist/assets/fonts'))
-    .pipe($.size({title: 'fonts'}))
+    .pipe($.size({title: 'fonts'}));
+});
+
+gulp.task('data', function () {
+  return gulp.src('./app/assets/data/**/*')
+    .pipe(gulp.dest('./dist/assets/data'))
+    .pipe($.size({title: 'data'}));
 });
 
 gulp.task('clean', cb => {
@@ -166,7 +179,7 @@ gulp.task('serve', ['styles', 'templates'], () => {
 });
 
 gulp.task('rev', () => {
-  return gulp.src(['./dist/**/*.css', './dist/**/*.js', './dist/assets/images/**/*'], { base: './dist' })
+  return gulp.src(['./dist/**/*.css', './dist/**/*.js', './dist/assets/images/**/*', './dist/assets/data/**/*'], { base: './dist' })
     .pipe($.rev())
     .pipe(gulp.dest('./dist'))
     .pipe($.rev.manifest())
@@ -183,7 +196,7 @@ gulp.task('revreplace', ['rev'], () => {
 
 
 gulp.task('default', ['clean'], (cb) => {
-  runSequence(['fonts', 'images', 'scripts', 'styles', 'templates'], ['revreplace'], cb);
+  runSequence(['fonts', 'images', 'data', 'scripts', 'styles', 'templates'], ['revreplace'], cb);
 });
 
 gulp.task('build', ['default']);

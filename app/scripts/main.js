@@ -1,14 +1,13 @@
-/* global $ */
+/* global $, d3, CONFIG */
 
 import './includes/adLoader';
-import d3 from 'd3';
 import './includes/jquery.waypoints.js';
 import './includes/sticky.js';
 import './includes/inview.js';
 import './includes/demographics.waypoints.js';
 
 var chartHeight;
-var chartTopper = $('#chart--topper');
+var chartTopper = $('#chart--topper_explainer_box');
 var chartBottom = $('.chart--bottom');
 
 function getHeights() {
@@ -17,12 +16,11 @@ function getHeights() {
   var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
     .map(function () { return $(this).height(); }).get());
 
-  var legendHeight = $('.legend').height(),
-      chartHeader = $('.chart--header').height(),
+  var chartHeader = $('.chart--header').height(),
       chartBottomHeight = chartBottom.height(),
-      chartTopHeight = maxTextHeight + legendHeight + chartHeader + 34;
+      chartTopHeight = maxTextHeight + chartHeader + 34;
 
-  chartTopper.height(maxTextHeight + legendHeight);
+  chartTopper.css('min-height', maxTextHeight + chartHeader);
   chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * 0.95;
 }
 
@@ -66,7 +64,7 @@ charts.forEach(function(race, index) {
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
   // Load Data
-  d3.csv('/assets/data/data.csv', function(error, data) {
+  d3.csv(CONFIG.projectPath + 'assets/data/data.csv', function(error, data) {
 
     // Color assignments
     var color = d3.scale.ordinal().range(['#90D3C8','#FF6249','#8DC967','#8DC967','#FFD454']);
@@ -218,26 +216,12 @@ charts.forEach(function(race, index) {
     }
 
     function resize() {
-      var windowHeight = $(window).height();
-
-      var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
-        .map(function () { return $(this).height(); }).get());
-
-      var legendHeight = $('.legend').height(),
-          chartHeader = $('.chart--header').height(),
-          chartBottomHeight = chartBottom.height(),
-          chartTopHeight = maxTextHeight + legendHeight + chartHeader + 34;
-
-      chartTopper.height(maxTextHeight + legendHeight);
-      chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * 0.95;
 
       // update width
       width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
-      height = chartHeight - margin.top - margin.bottom;
 
       d3.select('#' + race).select('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom);
+        .attr('width', width + margin.left + margin.right);
 
       // resize the chart width & xAxis
       x.range([0, width]);
@@ -372,7 +356,6 @@ charts.forEach(function(race, index) {
       element: $('#waypoint1')[0],
       enter: function(direction) {
         if (direction === 'down') {
-          console.log('enter down 1');
           // addBars(dataRaceTX);
           // addYAxis();
           // removeXAxis();
@@ -380,7 +363,6 @@ charts.forEach(function(race, index) {
       },
       exit: function(direction) {
         if (direction === 'up') {
-          console.log('exit up 1');
           // removeBars();
           // removeYAxis();
           // removeXAxis();
@@ -392,14 +374,12 @@ charts.forEach(function(race, index) {
       element: $('#waypoint2')[0],
       enter: function(direction) {
         if (direction === 'down') {
-          console.log('enter down 2');
           addBars(dataRace);
           removeXAxis();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
-          console.log('exit up 2');
           addBars(dataRaceTX);
           removeXAxis();
         }
@@ -410,14 +390,12 @@ charts.forEach(function(race, index) {
       element: $('#waypoint3')[0],
       enter: function(direction) {
         if (direction === 'down') {
-          console.log('enter down 3');
           addXAxis();
           addSeries(dataRaceTX);
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
-          console.log('exit up 3');
           addBars(dataRace);
           removeSeries();
           removeXAxis();
@@ -429,13 +407,11 @@ charts.forEach(function(race, index) {
       element: $('#waypoint4')[0],
       enter: function(direction) {
         if (direction === 'down') {
-          console.log('enter down 4');
           addSeries(dataRace);
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
-          console.log('exit up 4');
           addSeries(dataRaceTX);
         }
       }
@@ -445,13 +421,11 @@ charts.forEach(function(race, index) {
       element: $('#waypoint5')[0],
       enter: function(direction) {
         if (direction === 'down') {
-          console.log('enter down 5');
           rescale();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
-          console.log('exit up 5');
           resetScale();
         }
       }
