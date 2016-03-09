@@ -29,23 +29,7 @@ html {
   box-sizing: inherit;
 }
 
-// Clearfix
-@mixin clearfix {
-  &:after {
-    clear: both;
-    content: ' ';
-    display: block;
-    font-size: 0;
-    height: 0;
-    visibility: hidden;
- }
-}
-
-%content-padding {
-  padding: 0 1rem;
-}
-
-// Sample Scale / Font Sizes
+// Size Scale
 $base: 16;
 $xxl: 48;
 $xl: 36;
@@ -55,6 +39,9 @@ $s: 14;
 $xs: 12;
 $xxs: 9;
 
+// Font Stuff
+$serif: "Georgia", "Cambria", "Times New Roman", "Times", serif;
+$sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
 
 @mixin font-size($f, $pct:1, $bp:480px) {
   font-size: $f+px; // for IE8
@@ -69,4 +56,20 @@ $xxs: 9;
       font-size: $f/$base+rem;
     }
   }
+}
+
+// Clearfix
+@mixin clearfix {
+  &:after {
+    clear: both;
+    content: ' ';
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+ }
+}
+
+%content-padding {
+  padding: 0 1rem;
 }

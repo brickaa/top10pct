@@ -7,6 +7,7 @@ $chart-bp: 630px;
 }
 
 .charts {
+  font-family: $sans-serif;
   margin: 0 auto;
   max-width: $page-width;
   padding: 0 1.25em 0 0;
@@ -43,7 +44,7 @@ $chart-bp: 630px;
 
 // Line Charts
 .chart {
-  display: block;
+  display: block;    
 
   &-container {
     display: inline-block;
@@ -60,6 +61,7 @@ $chart-bp: 630px;
   }
 
   &--topper {
+    font-family: $sans-serif;
     position: relative;
     padding: 0 1.5em 0 0;
 
@@ -152,6 +154,7 @@ $chart-bp: 630px;
 
   bottom: 0;
   display: inline-block;
+  font-family: $sans-serif;
   text-align: center;
   width: 100%;
 

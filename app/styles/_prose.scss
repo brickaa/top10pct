@@ -1,6 +1,6 @@
 .prose {
   @include font-size($base);
-  font-family: $font-georgia;
+  font-family: $serif;
   line-height: 1.6;
 
   > p {
@@ -16,17 +16,18 @@
   }
 
   &__drop-cap {
-    &:first-letter {
-      @include font-size(72);
-      float: left;
-      font-weight: 900;
-      line-height: 1;
-      padding: 0 .25em;
-    }
+    // &:first-letter {
+    //   @include font-size(72);
+    //   float: left;
+    //   font-weight: 900;
+    //   line-height: 1;
+    //   padding: 0 .25em;
+    // }
   }
 
   //<h2>
   &__subhead {
+    font-family: $sans-serif;
     font-weight: 600;
   }
 
