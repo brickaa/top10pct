@@ -23,6 +23,7 @@ function getHeights() {
 
   chartTopper.css('min-height', maxTextHeight + chartHeader);
   chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * 0.95;
+  console.log('chartHeight: ' + chartHeight);
 }
 
 getHeights();
@@ -217,19 +218,30 @@ charts.forEach(function(race, index) {
     }
 
     function resize() {
-
+      getHeights();
       // update width
       width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
+      height = chartHeight - margin.top - margin.bottom;
 
+      console.log(height);
       d3.select('#' + race).select('svg')
-        .attr('width', width + margin.left + margin.right);
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom);
 
       // resize the chart width & xAxis
       x.range([0, width]);
+      y.range([height,0]);
 
       xAxis = d3.svg.axis()
         .scale(x)
         .orient('bottom');
+
+      yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+      removeYAxis();
+      addYAxis();
 
       // This checks if the chart has been rescaled
       // so resize() will draw paths on the correct yScale
@@ -268,7 +280,9 @@ charts.forEach(function(race, index) {
       var bars = svg.selectAll('rect');
 
       bars.attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
-        .attr('width', width/4);
+        .attr('width', width/4)
+        .attr('y', function(d, i) { return y(d.values[i].percent); })
+        .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); });
       
     }
 
