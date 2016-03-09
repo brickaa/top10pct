@@ -1,0 +1,44 @@
+.nav {
+  background-color: $tribune-black;
+  font-family: $sans-serif;
+
+  &--logo_tt {
+    display: inline-block;
+    padding: .25em 1em;
+  }
+
+  &--sections {
+    display: inline-block;
+    font-family: $sans-serif;
+    color: $white;
+    float: right;
+    padding: .25em 1em;
+
+    a {
+      color: #fff;
+      padding: .25em 1em;
+      text-decoration: none;
+
+      &:active,
+      &:hover {
+        color: $tribune-yellow;
+        text-decoration: none;
+      }
+    }
+
+    li {
+      display: inline-block;
+
+      &:not(:last-child):after {
+        content: ' | '
+      }
+    }
+
+    &_active {
+      span { 
+        color: $tribune-yellow;
+      }
+    }
+  }
+
+}

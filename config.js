@@ -17,6 +17,14 @@ config.data = {
     {
       fileid: '1ehh3ISrwq5lHNQS-eEs_i30Wi7UAF9txWgYTo56NFBI',
       name: 'test'
+    },
+    {
+      fileid: '1K8lpUd7bbprtR1It89CGEphItUiw8HMuaStxkvTCHNw',
+      name: 'story_two'
+    },
+    {
+      fileid: '1pvIa8mFx0z1wqSjrtCo1ZUwSHs7KFIjDYiElkiRWVwo',
+      name: 'story_three'
     }
   ],
   sheets: [

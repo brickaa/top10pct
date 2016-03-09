@@ -59,6 +59,7 @@
 
   &__caption {
     @include font-size($xs);
+    font-family: $sans-serif;
     letter-spacing: .05em;
     line-height: 1.3;
 
@@ -75,9 +76,6 @@
       color: $white;
     }
 
-    .image--lead-art &,
-    .image--full &,
-    .image--basic &,
     .image--left &,
     .image--right & {
       @extend %content-padding;

@@ -1,8 +1,23 @@
-{% macro nav() %}
-  <nav>
-    <ul>
-      <li>The Texas Tribune</li>
-      <li>LOGO </li>
+{% macro nav(slug, short_head) %}
+  <nav class="nav">
+    <div class="nav--logo_tt">
+      <img src="{{ data.PATH_PREFIX}}assets/images/tt-logo.svg">
+    </div>
+
+    <ul class="nav--sections">
+      {% if slug == '' %}
+      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}"><span>Part 1: {{ short_head }}</span></a></li>
+      <li><a href="/story_two">2</a></li>
+      <li><a href="/story_three">3</a></li>
+      {% elif slug == 'story_two' %}
+      <li><a href="/">1</a></li>
+      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ slug }}"><span>Part 2: {{ short_head }}</span></a></li>
+      <li><a href="/story_three">3</a></li>
+      {% else %}
+      <li><a href="/">1</a></li>
+      <li><a href="/story_two">2</a></li>
+      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ slug }}"><span>Part 3: {{ short_head }}</span></a></li>
+      {% endif %}
     </ul>
   </nav>
 {% endmacro %}

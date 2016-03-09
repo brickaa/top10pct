@@ -6,7 +6,7 @@
 {% import 'macros/prose.html' as prose %}
 
 {% block header %}
-  {{ nav() }}
+  {{ nav(context.slug, context.short_head) }}
 {% endblock %}
 
 {% block content %}
