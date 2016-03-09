@@ -27,7 +27,14 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.json']
   },
-  plugins: [],
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      d3: 'd3'
+    })
+  ],
   debug: true,
   devtool: 'cheap-module-eval-source-map'
 };

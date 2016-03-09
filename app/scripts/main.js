@@ -1,146 +1,418 @@
-// import './includes/adLoader';
+/* global $, d3, CONFIG */
 
-/* global d3, $ */
+import './includes/adLoader';
+import './includes/jquery.waypoints.js';
+import './includes/sticky.js';
+import './includes/inview.js';
+import './includes/demographics.waypoints.js';
 
-(function() {
-  'use strict';
+var chartHeight,
+    chartTopper = $('#chart--topper_explainer_box'),
+    chartBottom = $('.chart--bottom'),
+    height;
 
-      var margin = {top: 20, right: 55, bottom: 30, left: 40},
-          width  = 1000 - margin.left - margin.right,
-          height = 500  - margin.top  - margin.bottom;
+function getHeights() {
+  var windowHeight = $(window).height();
 
-      var x = d3.scale.ordinal()
-          .rangeRoundBands([0, width], .1);
+  var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
+    .map(function () { return $(this).height(); }).get());
 
-      var y = d3.scale.linear()
-          .rangeRound([height, 0]);
+  var chartHeader = $('.chart--header').height(),
+      chartBottomHeight = chartBottom.height(),
+      chartTopHeight = maxTextHeight + chartHeader + 34;
 
-      var xAxis = d3.svg.axis()
-          .scale(x)
-          .orient('bottom');
+  chartTopper.css('min-height', maxTextHeight + chartHeader);
+  chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * 0.95;
+  console.log('chartHeight: ' + chartHeight);
+}
 
-      var yAxis = d3.svg.axis()
-          .scale(y)
-          .orient('left');
+getHeights();
 
-      var line = d3.svg.line()
-          .interpolate('cardinal')
-          .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
-          .y(function (d) { return y(d.value); });
+var margin = {top: 10, right: 10, bottom: 30, left: 30},
+    width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
+    height = chartHeight - margin.top - margin.bottom;
 
-      var color = d3.scale.ordinal()
-          .range(['#001c9c','#101b4d','#475003','#9c8305','#d3c47c']);
+var parseDate = d3.time.format('%Y%m%d').parse;
 
-      var svg = d3.select('body').append('svg')
-          .attr('width',  width  + margin.left + margin.right)
-          .attr('height', height + margin.top  + margin.bottom)
-        .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+var x = d3.time.scale()
+    .range([0, width]);
+    
+var y = d3.scale.linear()
+    .range([height,0]);
 
-      d3.csv('/assets/data/UT_Undergrad_Demographics_Pct_White.csv', function (error, data) {
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient('bottom');
 
-        var labelVar = 'Year';
-        var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
-        color.domain(varNames);
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient('left');
 
-        var seriesData = varNames.map(function (name) {
-          return {
-            name: name,
-            values: data.map(function (d) {
-              return {name: name, label: d[labelVar], value: +d[name]};
-            })
-          };
+var line = d3.svg.line()
+    .interpolate('basis')
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { 
+      return y(d.percent); 
+    });
+
+var charts = ['white', 'black', 'hispanic'];
+
+charts.forEach(function(race, index) {
+  // Build SVG Container
+  var svg = d3.select('#' + race).append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+  // Load Data
+  d3.csv(CONFIG.projectPath + 'assets/data/data.csv', function(error, data) {
+
+    // Color assignments
+    var color = d3.scale.ordinal().range(['#90D3C8','#FF6249','#8DC967','#8DC967','#FFD454']);
+        
+    // Map the data to key values in an array
+    data = data.map( function (d) { 
+      return { 
+        group: d.group,
+        race: d.race,
+        date: parseDate(d.date),
+        percent: +d.percent }; 
+    });   
+    
+    // Nest the data on group & race
+    // so we can call/draw the chart in different steps
+    data = d3.nest().key(function(d) { return d.group; }).key(function(d) { return d.race; }).entries(data);
+
+    // Set X Domain on min/max of dates in nested data
+    x.domain([d3.min(data, function(d, i) { return d3.min(d.values[i].values, function (d) { return d.date; }); }),
+              d3.max(data, function(d, i) { return d3.max(d.values[i].values, function (d) { return d.date; }); })]);
+    
+    // Create yDomain variable -- this will change when the chart is rescaled
+    var yDomain;
+
+    // Draw initial chart w/ yAxis 0-100%;
+    y.domain([0, 1]);
+
+    // Create various data arrays for chart stages
+    var dataUT = [],
+        dataTX = [],
+        dataRace = [],
+        dataRaceTX = [],
+        dataRaceUT = [];
+
+    dataUT = data[0].values;
+    dataTX = data[1].values;
+    dataRace.push(dataTX[index], dataUT[index]);
+    dataRaceTX.push(dataTX[index]);
+    dataRaceUT.push(dataUT[index]);
+
+    // Call resize() on each chart
+    d3.select(window).on('resize.' + race, resize).transition();
+
+    // Functions to remove chart elements
+    function removeBars() {
+      var bars = svg.selectAll('rect');
+      bars.remove();
+    }
+
+    function removeXAxis() {
+      var axis = svg.select('.x.axis');
+      axis.remove();
+    }
+
+    function removeYAxis() {
+      var axis = svg.select('.y.axis');
+      axis.remove();
+    }
+
+    function removeSeries() {
+      var series = svg.selectAll('.group');
+      series.remove();
+    }
+
+    // Functions to add chart elements
+    function addYAxis() {
+     svg.append('g')
+         .attr('class', 'y axis')
+         .call(yAxis.ticks('5', '%').outerTickSize(0));   
+    }
+
+    function addBars(data) {
+      if (data === 'dataRaceTX') {
+        removeBars();
+      }
+
+      var bars = svg.selectAll('.bar')
+        .data(data, function(d) {
+          return d.values[0].group;
         });
+    
+      bars.exit()
+        .transition()
+          .duration(300)
+        .attr('y', y(0))
+        .attr('height', height - y(0))
+        .style('fill-opacity', 1e-6)
+        .remove();
 
-        x.domain(data.map(function (d) { return d.Year; }));
-        y.domain([
-          d3.min(seriesData, function (c) { 
-            return d3.min(c.values, function (d) { return d.value; });
-          }),
-          d3.max(seriesData, function (c) { 
-            return d3.max(c.values, function (d) { return d.value; });
-          })
-        ]);
+      // data that needs DOM = enter() (a set/selection, not an event!)
+      bars.enter().append('rect')
+        .attr('class', 'bar')
+        .attr('fill', function(d, i) { return color(d.values[i].group); })
+        .attr('y', y(0))
+        .attr('height', height - y(0));
 
-        svg.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis);
+      // the 'UPDATE' set:
+      bars.transition().duration(1000)
+        .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); })              .attr('width', width/4)
+        .attr('y', function(d, i) { return y(d.values[i].percent); })
+        .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); }); // flip the height, because y's domain is bottom up, but SVG renders top down
+    }
 
-        svg.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis)
-          .append('text')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', 6)
-            .attr('dy', '.71em')
-            .style('text-anchor', 'end')
-            .text('Number of Rounds');
+    function addXAxis() {
+      svg.select('.x.axis').remove();
+      svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis.outerTickSize(0))
+        .selectAll('text')
+          .attr('y', 0)
+          .attr('x', 9)
+          .attr('dy', '.35em')
+          .attr('transform', 'rotate(90)')
+          .style('text-anchor', 'start');
+    }
 
-        var series = svg.selectAll('.series')
-            .data(seriesData)
-          .enter().append('g')
-            .attr('class', 'series');
+    function addSeries(addData) {
+      removeBars();
+      removeSeries();
 
-        series.append('path')
-          .attr('class', 'line')
-          .attr('d', function (d) { return line(d.values); })
-          .style('stroke', function (d) { return color(d.name); })
-          .style('stroke-width', '4px')
-          .style('fill', 'none')
+      if(yDomain && yDomain === 1) {
+        resetScale();
+      } else if (yDomain) {
+        rescale();
+      }
 
-        series.selectAll('.point')
-          .data(function (d) { return d.values; })
-          .enter().append('circle')
-           .attr('class', 'point')
-           .attr('cx', function (d) { return x(d.label) + x.rangeBand()/2; })
-           .attr('cy', function (d) { return y(d.value); })
-           .attr('r', '5px')
-           .style('fill', function (d) { return color(d.name); })
-           .style('stroke', 'grey')
-           .style('stroke-width', '2px')
-           .on('mouseover', function (d) { showPopover.call(this, d); })
-           .on('mouseout',  function (d) { removePopovers(); })
+      var series = svg.selectAll('.group')
+        .data(addData, function(d, i) {
+          return d.values[i].group;
+        })
+        .enter().append('g')
+          .attr('class', 'group');
 
-        var legend = svg.selectAll('.legend')
-            .data(varNames.slice().reverse())
-          .enter().append('g')
-            .attr('class', 'legend')
-            .attr('transform', function (d, i) { return 'translate(55,' + i * 20 + ')'; });
+      var path = series.append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { 
+            return line(d.values);
+        })
+        .style('stroke', function(d, i) { return color(d.values[i].group); });
 
-        legend.append('rect')
-            .attr('x', width - 10)
-            .attr('width', 10)
-            .attr('height', 10)
-            .style('fill', color)
-            .style('stroke', 'grey');
+      path.each(function(d) { d.totalLength = this.getTotalLength(); })
+        .attr('stroke-dasharray', function(d) { return d.totalLength + ' ' + d.totalLength; })
+        .attr('stroke-dashoffset', function(d) { return d.totalLength; })
+        .transition()
+          .duration(500)
+          .ease('linear')
+          .attr('stroke-dashoffset', 0);
+    }
 
-        legend.append('text')
-            .attr('x', width - 12)
-            .attr('y', 6)
-            .attr('dy', '.35em')
-            .style('text-anchor', 'end')
-            .text(function (d) { return d; });
+    function resize() {
+      getHeights();
+      // update width
+      width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
+      height = chartHeight - margin.top - margin.bottom;
 
-        function removePopovers () {
-          $('.popover').each(function() {
-            $(this).remove();
-          }); 
-        }
+      console.log(height);
+      d3.select('#' + race).select('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom);
 
-        function showPopover (d) {
-          $(this).popover({
-            title: d.name,
-            placement: 'auto top',
-            container: 'body',
-            trigger: 'manual',
-            html : true,
-            content: function() { 
-              return 'Year: ' + d.label + 
-                     '<br/>Rounds: ' + d3.format(',')(d.value ? d.value: d.y1 - d.y0); }
-          });
-          $(this).popover('show')
-        }
+      // resize the chart width & xAxis
+      x.range([0, width]);
+      y.range([height,0]);
+
+      xAxis = d3.svg.axis()
+        .scale(x)
+        .orient('bottom');
+
+      yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+      removeYAxis();
+      addYAxis();
+
+      // This checks if the chart has been rescaled
+      // so resize() will draw paths on the correct yScale
+      if(yDomain && yDomain === 1) {
+        resetScale();
+      } else if (yDomain) {
+        rescale();
+      }
+
+      // Check if series exists, if yes - resize xAxis
+      if (!svg.selectAll('.group').empty()) {
+        addXAxis();
+      }
+
+      var series = svg.selectAll('.group');    
+
+      // Remove and redraw paths on resize
+      series.select('path').remove();
+
+      var path = series.append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { 
+            return line(d.values);
+        })
+        .style('stroke', function(d, i) { return color(d.values[i].group); });
+    
+      path.each(function(d) { d.totalLength = this.getTotalLength(); })
+        .attr('stroke-dasharray', function(d) { return d.totalLength + ' ' + d.totalLength; })
+        .attr('stroke-dashoffset', function(d) { return d.totalLength; })
+        .transition()
+          .duration(500)
+          .ease('linear')
+          .attr('stroke-dashoffset', 0);
+
+      // Resize bar width/position
+      var bars = svg.selectAll('rect');
+
+      bars.attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
+        .attr('width', width/4)
+        .attr('y', function(d, i) { return y(d.values[i].percent); })
+        .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); });
+      
+    }
+
+    function rescale() {
+      yDomain = d3.max(dataRace, function (c) { 
+        return d3.max(c.values, function (d) { return d.percent; });
       });
 
-})();
+      y.domain([0, yDomain]);
+
+      y.range([height, 0], 0.1);
+
+      yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+      // update yAxis, data
+      svg.select('.y.axis')
+        .transition().duration(1000).ease('sin-in-out')
+        .call(yAxis.ticks('5', '%'));
+
+      var series = svg.selectAll('.group');
+
+      // Remove and redraw paths on resize
+      series.select('path').remove();
+
+      var path = series.append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { 
+            return line(d.values);
+        })
+        .style('stroke', function(d, i) { return color(d.values[i].group); });
+      
+      path.each(function(d) { d.totalLength = this.getTotalLength(); })
+        .attr('stroke-dasharray', function(d) { return d.totalLength; })
+        .attr('stroke-dashoffset', function(d) { return d.totalLength; })
+        .transition()
+          .duration(300)
+          .ease('linear')
+          .attr('stroke-dashoffset', 0);
+
+    }
+
+    function resetScale() {
+      yDomain = 1;
+
+      y.domain([0,yDomain]);
+
+      y.range([height, 0], 0.1);
+
+      yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+      // update yAxis, data
+      svg.select('.y.axis')
+        .transition().duration(1000).ease('sin-in-out')
+        .call(yAxis.ticks('5', '%'));
+
+      var series = svg.selectAll('.group');
+
+      // Remove and redraw paths on resize
+      series.select('path').remove();
+
+      var path = series.append('path')
+        .attr('class', 'line')
+        .attr('d', function(d) { 
+            return line(d.values);
+        })
+        .style('stroke', function(d, i) { return color(d.values[i].group); });
+      
+      path.each(function(d) { d.totalLength = this.getTotalLength(); })
+        .attr('stroke-dasharray', function(d) { return d.totalLength; })
+        .attr('stroke-dashoffset', function(d) { return d.totalLength; })
+        .transition()
+          .duration(300)
+          .ease('linear')
+          .attr('stroke-dashoffset', 0);      
+    }
+
+    addBars(dataRaceTX);
+    addYAxis();
+    removeXAxis();
+
+    var inview2 = new Waypoint.Inview({
+      element: $('#waypoint2')[0],
+      enter: function(direction) {
+        if (direction === 'down') {
+          addBars(dataRace);
+          removeXAxis();
+        }
+      },
+      exit: function(direction) {
+        if (direction === 'up') {
+          addBars(dataRaceTX);
+          removeXAxis();
+        }
+      }
+    });
+
+    var inview3 = new Waypoint.Inview({
+      element: $('#waypoint3')[0],
+      enter: function(direction) {
+        if (direction === 'down') {
+          addXAxis();
+          addSeries(dataRace);
+        }
+      },
+      exit: function(direction) {
+        if (direction === 'up') {
+          addBars(dataRace);
+          removeSeries();
+          removeXAxis();
+        }
+      }
+    });
+
+    var inview4 = new Waypoint.Inview({
+      element: $('#waypoint4')[0],
+      enter: function(direction) {
+        if (direction === 'down') {
+          rescale();
+        }
+      },
+      exit: function(direction) {
+        if (direction === 'up') {
+          resetScale();
+        }
+      }
+    });
+  });
+
+});
