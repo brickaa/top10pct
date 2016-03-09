@@ -140,22 +140,22 @@ var inview4 = new Waypoint.Inview({
   }
 });
 
-var inview5 = new Waypoint.Inview({
-  element: $('#waypoint5')[0],
-  enter: function(direction) {
-    if (direction === 'down') {
-      text4.animate({ opacity: 0});
-      text5.animate({ opacity: 1});
-      pos4.removeClass('fa-circle').addClass('fa-circle-thin');
-      pos5.removeClass('fa-circle-thin').addClass('fa-circle');
-    }
-  },
-  exit: function(direction) {
-    if (direction === 'up') {
-      text4.animate({ opacity: 1});
-      text5.animate({ opacity: 0});
-      pos5.removeClass('fa-circle').addClass('fa-circle-thin');
-      pos4.removeClass('fa-circle-thin').addClass('fa-circle');
-    }
-  }
-});
+// var inview5 = new Waypoint.Inview({
+//   element: $('#waypoint5')[0],
+//   enter: function(direction) {
+//     if (direction === 'down') {
+//       text4.animate({ opacity: 0});
+//       text5.animate({ opacity: 1});
+//       pos4.removeClass('fa-circle').addClass('fa-circle-thin');
+//       pos5.removeClass('fa-circle-thin').addClass('fa-circle');
+//     }
+//   },
+//   exit: function(direction) {
+//     if (direction === 'up') {
+//       text4.animate({ opacity: 1});
+//       text5.animate({ opacity: 0});
+//       pos5.removeClass('fa-circle').addClass('fa-circle-thin');
+//       pos4.removeClass('fa-circle-thin').addClass('fa-circle');
+//     }
+//   }
+// });

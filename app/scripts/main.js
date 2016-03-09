@@ -391,7 +391,7 @@ charts.forEach(function(race, index) {
       enter: function(direction) {
         if (direction === 'down') {
           addXAxis();
-          addSeries(dataRaceTX);
+          addSeries(dataRace);
         }
       },
       exit: function(direction) {
@@ -403,22 +403,22 @@ charts.forEach(function(race, index) {
       }
     });
 
+    // var inview4 = new Waypoint.Inview({
+    //   element: $('#waypoint4')[0],
+    //   enter: function(direction) {
+    //     if (direction === 'down') {
+    //       addSeries(dataRace);
+    //     }
+    //   },
+    //   exit: function(direction) {
+    //     if (direction === 'up') {
+    //       addSeries(dataRaceTX);
+    //     }
+    //   }
+    // });
+
     var inview4 = new Waypoint.Inview({
       element: $('#waypoint4')[0],
-      enter: function(direction) {
-        if (direction === 'down') {
-          addSeries(dataRace);
-        }
-      },
-      exit: function(direction) {
-        if (direction === 'up') {
-          addSeries(dataRaceTX);
-        }
-      }
-    });
-
-    var inview5 = new Waypoint.Inview({
-      element: $('#waypoint5')[0],
       enter: function(direction) {
         if (direction === 'down') {
           rescale();
