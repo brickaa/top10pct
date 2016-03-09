@@ -1,3 +1,4 @@
+/* global $ */
 
 var text1 = $('#explainer1');
 var text2 = $('#explainer2');
