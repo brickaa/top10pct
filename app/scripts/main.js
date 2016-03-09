@@ -6,9 +6,10 @@ import './includes/sticky.js';
 import './includes/inview.js';
 import './includes/demographics.waypoints.js';
 
-var chartHeight;
-var chartTopper = $('#chart--topper_explainer_box');
-var chartBottom = $('.chart--bottom');
+var chartHeight,
+    chartTopper = $('#chart--topper_explainer_box'),
+    chartBottom = $('.chart--bottom'),
+    height;
 
 function getHeights() {
   var windowHeight = $(window).height();
@@ -352,24 +353,6 @@ charts.forEach(function(race, index) {
     addYAxis();
     removeXAxis();
 
-    var inview1 = new Waypoint.Inview({
-      element: $('#waypoint1')[0],
-      enter: function(direction) {
-        if (direction === 'down') {
-          // addBars(dataRaceTX);
-          // addYAxis();
-          // removeXAxis();
-        } 
-      },
-      exit: function(direction) {
-        if (direction === 'up') {
-          // removeBars();
-          // removeYAxis();
-          // removeXAxis();
-        }
-      }
-    });
-
     var inview2 = new Waypoint.Inview({
       element: $('#waypoint2')[0],
       enter: function(direction) {
@@ -402,20 +385,6 @@ charts.forEach(function(race, index) {
         }
       }
     });
-
-    // var inview4 = new Waypoint.Inview({
-    //   element: $('#waypoint4')[0],
-    //   enter: function(direction) {
-    //     if (direction === 'down') {
-    //       addSeries(dataRace);
-    //     }
-    //   },
-    //   exit: function(direction) {
-    //     if (direction === 'up') {
-    //       addSeries(dataRaceTX);
-    //     }
-    //   }
-    // });
 
     var inview4 = new Waypoint.Inview({
       element: $('#waypoint4')[0],
