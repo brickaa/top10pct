@@ -12,6 +12,26 @@ var pos3 = $('#explainerPos3');
 var pos4 = $('#explainerPos4');
 var pos5 = $('#explainerPos5');
 
+pos1.click(function() {
+  $('body, html').animate({ scrollTop: $('#waypoint1').offset().top }, 500);
+});
+
+pos2.click(function() {
+  $('body, html').animate({ scrollTop: $('#waypoint2').offset().top - 500 }, 500);
+});
+
+pos3.click(function() {
+  $('body, html').animate({ scrollTop: $('#waypoint3').offset().top - 500 }, 500);
+});
+
+pos4.click(function() {
+  $('body, html').animate({ scrollTop: $('#waypoint4').offset().top - 500 }, 500);
+});
+
+pos5.click(function() {
+  $('body, html').animate({ scrollTop: $('#waypoint5').offset().top - 500 }, 500);
+});
+
 var sticky = new Waypoint.Sticky({
   element: $('.sticky-charts')[0]
 });
