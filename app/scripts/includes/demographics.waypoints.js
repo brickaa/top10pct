@@ -20,18 +20,16 @@ var inview6 = new Waypoint.Inview({
   element: $('#waypoint6')[0],
   enter: function(direction) {
     if (direction === 'down') {
-      $('.stuck').css('position', 'absolute');
-      $('.stuck').css('bottom', '0');
+      $('.sticky-charts').removeClass('stuck');
       $('.chart-wrapper').css('position', 'absolute');
-      $('.chart-wrapper').css('top', $('.stuck').height() - $(window).height());
+      $('.chart-wrapper').css('bottom', 0);
     }  
   },
   exit: function(direction) {
     if (direction === 'up') {
-      $('.stuck').css('position', 'fixed');
-      $('.stuck').css('bottom', '');
+      $('.sticky-charts').addClass('stuck');
       $('.chart-wrapper').css('position', 'relative');
-      $('.chart-wrapper').css('top', '');
+      $('.chart-wrapper').css('bottom', '');
     }
   }
 });
