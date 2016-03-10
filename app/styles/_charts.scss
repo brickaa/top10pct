@@ -32,13 +32,13 @@ $chart-bp: 630px;
 
 .x.axis path {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
 
 }
 
 .y.axis path {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
 }
 
 
@@ -49,14 +49,14 @@ $chart-bp: 630px;
   &-container {
     display: inline-block;
     margin: 0;
-    width: 100%;
-
-    @include susy-media($chart-bp) {
-      width: 32%;
-    }
 
     &_demographics {
       width: 32%;
+    }
+
+    &_scatter {
+      float: left;
+      width: 50%;
     }
   }
 
