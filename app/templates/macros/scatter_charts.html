@@ -1,7 +1,4 @@
-{% extends 'layouts/scatter.html' %}
-
-{% block content %}
-
+{% macro scatter() %}
 <button id="all" class="ghost-button">All</button>
 <button id="austin" class="ghost-button">Austin</button>
 <button id="dallas" class="ghost-button">Dallas</button>
@@ -21,4 +18,5 @@
     <div id="graphicCollegeReady"></div>
   </div>
 </div>
-{% endblock %}
+
+{% endmacro %}

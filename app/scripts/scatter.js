@@ -1,10 +1,6 @@
 // import './includes/adLoader';
 
 /* global d3, $ */
-
-(function() {
-  'use strict';
-
   function drawChart(dataFile, location) {
     var margin = {top: 20, right: 20, bottom: 30, left: 60},
         width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
@@ -56,7 +52,7 @@
         .style('opacity', 0);
 
     // load data
-    d3.csv('/assets/data/' + dataFile, function(error, data) {
+    d3.csv(CONFIG.projectPath + 'assets/data/' + dataFile, function(error, data) {
 
       // change string (from CSV) into number format
       data.forEach(function(d) {
@@ -264,6 +260,3 @@
   });
 
   window.onload = load('feeder100');
-
-
-})();

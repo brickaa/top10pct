@@ -4,7 +4,8 @@ const webpack = require('webpack');
 module.exports = {
   context: path.join(__dirname, '/app/scripts'),
   entry: {
-    main: './main.js'
+    main: './main.js',
+    scatter: './scatter.js'
   },
   output: {
     path: path.join(__dirname, '/dist/scripts'),

@@ -1,4 +1,5 @@
 {% from 'macros/demographic_charts.html' import demographics %}
+{% from 'macros/scatter_charts.html' import scatter %}
 
 {% macro text(value) %}
 <p>{{ value }}</p>
@@ -37,6 +38,10 @@
 
 {% macro demographic_charts(value) %}
   {{ demographics(value) }}
+{% endmacro %}
+
+{% macro scatter_charts(value) %}
+  {{ scatter(value) }}
 {% endmacro %}
 
 {% macro disclosure(value) %}
