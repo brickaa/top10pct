@@ -1,23 +1,18 @@
 {% macro scatter() %}
+
+<select data-placeholder="Find your test" id="chosen-select" tabindex="2">
+  <option value=""></option>
+  <option value="Test 1">Test 1</option>
+  <option value="Test 2">Test 2</option>
+  <option value="Test 3">Test 3</option>
+  <option value="Test 4">Test 4</option>
+</select>
+
 <button id="all" class="ghost-button">All</button>
 <button id="austin" class="ghost-button">Austin</button>
 <button id="dallas" class="ghost-button">Dallas</button>
 <button id="houston" class="ghost-button">Houston</button>
 <button id="sanantonio" class="ghost-button">San Antonio</button>
-
-<div class="side-by-side clearfix">
-  <select data-placeholder="Your Favorite Type of Bear" style="width: 350px; display: none;" class="chosen-select-deselect" tabindex="-1">
-    <option value=""></option>
-    <option>American Black Bear</option>
-    <option>Asiatic Black Bear</option>
-    <option>Brown Bear</option>
-    <option>Giant Panda</option>
-    <option selected="">Sloth Bear</option>
-    <option>Sun Bear</option>
-    <option>Polar Bear</option>
-    <option>Spectacled Bear</option>
-  </select><div class="chosen-container chosen-container-single chosen-container-active chosen-with-drop" style="width: 350px;" title=""><a class="chosen-single chosen-single-with-deselect chosen-default"><span>Your Favorite Type of Bear</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off" tabindex="12"></div><ul class="chosen-results"><li class="active-result" data-option-array-index="1">American Black Bear</li><li class="active-result" data-option-array-index="2">Asiatic Black Bear</li><li class="active-result" data-option-array-index="3">Brown Bear</li><li class="active-result" data-option-array-index="4">Giant Panda</li><li class="active-result" data-option-array-index="5">Sloth Bear</li><li class="active-result" data-option-array-index="6">Sun Bear</li><li class="active-result" data-option-array-index="7">Polar Bear</li><li class="active-result" data-option-array-index="8">Spectacled Bear</li></ul></div></div>
-</div>
 
 <div id="charts" class="charts">
   <div class="chart-container">
