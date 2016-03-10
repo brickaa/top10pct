@@ -44,8 +44,8 @@ d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
   $.each(data, function(d, i) { 
     $('#chosen-select')
       .append($('<option></option>')
-      .attr('value', i.name)
-      .text(i.name)); 
+        .attr('value', i.name)
+        .text(i.name + ' (' + i.city + ')')); 
 
     if (!--count) {
       $('#chosen-select').chosen({
@@ -162,7 +162,7 @@ charts.forEach(function(chart, index) {
         .call(xAxis
           .scale(xScale)
           .orient('bottom')
-          .ticks(5, '%')
+          .ticks(10, '%')
           .outerTickSize(0))
         .append('text')
           .attr('class', 'label')
@@ -177,12 +177,12 @@ charts.forEach(function(chart, index) {
         .call(yAxis
           .scale(yScale)
           .orient('left')
-          .ticks(10, '%')
+          .ticks(5, '%')
           .outerTickSize(0))
         .append('text')
           .attr('class', 'label')
           .attr('transform', 'rotate(-90)')
-          .attr('y', -(margin.left - 10))
+          .attr('y', -(margin.left))
           .attr('x', 0)
           .attr('dy', '.71em')
           .style('text-anchor', 'end')
@@ -206,6 +206,18 @@ charts.forEach(function(chart, index) {
 
     $('#sanantonio').click(function() {
       dot(sanantonio);
+    });
+
+    $('#chosen-select').change(function(d) {
+      var name = $(this).val(),
+          object = $.grep(data, function(e){ return e.name == name; }),
+          enrolledpct = Math.round(object[0].enrolledpct * 100),
+          ecodis = Math.round(object[0].ecodis * 100),
+          collegeready = Math.round(object[0].collegeready * 100);
+
+      $('#chosen_enrolledpct').html(enrolledpct + '%');
+      $('#chosen_ecodis').html(ecodis + '%');
+      $('#chosen_collegeready').html(collegeready + '%');
     });
   });
 
