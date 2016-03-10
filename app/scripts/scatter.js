@@ -1,6 +1,11 @@
 // import './includes/adLoader';
 
 /* global d3, $ */
+
+import './includes/chosen.jquery.js';
+
+  $('.chosen-select-deselect').chosen({allow_single_deselect:true});
+
   function drawChart(dataFile, location) {
     var margin = {top: 20, right: 20, bottom: 30, left: 60},
         width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
