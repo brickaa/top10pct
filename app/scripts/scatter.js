@@ -1,5 +1,7 @@
 /* global $, d3, CONFIG */
 
+import './includes/chosen.jquery.js';
+
 var margin = {top: 10, right: 10, bottom: 30, left: 30},
     width = parseInt(d3.select('.chart-container_scatter').style('width'), 10) - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
@@ -11,6 +13,48 @@ var xScale = d3.scale.linear().range([0, width]), // value -> display
 // setup y
 var yScale = d3.scale.linear().range([height, 0]), // value -> display
     yAxis = d3.svg.axis().scale(yScale).orient('left');
+
+// add the tooltip area to the webpage
+var tooltip = d3.select('.tooltip-container').append('div')
+    .attr('class', 'tooltip')
+    .style('opacity', 0);
+
+d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
+  data = data.map( function (d) {
+    return { 
+      name: d.Name,
+      metro: d.Metro_Area,
+      city: d.City,
+      enrolledpct: d.enrolled2015PctSeniors,
+      minority: d.BlackHispMulti,
+      white: d.WhiteOther,
+      atrisk: d.atRiskPct,
+      ecodis: d.ecoDisPct,
+      collegeready: d.collegeReadyBothPct,
+      avgsat: d.avgSAT,
+      avgact: d.avgACT,
+      admitted: d.Admitted2015,
+      enrolled: d.Enrolled2015,
+      color: d.Color
+    };
+  });
+
+  var count = data.length;
+
+  $.each(data, function(d, i) { 
+    $('#chosen-select')
+      .append($('<option></option>')
+      .attr('value', i.name)
+      .text(i.name)); 
+
+    if (!--count) {
+      $('#chosen-select').chosen({
+        allow_single_deselect: true // not working
+      });
+    }
+  });
+
+});
 
 var charts = ['ecoDis', 'collegeReady'];
 
@@ -26,6 +70,9 @@ charts.forEach(function(chart, index) {
 
   // Load Data
   d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
+    // Color assignments
+    var color = d3.scale.ordinal().range(['#90D3C8','#FF6249','#8DC967','#8DC967','#FFD454']);
+      
     data = data.map( function (d) {
       return { 
         name: d.Name,
@@ -62,8 +109,6 @@ charts.forEach(function(chart, index) {
         houston = houston[0].values,
         sanantonio = sanantonio[0].values;
 
-    console.log(austin);
-
     var yValue;
 
     if (chart === 'atRisk') {
@@ -78,8 +123,36 @@ charts.forEach(function(chart, index) {
         xMap = function(d) { return xScale(xValue(d));}, // data -> display
         yMap = function(d) { return yScale(yValue(d));}; // data -> display
 
-  //     // don't want dots overlapping axis, so add in buffer to data domain
-    xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
+    function dot(data) {
+      var dots = svg.selectAll('.dot');
+      dots.remove();
+
+      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
+      yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
+
+      // draw dots
+      svg.selectAll('.dot')
+          .data(data)
+          .enter().append('circle')
+            .attr('class', 'dot')
+            .attr('r', 1.5)
+            .attr('cx', xMap)
+            .attr('cy', yMap)
+            .style('fill', function(d) { return color(d.color); })
+            .on('mouseover', function(d) {
+              tooltip.transition()
+                .duration(200)
+                .style('opacity', 0.9);
+              tooltip.html(d.name);
+            })
+            .on('mouseout', function(d) {
+              tooltip.transition()
+                .duration(500)
+                .style('opacity', 0);
+            });
+    }
+
+    dot(data);
     yScale.domain([0, 1]);
 
     // x-axis
@@ -115,49 +188,24 @@ charts.forEach(function(chart, index) {
           .style('text-anchor', 'end')
           .text('Percent of School TEST');
 
-    // draw dots
-    svg.selectAll('.dot')
-        .data(data)
-        .enter().append('circle')
-          .attr('class', 'dot')
-          .attr('r', 1.5)
-          .attr('cx', xMap)
-          .attr('cy', yMap);
-
-    function reDot(data) {
-      var dots = svg.selectAll('.dot');
-      dots.remove();
-
-      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
-
-      // draw dots
-      svg.selectAll('.dot')
-          .data(data)
-          .enter().append('circle')
-            .attr('class', 'dot')
-            .attr('r', 1.5)
-            .attr('cx', xMap)
-            .attr('cy', yMap);
-    }
-
     $('#all').click(function() {
-      reDot(data);
+      dot(data);
     });
 
     $('#austin').click(function() {
-      reDot(austin);
+      dot(austin);
     });
 
     $('#dallas').click(function() {
-      reDot(dallas);
+      dot(dallas);
     });
 
     $('#houston').click(function() {
-      reDot(houston);
+      dot(houston);
     });
 
     $('#sanantonio').click(function() {
-      reDot(sanantonio);
+      dot(sanantonio);
     });
   });
 
