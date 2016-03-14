@@ -42,10 +42,30 @@ d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
   var count = data.length;
 
   $.each(data, function(d, i) { 
-    $('#chosen-select')
-      .append($('<option></option>')
+    console.log(i.metro);
+
+    if (i.metro === 'Austin-Round Rock') {
+      $('#austin-group').append($('<option></option>')
         .attr('value', i.name)
-        .text(i.name + ' (' + i.city + ')')); 
+        .text(i.name + ' (' + i.city + ')'));
+    } else if (i.metro === 'Dallas-Fort Worth-Arlington') {
+      $('#dallas-group').append($('<option></option>')
+        .attr('value', i.name)
+        .text(i.name + ' (' + i.city + ')'));
+    } else if (i.metro === 'Houston-The Woodlands-Sugar Land') {
+      $('#houston-group').append($('<option></option>')
+        .attr('value', i.name)
+        .text(i.name + ' (' + i.city + ')'));
+    } else if (i.metro === 'San Antonio-New Braunfels') {
+      $('#sanantonio-group').append($('<option></option>')
+        .attr('value', i.name)
+        .text(i.name + ' (' + i.city + ')'));
+    } else {
+      $('#chosen-select')
+        .append($('<option></option>')
+          .attr('value', i.name)
+          .text(i.name + ' (' + i.city + ')')); 
+    }
 
     if (!--count) {
       $('#chosen-select').chosen({
@@ -208,9 +228,15 @@ charts.forEach(function(chart, index) {
       dot(sanantonio);
     });
 
+    $('#reset-highlights').click(function() {
+      console.log('reset');
+      var highlight = svg.selectAll('.highlight');
+          highlight.remove();
+    });
+
     $('#chosen-select').change(function(d) {
       var name = $(this).val(),
-          object = $.grep(data, function(e){ return e.name == name; }),
+          object = $.grep(data, function(e){ return e.name === name; }),
           enrolledpct = Math.round(object[0].enrolledpct * 100),
           ecodis = Math.round(object[0].ecodis * 100),
           collegeready = Math.round(object[0].collegeready * 100);
@@ -218,6 +244,20 @@ charts.forEach(function(chart, index) {
       $('#chosen_enrolledpct').html(enrolledpct + '%');
       $('#chosen_ecodis').html(ecodis + '%');
       $('#chosen_collegeready').html(collegeready + '%');
+
+      var highlight = svg.selectAll('.highlight');
+          highlight.remove();
+
+      svg.selectAll('.highlight')
+          .data(data)
+          .enter().append('circle')
+            .attr('class', 'highlight')
+            .filter(function(d){ return d.name === name; })        // <== This line
+            .style('fill', 'red')                            // <== and this one
+            .attr('r', 3)
+            .attr('cx', xMap)
+            .attr('cy', yMap);
+
     });
   });
 
