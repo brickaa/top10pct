@@ -43,3 +43,74 @@
   }
 
 }
+
+.nav-aside {
+
+  &__right-lock {
+    float: right;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 0 0 0 1.25em;
+    width: 100%;
+
+    @include susy-media(620px) {
+      margin-left: 1rem;
+      margin-right: 1rem;
+      padding: 0;
+      width: 48%;
+    }
+
+    @include susy-media($prose-desktop-bp) {
+      margin-right: -10rem;      
+    }
+  }
+
+  &__header {
+    @include font-size($base);
+    font-family: $sans-serif;
+    font-weight: 600;
+    color: #000
+  }
+
+  &__subhead {
+    @include font-size($xs);
+    font-family: $sans-serif;
+    font-weight: 400;
+    color: #666;
+    margin: 0 0 1em 0;
+  }
+
+  &__link {
+    color: #000;
+  }
+
+  &__story {
+    @include clearfix;
+  }
+
+  &__thumbnail {
+    float: left;
+    max-width: 25%;
+    margin: 0 .5em 0 0;
+  }
+
+  &__part-wrapper {
+    float: left;
+    max-width: 71%;
+  }
+
+  &__part {
+    @include font-size($xs);
+    color: $tribune-yellow;
+    font-family: $sans-serif;
+    font-weight: 600;
+  }
+
+  &__headline {
+    &:hover,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+}

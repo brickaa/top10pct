@@ -31,11 +31,13 @@
   }
 
   &--right {
-    @include susy-media($sidebar-break) {
-      float: right;
-      margin-bottom: 2rem;
-      margin-left: 1rem;
-      width: 48%;
+    float: right;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    width: 48%;
+
+    @include susy-media($prose-desktop-bp) {
+      margin-right: -10rem;      
     }
   }
 
@@ -45,6 +47,10 @@
     margin-left: 1rem;
     margin-right: 1rem;
     width: 48%;
+
+    @include susy-media($prose-desktop-bp) {
+      margin-right: -10rem;      
+    }
   }
 
   &__img {

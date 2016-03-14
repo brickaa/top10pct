@@ -36,6 +36,44 @@
 </aside>
 {% endmacro %}
 
+{% macro nav_aside(value) %}
+<aside class="nav-aside nav-aside__{{ value.alignment }}">
+  <header>
+    <h3 class="nav-aside__header">The Price of Admission</h3>
+    <p class="nav-aside__subhead">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</p>
+  </header>
+  <ul>
+    <a class="nav-aside__link" href=""><li class="nav-aside__story">
+      <figure class="nav-aside__thumbnail">
+        <img src="http://placehold.it/75x75">
+      </figure>
+      <div class="nav-aside__part-wrapper">
+        <p class="nav-aside__part">Part 1</p>
+        <p class="nav-aside__headline">This is a sample headline</p>
+      </div>    
+    </li></a>
+    <a class="nav-aside__link" href=""><li class="nav-aside__story">
+      <figure class="nav-aside__thumbnail">
+        <img src="http://placehold.it/75x75">
+      </figure>
+      <div class="nav-aside__part-wrapper">
+        <p class="nav-aside__part">Part 2</p>
+        <p class="nav-aside__headline">This is a sample headline and it could be longer</p>
+      </div>    
+    </li></a>
+    <a class="nav-aside__link" href=""><li class="nav-aside__story">
+      <figure class="nav-aside__thumbnail">
+        <img src="http://placehold.it/75x75">
+      </figure>
+      <div class="nav-aside__part-wrapper">
+        <p class="nav-aside__part">Part 3</p>
+        <p class="nav-aside__headline">This is a sample headline</p>
+      </div>    
+    </li></a>
+  </ul>
+</aside>
+{% endmacro %}
+
 {% macro demographic_charts(value) %}
   {{ demographics(value) }}
 {% endmacro %}
