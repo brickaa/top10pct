@@ -104,7 +104,6 @@ var inview3 = new Waypoint.Inview({
       text3.animate({ opacity: 1});
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
       pos3.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_ut').animate({ opacity: 0});
     }
   },
   exit: function(direction) {
@@ -113,7 +112,6 @@ var inview3 = new Waypoint.Inview({
       text3.animate({ opacity: 0});
       pos3.removeClass('fa-circle').addClass('fa-circle-thin');
       pos2.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_ut').animate({ opacity: 1});
     }
   }
 });
@@ -126,7 +124,6 @@ var inview4 = new Waypoint.Inview({
       text4.animate({ opacity: 1});
       pos3.removeClass('fa-circle').addClass('fa-circle-thin');
       pos4.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_ut').animate({ opacity: 1});
     }
   },
   exit: function(direction) {
@@ -135,7 +132,6 @@ var inview4 = new Waypoint.Inview({
       text4.animate({ opacity: 0});
       pos4.removeClass('fa-circle').addClass('fa-circle-thin');
       pos3.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_ut').animate({ opacity: 0});
     }
   }
 });
