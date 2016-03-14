@@ -10,5 +10,5 @@ ADD SUPPORT FOR THREE AUTHORS
 {% endmacro %}
 
 {% macro email(value) %}
-<a href="mailto:{{ value.email }}">{{ value.name }}</a>
+<a class="story-head__byline-link" href="mailto:{{ value.email }}">{{ value.name }}</a>
 {% endmacro %}

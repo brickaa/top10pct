@@ -2,6 +2,7 @@
   @include font-size($base);
   font-family: $serif;
   line-height: 1.6;
+  max-width: $prose-width;
 
   > p {
     margin-bottom: 1rem;
@@ -47,34 +48,84 @@
 }
 
 .story-header {
+  $header-height-desktop: 30rem;
+  $header-height: 20rem;
+  $header-img-height: 18rem;
+
   @include clearfix;
-  margin: 0 0 1rem;
+  position: absolute;
+  bottom: 0;
+
+  &__wrapper {
+    position: relative;
+    height: $header-height;
+    margin: 0 0 2rem 0;
+
+    @include susy-media($susy-desktop) {
+      height: $header-height-desktop;
+    }
+  }
+
+  &__lead-art {
+    background-image: url(../assets/images/test.jpg);
+    background-size: cover;
+    height: $header-img-height;
+    width: 100%;
+    background-position: center center;
+
+    @include susy-media($susy-desktop) {
+      height: $header-height-desktop;
+    }
+  }
+
+  &__part {
+    @include font-size($base);
+    background-color: $tribune-yellow;
+    color: #000;
+    display: inline-block;
+    font-family: $sans-serif;
+    font-weight: 600;
+    padding: .5rem;
+    margin: 0 0 1em -1em;
+  }
+
+  &__headline-box {
+    background-color: #fff;
+    padding: .5rem .5rem .5rem 0;
+    width: 80%;
+
+    @include susy-media($susy-desktop) {
+      width: 60%;
+    }
+  }
 
   &__headline {
-    @include font-size($xl);
-    font-weight: 700;
+    @include font-size($l);
+    font-family: $serif;
+    font-weight: 400;
     line-height: 1.1;
     margin: 0 0 .25em;
 
-    @include susy-media($sidebar-break) {
-      @include font-size($xxl);
+    @include susy-media($susy-desktop) {
+      @include font-size($xl);
       line-height: 1.2;
     }
-
   }
 
   &__byline {
     @include font-size($s);
-    margin: 0 0 2rem;
-  }
+    font-family: $sans-serif;
+  
+    a {
+      color: $tribune-teal;
+      font-weight: 800;
+      text-decoration: none;
 
-  &__byline-link {
-    color: $tribune-teal;
-    font-weight: 500;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
+
+
 }
