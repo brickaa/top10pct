@@ -1,4 +1,6 @@
 .nav {
+  $nav-bp: 570px;
+
   background-color: $tribune-black;
   font-family: $sans-serif;
 
@@ -11,8 +13,11 @@
     display: inline-block;
     font-family: $sans-serif;
     color: $white;
-    float: right;
-    padding: .25em 1em;
+    
+    @include susy-media($nav-bp) {
+      float: right;
+      padding: .25em 1em;
+    }
 
     a {
       color: #fff;
@@ -28,10 +33,6 @@
 
     li {
       display: inline-block;
-
-      &:not(:last-child):after {
-        content: ' | '
-      }
     }
 
     &_active {
