@@ -61,7 +61,7 @@ d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
         .attr('value', i.name)
         .text(i.name + ' (' + i.city + ')'));
     } else {
-      $('#chosen-select')
+      $('#other-group')
         .append($('<option></option>')
           .attr('value', i.name)
           .text(i.name + ' (' + i.city + ')')); 
