@@ -187,6 +187,13 @@
       }
     }
   }
+}
 
-
+.republish {
+  ol {
+    @include font-size($s);
+    list-style: inherit;
+    list-style-type: decimal;
+    margin: 0 0 1em 1em;
+  }
 }

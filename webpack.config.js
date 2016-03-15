@@ -5,7 +5,8 @@ module.exports = {
   context: path.join(__dirname, '/app/scripts'),
   entry: {
     main: './main.js',
-    scatter: './scatter.js'
+    scatter: './scatter.js',
+    copy: './copy.js'
   },
   output: {
     path: path.join(__dirname, '/dist/scripts'),

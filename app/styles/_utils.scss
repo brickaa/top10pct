@@ -77,3 +77,53 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
 %content-padding {
   padding: 0 1rem;
 }
+
+@mixin btn($color, $type: null) {
+  @include clearfix;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $sans-serif;
+  letter-spacing: .03rem;
+  margin: 0 0 .3em;
+  text-align: center;
+  vertical-align: middle;
+
+
+  @if $type == ghost {
+    background: transparent;
+    border: 2px solid $color;
+    color: $color;
+    padding: .4em .75em .5em;
+  } @else {
+    background: $color;
+    @if $color == $tribune-teal {
+      color: $white;
+    } @else {
+      color: #000;
+    }
+    border: 0;
+    padding: .5em .75em .625em;
+  }
+
+  &:active,
+  &:hover {
+    @if $type == ghost {
+      background-color: transparentize($color, .95);
+    } @else {
+      background-color: transparentize($color, .3);
+    }
+  }
+}
+
+.button {
+  @include btn($tribune-yellow);
+}
+
+.ghost-button {
+  @include btn($tribune-teal, ghost);
+
+  &.active {
+    background-color: transparentize($tribune-teal, .8);
+  }
+}
