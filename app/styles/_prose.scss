@@ -2,10 +2,11 @@
   @include font-size($base);
   font-family: $serif;
   line-height: 1.6;
-  max-width: $prose-width;
+  padding: 0 1.25em;
 
   > p {
     margin-bottom: 1rem;
+    max-width: $prose-width;
   }
 
   > a {
@@ -28,8 +29,30 @@
 
   //<h2>
   &__subhead {
+    @include font-size($m);
     font-family: $sans-serif;
     font-weight: 600;
+    margin: 0 0 1em;
+  }
+
+  &__blockquote {
+    border-top: 2px;
+    border-bottom: 2px;
+    border-style: solid;
+    border-color: $tribune-yellow;
+    font-family: $sans-serif;
+    padding: 1em 0;
+    position: relative;
+
+    &--quote {
+      @include font-size($l);
+      margin: 0 0 1em;
+    }
+
+    &--caption {
+      @include font-size($base);
+    }
+
   }
 
   // <ul> 
@@ -45,6 +68,28 @@
   &__republish {
     font-family: $sans-serif;
   }
+
+  .ad-slot {
+    margin-bottom: 1rem;
+  }
+
+  &--right-lock {
+    margin-bottom: 2rem;
+    margin-right: 1rem;
+    width: 100%;
+
+    @include susy-media($prose-premobile-bp) {
+      float: right;
+      margin-left: 1rem;
+      width: 40%;
+    }
+
+    // @include susy-media($prose-desktop-bp) {
+    //   margin-right: -12rem;
+    //   width: 60%;     
+    // }
+  }
+
 }
 
 .story-header {

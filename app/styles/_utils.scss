@@ -18,7 +18,8 @@ $default-mobile: new-breakpoint(max-width 480px);
 // Max page width
 $page-width: 60em;
 $prose-width: 40em;
-$prose-desktop-bp: 50em;
+$prose-premobile-bp: 38em;
+$prose-desktop-bp: 60em;
 
 // Box Sizing
 html {

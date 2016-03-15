@@ -42,15 +42,22 @@
   }
 
   &--right-lock {
-    float: right;
     margin-bottom: 2rem;
-    margin-left: 1rem;
     margin-right: 1rem;
-    width: 48%;
+    width: 100%;
+    max-width: $prose-width;
 
     @include susy-media($prose-desktop-bp) {
-      margin-right: -10rem;      
+      float: right;
+      margin-left: 1rem;
+      // margin-right: -10rem;
+      width: 40%;      
     }
+
+    // @include susy-media($prose-desktop-bp) {
+    //   margin-right: -15rem;
+    //   width: 70%;      
+    // }
   }
 
   &__img {
