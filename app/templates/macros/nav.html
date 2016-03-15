@@ -1,24 +1,74 @@
-{% macro nav(slug, short_head) %}
+{% macro nav(id) %}
   <nav class="nav">
     <div class="nav--logo_tt">
       <img src="{{ data.PATH_PREFIX }}assets/images/tt-logo.svg">
     </div>
-
     <ul class="nav--sections">
       <li>The Price of Admission: </li>
-      {% if slug == '' %}
-      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}"><span>Part 1</span></a></li>
-      <li><a href="/story_two">2</a></li>
-      <li><a href="/story_three">3</a></li>
-      {% elif slug == 'story_two' %}
+    {% if id == '1' %}
+      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX }}"><span>Part 1 {{ PATH_PREFIX }}</span></a></li>
+      <li><a href="{{ data.PATH_PREFIX }}story_two">2</a></li>
+      <li><a href="{{ data.PATH_PREFIX }}story_three">3</a></li>
+    {% elif id == '2' %}
       <li><a href="/">1</a></li>
-      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ slug }}"><span>Part 2</span></a></li>
-      <li><a href="/story_three">3</a></li>
-      {% else %}
-      <li><a href="/">1</a></li>
-      <li><a href="/story_two">2</a></li>
-      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ slug }}"><span>Part 3</span></a></li>
-      {% endif %}
+      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ id }}"><span>Part 2</span></a></li>
+      <li><a href="{{ data.PATH_PREFIX }}story_three">3</a></li>
+    {% else %}
+      <li><a href="{{ data.PATH_PREFIX }}">1</a></li>
+      <li><a href="{{ data.PATH_PREFIX }}story_two">2</a></li>
+      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX }}"><span>Part 3</span></a></li>
+    {% endif %}
     </ul>
   </nav>
+{% endmacro %}
+
+{% macro navfooter(id, headline) %}
+  <aside class="nav-footer">
+    <div class="nav-footer__wrapper">
+      {% if id == '1' %}
+      <a href="{{ data.PATH_PREFIX }}story_two">
+      <div class="nav-footer__lead-art"></div>
+      <header class="nav-footer__box">
+        <div class="nav-footer__part">Part 2</div>
+        <div class="nav-footer__headline-box">
+          <h1 class="nav-footer__headline">This is a test headline</h1>
+        </div>     
+      </header>
+      </a>
+      {% else %}
+      <a href="{{ data.PATH_PREFIX }}">
+      <div class="nav-footer__lead-art"></div>
+      <header class="nav-footer__box">
+        <div class="nav-footer__part">Part 1</div>
+        <div class="nav-footer__headline-box">
+          <h1 class="nav-footer__headline">This is a test headline</h1>
+        </div>     
+      </header>
+      </a>      
+      {% endif %}
+    </div>
+    <div class="nav-footer__wrapper">
+      {% if id == '3' %}
+      <a href="{{ data.PATH_PREFIX }}story_two">
+      <div class="nav-footer__lead-art"></div>
+      <header class="nav-footer__box">
+        <div class="nav-footer__part">Part 2</div>
+        <div class="nav-footer__headline-box">
+          <h1 class="nav-footer__headline">This is a test headline</h1>
+        </div>     
+      </header>
+      </a>
+      {% else %}
+      <a href="{{ data.PATH_PREFIX }}story_three">
+      <div class="nav-footer__lead-art"></div>
+      <header class="nav-footer__box">
+        <div class="nav-footer__part">Part 3</div>
+        <div class="nav-footer__headline-box">
+          <h1 class="nav-footer__headline">This is a test headline</h1>
+        </div>     
+      </header>
+      </a>      
+      {% endif %}
+    </div>
+  </aside>
 {% endmacro %}
