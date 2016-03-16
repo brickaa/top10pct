@@ -19,9 +19,10 @@ var tooltip = d3.select('.tooltip-container').append('div')
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
-d3.csv(CONFIG.projectPath + 'assets/data/feeder.csv', function(error, data) {
+d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
   data = data.map( function (d) {
     return { 
+      id: d.HSCode,
       name: d.Name,
       metro: d.Metro_Area,
       city: d.City,
@@ -45,24 +46,24 @@ d3.csv(CONFIG.projectPath + 'assets/data/feeder.csv', function(error, data) {
 
     if (i.metro === 'Austin-Round Rock') {
       $('#austin-group').append($('<option></option>')
-        .attr('value', i.name)
+        .attr('value', i.id)
         .text(i.name + ' (' + i.city + ')'));
     } else if (i.metro === 'Dallas-Fort Worth-Arlington') {
       $('#dallas-group').append($('<option></option>')
-        .attr('value', i.name)
+        .attr('value', i.id)
         .text(i.name + ' (' + i.city + ')'));
     } else if (i.metro === 'Houston-The Woodlands-Sugar Land') {
       $('#houston-group').append($('<option></option>')
-        .attr('value', i.name)
+        .attr('value', i.id)
         .text(i.name + ' (' + i.city + ')'));
     } else if (i.metro === 'San Antonio-New Braunfels') {
       $('#sanantonio-group').append($('<option></option>')
-        .attr('value', i.name)
+        .attr('value', i.id)
         .text(i.name + ' (' + i.city + ')'));
     } else {
       $('#other-group')
         .append($('<option></option>')
-          .attr('value', i.name)
+          .attr('value', i.id)
           .text(i.name + ' (' + i.city + ')')); 
     }
 
@@ -94,6 +95,7 @@ charts.forEach(function(chart, index) {
       
     data = data.map( function (d) {
       return { 
+        id: d.HSCode,
         name: d.Name,
         metro: d.Metro_Area,
         city: d.City,
@@ -156,8 +158,6 @@ charts.forEach(function(chart, index) {
       var dots = svg.selectAll('.dot');
       dots.remove();
 
-      console.log(dataKey);
-
       xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
       yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
 
@@ -170,6 +170,11 @@ charts.forEach(function(chart, index) {
             .attr('cx', xMap)
             .attr('cy', yMap)
             .style('fill', function(d) { return color(d.color); })
+            .on('click', function(d) {
+              $('#chosen-select').val(d.id);
+              $('#chosen-select').trigger('chosen:updated');
+              $('#chosen-select').trigger('change');
+            })
             .on('mouseover', function(d) {
               tooltip.transition()
                 .duration(200)
@@ -281,20 +286,20 @@ charts.forEach(function(chart, index) {
     $('#reset-highlights').click(function() {
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
-
       $('#chosen-select').val('').trigger('chosen:updated');
       $('#chosen_enrolledpct').empty();
       $('#chosen_ecodis').empty();
       $('#chosen_collegeready').empty();
     });
 
-    $('#chosen-select').change(function(d) {
-      var name = $(this).val(),
-          object = $.grep(data, function(e){ return e.name === name; }),
+    function chosenChange(selected) {
+      var id = selected,
+          object = $.grep(data, function(e){ return e.id === id; }),
           enrolledpct = Math.round(object[0].enrolledpct * 100),
           ecodis = Math.round(object[0].ecodis * 100),
           collegeready = Math.round(object[0].collegeready * 100);
 
+      console.log(enrolledpct);
       $('#chosen_enrolledpct').html(enrolledpct + '%');
       $('#chosen_ecodis').html(ecodis + '%');
       $('#chosen_collegeready').html(collegeready + '%');
@@ -302,16 +307,24 @@ charts.forEach(function(chart, index) {
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
 
+      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
+      yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
+
       svg.selectAll('.highlight')
           .data(data)
           .enter().append('circle')
             .attr('class', 'highlight')
-            .filter(function(d){ return d.name === name; })        // <== This line
+            .filter(function(d){ return d.id === id; })        // <== This line
             .style('fill', 'blue')                            // <== and this one
             .attr('r', 3)
             .attr('cx', xMap)
             .attr('cy', yMap);
+    }
 
+    $('#chosen-select').change(function() {
+      var selected = $('option:selected').val();
+      console.log(selected);
+      chosenChange(selected);
     });
   });
 
