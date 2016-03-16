@@ -183,8 +183,10 @@ charts.forEach(function(chart, index) {
             });
     }
 
+    // Call resize() on each chart
+    d3.select(window).on('resize.' + chart, resize).transition();
+
     function resize() {
-      console.log('triggered');
       width = parseInt(d3.select('.chart-container_scatter').style('width'), 10) - margin.left - margin.right;
       d3.select('#' + chart).select('svg')
         .attr('width', width + margin.left + margin.right)
@@ -208,13 +210,15 @@ charts.forEach(function(chart, index) {
           .attr('y', 28)
           .style('text-anchor', 'start')
           .text('Percent of Seniors Enrolled at UT-Austin');
-          
+
       dot(dataKey);
     }  
+
 
     yScale.domain([0, 1]);
 
     // x-axis
+    xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
     svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')

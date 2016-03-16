@@ -12,7 +12,7 @@ $chart-bp: 630px;
   width: 100%;
   
   text {
-    @include font-size($xxs);
+    @include font-size($xs);
   } 
 }
 
@@ -53,8 +53,12 @@ $chart-bp: 630px;
     }
 
     &_scatter {
-      float: left;
-      width: 50%;
+      width: 100%;
+
+      @include susy-media($prose-premobile-bp) {
+        float: left;
+        width: 50%;        
+      }
     }
   }
 
@@ -168,6 +172,10 @@ $chart-bp: 630px;
     display: inline-block;
     vertical-align: top;
     line-height: 1.1;
+
+    .legend--wrapper & {
+      @include font-size($s);
+    }
   }
 
   &--color_box {
