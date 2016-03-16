@@ -114,16 +114,11 @@ charts.forEach(function(chart, index) {
     });
 
     var nest = d3.nest().key(function(d) { return d.metro; }).entries(data);
-    
-    var austin = [],
-        dallas = [],
-        houston = [],
-        sanantonio = [];
 
-    austin.push(nest[1]);
-    dallas.push(nest[0]);
-    houston.push(nest[2]);
-    sanantonio.push(nest[3]);
+    var austin = $.grep(nest, function(e){ return e.key === 'Austin-Round Rock'; });
+    var dallas = $.grep(nest, function(e){ return e.key === 'Dallas-Fort Worth-Arlington'; });
+    var houston = $.grep(nest, function(e){ return e.key === 'Houston-The Woodlands-Sugar Land'; });
+    var sanantonio = $.grep(nest, function(e){ return e.key === 'San Antonio-New Braunfels'; });
 
     var austin = austin[0].values,
         dallas = dallas[0].values,
@@ -158,8 +153,8 @@ charts.forEach(function(chart, index) {
       var dots = svg.selectAll('.dot');
       dots.remove();
 
-      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
-      yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
+      xScale.domain([0, .3]);
+      yScale.domain([0, 1]);
 
       // draw dots
       svg.selectAll('.dot')
@@ -176,15 +171,8 @@ charts.forEach(function(chart, index) {
               $('#chosen-select').trigger('change');
             })
             .on('mouseover', function(d) {
-              tooltip.transition()
-                .duration(200)
-                .style('opacity', 0.9);
-              tooltip.html(d.name);
             })
             .on('mouseout', function(d) {
-              tooltip.transition()
-                .duration(500)
-                .style('opacity', 0);
             });
     }
 
@@ -223,7 +211,7 @@ charts.forEach(function(chart, index) {
     yScale.domain([0, 1]);
 
     // x-axis
-    xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
+    xScale.domain([0, .3]);
     svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
@@ -260,27 +248,37 @@ charts.forEach(function(chart, index) {
 
     $('#all').click(function() {
       dot(data);
+      $('button').removeClass('active');
+      $(this).addClass('active');
       dataKey = data;
     });
 
     $('#austin').click(function() {
       dot(austin);
       dataKey = austin;
+      $('button').removeClass('active');
+      $(this).addClass('active');
     });
 
     $('#dallas').click(function() {
       dot(dallas);
       dataKey = dallas;
+      $('button').removeClass('active');
+      $(this).addClass('active');
     });
 
     $('#houston').click(function() {
       dot(houston);
       dataKey = houston;
+      $('button').removeClass('active');
+      $(this).addClass('active');
     });
 
     $('#sanantonio').click(function() {
       dot(sanantonio);
       dataKey = sanantonio;
+      $('button').removeClass('active');
+      $(this).addClass('active');
     });
 
     $('#reset-highlights').click(function() {
@@ -307,15 +305,16 @@ charts.forEach(function(chart, index) {
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
 
-      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
-      yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
+      xMap = function(d) { return xScale(xValue(d));}; 
+      xScale.domain([0, .3]);
+      yScale.domain([0, 1]);
 
       svg.selectAll('.highlight')
           .data(data)
           .enter().append('circle')
             .attr('class', 'highlight')
             .filter(function(d){ return d.id === id; })        // <== This line
-            .style('fill', 'blue')                            // <== and this one
+            .style('fill', 'rgb(255, 194, 0)')                            // <== and this one
             .attr('r', 3)
             .attr('cx', xMap)
             .attr('cy', yMap);
@@ -323,7 +322,6 @@ charts.forEach(function(chart, index) {
 
     $('#chosen-select').change(function() {
       var selected = $('option:selected').val();
-      console.log(selected);
       chosenChange(selected);
     });
   });

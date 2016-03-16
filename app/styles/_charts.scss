@@ -13,7 +13,30 @@ $chart-bp: 630px;
   
   text {
     @include font-size($xs);
-  } 
+  }
+
+  &--info {
+    @include clearfix;
+
+    &_box {
+      float: left;
+      width: 33%;
+      text-align: center;
+      padding: 0 2em;
+    }
+
+    &_header {
+      @include font-size($xs);
+      height: 2.5em;
+    }
+
+    &_value {
+      @include font-size($l);
+      color: $tribune-yellow;
+      height: 2em;
+    }
+  }
+  
 }
 
 .chart-wrapper {
