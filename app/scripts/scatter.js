@@ -153,7 +153,7 @@ charts.forEach(function(chart, index) {
       var dots = svg.selectAll('.dot');
       dots.remove();
 
-      xScale.domain([0, .3]);
+      xScale.domain([0, .18]);
       yScale.domain([0, 1]);
 
       // draw dots
@@ -171,6 +171,9 @@ charts.forEach(function(chart, index) {
               $('#chosen-select').trigger('change');
             })
             .on('mouseover', function(d) {
+              $('#chosen-select').val(d.id);
+              $('#chosen-select').trigger('chosen:updated');
+              $('#chosen-select').trigger('change');              
             })
             .on('mouseout', function(d) {
             });
@@ -211,7 +214,7 @@ charts.forEach(function(chart, index) {
     yScale.domain([0, 1]);
 
     // x-axis
-    xScale.domain([0, .3]);
+    xScale.domain([0, .18]);
     svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
@@ -246,49 +249,43 @@ charts.forEach(function(chart, index) {
 
     dot(dataKey);
 
-    $('#all').click(function() {
-      dot(data);
-      $('button').removeClass('active');
-      $(this).addClass('active');
-      dataKey = data;
+    var metroNames = ['data', 'austin', 'dallas', 'houston', 'sanantonio'];
+
+    $.each(metroNames, function() {
+      $('#' + this).click(function() {
+        var metro = $(this).attr('id');
+        if (metro === 'austin') {
+          dot(austin);
+          dataKey = austin;
+        } else if (metro === 'dallas') {
+          dot(dallas);
+          dataKey = dallas;
+        } else if (metro === 'houston') {
+          dot(houston);
+          dataKey = houston;
+        }  else if (metro === 'sanantonio') {
+          dot(sanantonio);
+          dataKey = sanantonio;
+        } else {
+          dot(data);
+          dataKey = data;
+        }
+        $('button').removeClass('active');
+        $(this).addClass('active');
+        resetValues();
+      });
     });
 
-    $('#austin').click(function() {
-      dot(austin);
-      dataKey = austin;
-      $('button').removeClass('active');
-      $(this).addClass('active');
-    });
-
-    $('#dallas').click(function() {
-      dot(dallas);
-      dataKey = dallas;
-      $('button').removeClass('active');
-      $(this).addClass('active');
-    });
-
-    $('#houston').click(function() {
-      dot(houston);
-      dataKey = houston;
-      $('button').removeClass('active');
-      $(this).addClass('active');
-    });
-
-    $('#sanantonio').click(function() {
-      dot(sanantonio);
-      dataKey = sanantonio;
-      $('button').removeClass('active');
-      $(this).addClass('active');
-    });
-
-    $('#reset-highlights').click(function() {
+    function resetValues() {
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
       $('#chosen-select').val('').trigger('chosen:updated');
       $('#chosen_enrolledpct').empty();
       $('#chosen_ecodis').empty();
       $('#chosen_collegeready').empty();
-    });
+    }
+
+    $('#reset-highlights').click(resetValues);
 
     function chosenChange(selected) {
       var id = selected,
@@ -306,7 +303,7 @@ charts.forEach(function(chart, index) {
           highlight.remove();
 
       xMap = function(d) { return xScale(xValue(d));}; 
-      xScale.domain([0, .3]);
+      xScale.domain([0, .18]);
       yScale.domain([0, 1]);
 
       svg.selectAll('.highlight')
