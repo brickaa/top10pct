@@ -6,10 +6,8 @@
 <p>{{ value }}</p>
 {% endmacro %}
 
-{% macro html_text(value) %}&lt;p>{{ value }}&lt;/p>{% endmacro %}
-
-{% macro first(value) %}
-<p class="prose__drop-cap">{{ value }}</p>
+{% macro html_text(value) %}
+&lt;p>{{ value|escape }}&lt;/p>
 {% endmacro %}
 
 {% macro subhead(value) %}

@@ -100,10 +100,5 @@
 
 {% block script %}
 {{ super() }}
-<script type="text/javascript" src="{{ data.PATH_PREFIX}}scripts/includes/clipboard.js"></script>
-
-<script type="text/javascript">
-  new Clipboard('#copy');
-</script>
 <script src="{{ data.PATH_PREFIX }}scripts/copy.js"></script>
 {% endblock %}

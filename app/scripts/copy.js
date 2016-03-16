@@ -1,8 +1,9 @@
-import './includes/clipboard.js';
 
-/* global $, Clipboard */
+/* global $ */
 
-// new Clipboard('#copy');
+const Clipboard = require ('clipboard');
+
+new Clipboard('#copy');
 
 $('#text-btn').click(function() {
   $('#text').show();
