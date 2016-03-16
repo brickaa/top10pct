@@ -2,7 +2,7 @@
 
 import './includes/chosen.jquery.js';
 
-var margin = {top: 10, right: 10, bottom: 30, left: 30},
+var margin = {top: 10, right: 10, bottom: 30, left: 60},
     width = parseInt(d3.select('.chart-container_scatter').style('width'), 10) - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
@@ -19,7 +19,7 @@ var tooltip = d3.select('.tooltip-container').append('div')
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
-d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
+d3.csv(CONFIG.projectPath + 'assets/data/feeder.csv', function(error, data) {
   data = data.map( function (d) {
     return { 
       name: d.Name,
@@ -118,8 +118,8 @@ charts.forEach(function(chart, index) {
         houston = [],
         sanantonio = [];
 
-    austin.push(nest[0]);
-    dallas.push(nest[1]);
+    austin.push(nest[1]);
+    dallas.push(nest[0]);
     houston.push(nest[2]);
     sanantonio.push(nest[3]);
 
@@ -128,23 +128,35 @@ charts.forEach(function(chart, index) {
         houston = houston[0].values,
         sanantonio = sanantonio[0].values;
 
-    var yValue;
+    var yValue, 
+        yLabel,
+        dataKey;
+
+    dataKey = data;
 
     if (chart === 'atRisk') {
-      yValue = function(d) { return d.atrisk; };   
+      yValue = function(d) { return d.atrisk; };
+      yLabel = 'At Risk';   
     } else if (chart === 'ecoDis') {   
       yValue = function(d) { return d.ecodis; };
+      yLabel = 'Economically Disadvantaged';
     } else if (chart === 'collegeReady') {
       yValue = function(d) { return d.collegeready; };
+      yLabel = 'College Ready';
     }
 
     var xValue = function(d) { return d.enrolledpct;},
         xMap = function(d) { return xScale(xValue(d));}, // data -> display
         yMap = function(d) { return yScale(yValue(d));}; // data -> display
 
+    // Call resize() on each chart
+    d3.select(window).on('resize.' + chart, resize).transition();
+
     function dot(data) {
       var dots = svg.selectAll('.dot');
       dots.remove();
+
+      console.log(dataKey);
 
       xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
       yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
@@ -154,7 +166,7 @@ charts.forEach(function(chart, index) {
           .data(data)
           .enter().append('circle')
             .attr('class', 'dot')
-            .attr('r', 1.5)
+            .attr('r', 2)
             .attr('cx', xMap)
             .attr('cy', yMap)
             .style('fill', function(d) { return color(d.color); })
@@ -171,7 +183,35 @@ charts.forEach(function(chart, index) {
             });
     }
 
-    dot(data);
+    function resize() {
+      console.log('triggered');
+      width = parseInt(d3.select('.chart-container_scatter').style('width'), 10) - margin.left - margin.right;
+      d3.select('#' + chart).select('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom);
+
+      xScale.range([0, width]);
+      xAxis = d3.svg.axis().scale(xScale).orient('bottom');
+
+      svg.select('.x.axis').remove();
+      svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis
+          .scale(xScale)
+          .orient('bottom')
+          .ticks(10, '%')
+          .outerTickSize(0))
+        .append('text')
+          .attr('class', 'label')
+          .attr('x', 0)
+          .attr('y', 28)
+          .style('text-anchor', 'start')
+          .text('Percent of Seniors Enrolled at UT-Austin');
+          
+      dot(dataKey);
+    }  
+
     yScale.domain([0, 1]);
 
     // x-axis
@@ -205,26 +245,33 @@ charts.forEach(function(chart, index) {
           .attr('x', 0)
           .attr('dy', '.71em')
           .style('text-anchor', 'end')
-          .text('Percent of School TEST');
+          .text('Percent ' + yLabel);
+
+    dot(dataKey);
 
     $('#all').click(function() {
       dot(data);
+      dataKey = data;
     });
 
     $('#austin').click(function() {
       dot(austin);
+      dataKey = austin;
     });
 
     $('#dallas').click(function() {
       dot(dallas);
+      dataKey = dallas;
     });
 
     $('#houston').click(function() {
       dot(houston);
+      dataKey = houston;
     });
 
     $('#sanantonio').click(function() {
       dot(sanantonio);
+      dataKey = sanantonio;
     });
 
     $('#reset-highlights').click(function() {
@@ -256,7 +303,7 @@ charts.forEach(function(chart, index) {
           .enter().append('circle')
             .attr('class', 'highlight')
             .filter(function(d){ return d.name === name; })        // <== This line
-            .style('fill', 'red')                            // <== and this one
+            .style('fill', 'blue')                            // <== and this one
             .attr('r', 3)
             .attr('cx', xMap)
             .attr('cy', yMap);

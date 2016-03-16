@@ -223,7 +223,6 @@ charts.forEach(function(race, index) {
       width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
       height = chartHeight - margin.top - margin.bottom;
 
-      console.log(height);
       d3.select('#' + race).select('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom);
