@@ -15,7 +15,7 @@
   <div class="story-header__wrapper">
     <div class="story-header__lead-art"></div>
     <header class="story-header">
-      <div class="story-header__part">Part 1</div>
+      <div class="story-header__part">Part {{ context.id }}</div>
       <div class="story-header__headline-box">
         <h1 class="story-header__headline">{{ context.headline }}</h1>
         <p class="story-header__byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>

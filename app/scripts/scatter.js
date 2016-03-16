@@ -42,7 +42,6 @@ d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
   var count = data.length;
 
   $.each(data, function(d, i) { 
-    console.log(i.metro);
 
     if (i.metro === 'Austin-Round Rock') {
       $('#austin-group').append($('<option></option>')
@@ -229,9 +228,13 @@ charts.forEach(function(chart, index) {
     });
 
     $('#reset-highlights').click(function() {
-      console.log('reset');
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
+
+      $('#chosen-select').val('').trigger('chosen:updated');
+      $('#chosen_enrolledpct').empty();
+      $('#chosen_ecodis').empty();
+      $('#chosen_collegeready').empty();
     });
 
     $('#chosen-select').change(function(d) {

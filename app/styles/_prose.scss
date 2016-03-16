@@ -21,16 +21,6 @@
     }
   }
 
-  &__drop-cap {
-    // &:first-letter {
-    //   @include font-size(72);
-    //   float: left;
-    //   font-weight: 900;
-    //   line-height: 1;
-    //   padding: 0 .25em;
-    // }
-  }
-
   //<h2>
   &__subhead {
     @include font-size($m);
@@ -195,5 +185,10 @@
     list-style: inherit;
     list-style-type: decimal;
     margin: 0 0 1em 1em;
+  }
+
+  ul {
+    margin: 0 0 0 1em;
+    list-style-type: circle;
   }
 }
