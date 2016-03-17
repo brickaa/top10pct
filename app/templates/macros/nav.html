@@ -10,7 +10,7 @@
       <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
       <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
     {% elif id == '2' %}
-      <li><a href="/">1</a></li>
+      <li><a href="{{ PATH_PREFIX }}">1</a></li>
       <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ id }}"><span>Part 2</span></a></li>
       <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
     {% else %}
