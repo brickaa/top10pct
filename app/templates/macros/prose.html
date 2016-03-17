@@ -1,6 +1,7 @@
 {% from 'macros/demographic_charts.html' import demographics %}
 {% from 'macros/scatter_charts.html' import scatter %}
 {% from 'macros/nav.html' import navfooter %}
+{% from 'macros/timeline.html' import build_timeline %}
 
 {% macro text(value) %}
 <p>{{ value }}</p>
@@ -37,6 +38,11 @@
 </aside>
 {% endmacro %}
 
+{% macro timeline(value) %}
+  <aside class="nav-aside prose--{{ value.alignment }}">
+  {{ build_timeline() }}
+  </aside>
+{% endmacro %}
 {% macro nav_aside(value) %}
 <aside class="nav-aside prose--{{ value.alignment }}">
   <header>
@@ -92,7 +98,7 @@
 {% endmacro %}
 
 {% macro image(value, data) %}
-<figure class="image{% if value.alignment %} image--{{ value.alignment }}{% else %} image--full{% endif %}">
+<figure class="image{% if value.alignment %} prose--{{ value.alignment }}{% else %} image--full{% endif %}">
   <img class="image__img" src="{{ data.PATH_PREFIX }}assets/images/{{ value.photo_url }}">
   <figcaption class="image__caption">{{ value.caption }}{% if value.credit %} | {{ value.credit }}{% endif %}</figcaption>
 </figure>

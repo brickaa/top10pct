@@ -2,7 +2,7 @@
   @include font-size($base);
   font-family: $serif;
   line-height: 1.6;
-  padding: 0 1.25em;
+  padding: 0 1.5em;
 
   @include susy-media($page-width) {
     padding: 0;
@@ -79,11 +79,6 @@
       margin-left: 1rem;
       width: 40%;
     }
-
-    // @include susy-media($prose-desktop-bp) {
-    //   margin-right: -12rem;
-    //   width: 60%;     
-    // }
   }
 
 }
@@ -137,16 +132,12 @@
   &__headline-box {
     background-color: #fff;
     margin: 0 0 0 1em;
-    padding: .5rem;
-    width: 80%;
+    padding: .5rem 1rem .5rem .5rem;
+    width: 100%;
 
     @include susy-media($page-width) {
       margin: 0;
       padding: .5rem .5rem .5rem 0;
-    }
-
-    @include susy-media($susy-desktop) {
-      width: 60%;
     }
   }
 
@@ -176,6 +167,12 @@
         text-decoration: underline;
       }
     }
+  }
+}
+
+.timeline {
+  &--date {
+    color: $tribune-yellow;
   }
 }
 
