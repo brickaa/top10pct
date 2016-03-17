@@ -42,164 +42,110 @@
     }
   }
 
-}
+  // Inside Story Navigation
+  &__aside {
+    @extend %right-lock;
 
-.nav-aside {
-
-  &__right-lock {
-    float: right;
-    margin-bottom: 2rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    padding: 0 0 0 1.25em;
-    width: 100%;
-
-    @include susy-media(620px) {
-      margin-left: 1rem;
-      margin-right: 1rem;
-      padding: 0;
-      width: 48%;
+    &--header {
+      @extend %subhead;
     }
 
-    @include susy-media($prose-desktop-bp) {
-      margin-right: -10rem;      
+    &--subtitle {
+      @extend %subtitle;
     }
-  }
 
-  &__header {
-    @include font-size($base);
-    font-family: $sans-serif;
-    font-weight: 600;
-    color: #000
-  }
-
-  &__subhead {
-    @include font-size($xs);
-    font-family: $sans-serif;
-    font-weight: 400;
-    color: #666;
-    margin: 0 0 1em 0;
-  }
-
-  &__link {
-    color: #000;
-  }
-
-  &__story {
-    @include clearfix;
-  }
-
-  &__thumbnail {
-    float: left;
-    max-width: 25%;
-    margin: 0 .5em 0 0;
-  }
-
-  &__part-wrapper {
-    float: left;
-    max-width: 71%;
-  }
-
-  &__part {
-    @include font-size($xs);
-    color: $tribune-yellow;
-    font-family: $sans-serif;
-    font-weight: 600;
-  }
-
-  &__headline {
-    &:hover,
-    &:active {
-      text-decoration: underline;
+    &--story_wrapper {
+      @include clearfix;
     }
-  }
-}
 
-.nav-footer {
-  $footer-height-desktop: 18rem;
-  $footer-height: 32rem;
-  $footer-img-height: 15rem;
-  $footer-nav-bp: 700px;
+    // &--thumbnail {
+    //   float: left;
+    //   max-width: 25%;
+    //   margin: 0 .5em 0 0;
+    // }
 
-  height: $footer-height;
-  margin: 0 0 2rem 0;
-
-  @include susy-media($footer-nav-bp) {
-    height: $footer-height-desktop;
-  }
-
-  &__box {
-    @include clearfix;
-    position: absolute;
-    bottom: 0;   
-  }
-
-  &__wrapper {
-    position: relative;
-    float: left;
-    width: 100%;
-    margin: 0 0 2rem;
-
-    @include susy-media($footer-nav-bp) {
-      margin: 0 2rem 2rem 0;
-      width: 45%;
-
+    &--part-wrapper {
+      margin: 0 0 .5rem;
+      // background-image: url(../assets/images/test.jpg);
+      // background-size: cover;
+      // height: 50px;
+      // width: 100%;
+      // background-position: center center;
+      // max-width: 71%;
     }
+
+    &--link {
+      color: #000;
+      text-decoration: none;
+    }
+
+    &--part {
+      @extend %accent-subhead;
+    }
+
+    &--headline {
+      @include headline($m, $l);
+      &:hover,
+      &:active {
+        text-decoration: underline;
+      }
+    }
+
+    &--extra {
+      &_wrapper {
+        float: left;
+        width: 50%;
+        &:first-child {
+          padding: 0 .5rem 0 0;
+        }
+      }
+      &_subject {
+        @include headline($s, $base);
+        &:hover,
+        &:active {
+          text-decoration: underline;
+        }      
+      }
+    }
+    
   }
 
-  &__lead-art {
-    background-image: url(../assets/images/test.jpg);
-    background-size: cover;
-    height: $footer-img-height;
-    width: 100%;
-    background-position: center center;
+  &__footer {
+    $footer-nav-bp: 700px;
+    $footer-height-desktop: 18rem;
+
+    @include story-header(32rem, $footer-height-desktop, 15rem); 
+    margin: 0 0 2rem 0;
 
     @include susy-media($footer-nav-bp) {
       height: $footer-height-desktop;
     }
-  }
 
-  &__part {
-    @include font-size($base);
-    background-color: $tribune-yellow;
-    color: #000;
-    display: inline-block;
-    font-family: $sans-serif;
-    font-weight: 600;
-    margin: 0 0 1em 1em;
-    padding: .5rem;
-    
-    @include susy-media($page-width) {
-      margin: 0 0 1em -1em;
-    }
-  }
-
-  &__headline-box {
-    background-color: #fff;
-    margin: 0 0 0 1em;
-    padding: .5rem;
-    width: 80%;
-
-    @include susy-media($page-width) {
-      margin: 0;
-      padding: .5rem .5rem .5rem 0;
+    &--headline {
+      @include headline($m, $l);
     }
 
-    @include susy-media($footer-nav-bp) {
-      width: 60%;
+    &--box {
+      @include clearfix;
+      position: absolute;
+      bottom: 0;   
     }
-  }
 
-  &__headline {
-    @include font-size($m);
-    font-family: $serif;
-    font-weight: 400;
-    line-height: 1.1;
-    margin: 0 0 .25em;
+    &--wrapper {
+      position: relative;
+      float: left;
+      width: 100%;
+      margin: 0 0 2rem;
 
-    @include susy-media($footer-nav-bp) {
-      @include font-size($l);
-      line-height: 1.2;
+      @include susy-media($footer-nav-bp) {
+        margin: 0 2rem 2rem 0;
+        width: 45%;
+
+      }
     }
   }
 }
+
+
+
+

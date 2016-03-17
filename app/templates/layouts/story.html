@@ -12,13 +12,13 @@
 
 {% block content %}
 <main class="main-body">
-  <div class="story-header__wrapper">
-    <div class="story-header__lead-art"></div>
-    <header class="story-header">
-      <div class="story-header__part">Part {{ context.id }}</div>
-      <div class="story-header__headline-box">
-        <h1 class="story-header__headline">{{ context.headline }}</h1>
-        <p class="story-header__byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
+  <div class="storytop--wrapper">
+    <div class="storytop--lead-art"></div>
+    <header class="storytop">
+      <div class="storytop--part">Part {{ context.id }}</div>
+      <div class="storytop--headline-box">
+        <h1 class="storytop--headline">{{ context.headline }}</h1>
+        <p class="storytop--byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
       </div>     
     </header>
   </div>

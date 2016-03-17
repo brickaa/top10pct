@@ -1,10 +1,10 @@
 {% from 'macros/demographic_charts.html' import demographics %}
 {% from 'macros/scatter_charts.html' import scatter %}
-{% from 'macros/nav.html' import navfooter %}
+{% from 'macros/nav.html' import navaside, navfooter %}
 {% from 'macros/timeline.html' import build_timeline %}
 
 {% macro text(value) %}
-<p>{{ value }}</p>
+<p>{{ value|safe }}</p>
 {% endmacro %}
 
 {% macro html_text(value) %}
@@ -39,46 +39,13 @@
 {% endmacro %}
 
 {% macro timeline(value) %}
-  <aside class="nav-aside prose--{{ value.alignment }}">
+  <aside class="nav__aside prose--{{ value.alignment }}">
   {{ build_timeline() }}
   </aside>
 {% endmacro %}
+
 {% macro nav_aside(value) %}
-<aside class="nav-aside prose--{{ value.alignment }}">
-  <header>
-    <h3 class="nav-aside__header">The Price of Admission</h3>
-    <p class="nav-aside__subhead">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</p>
-  </header>
-  <ul>
-    <a class="nav-aside__link" href=""><li class="nav-aside__story">
-      <figure class="nav-aside__thumbnail">
-        <img src="http://placehold.it/75x75">
-      </figure>
-      <div class="nav-aside__part-wrapper">
-        <p class="nav-aside__part">Part 1</p>
-        <p class="nav-aside__headline">This is a sample headline</p>
-      </div>    
-    </li></a>
-    <a class="nav-aside__link" href=""><li class="nav-aside__story">
-      <figure class="nav-aside__thumbnail">
-        <img src="http://placehold.it/75x75">
-      </figure>
-      <div class="nav-aside__part-wrapper">
-        <p class="nav-aside__part">Part 2</p>
-        <p class="nav-aside__headline">This is a sample headline and it could be longer</p>
-      </div>    
-    </li></a>
-    <a class="nav-aside__link" href=""><li class="nav-aside__story">
-      <figure class="nav-aside__thumbnail">
-        <img src="http://placehold.it/75x75">
-      </figure>
-      <div class="nav-aside__part-wrapper">
-        <p class="nav-aside__part">Part 3</p>
-        <p class="nav-aside__headline">This is a sample headline</p>
-      </div>    
-    </li></a>
-  </ul>
-</aside>
+  {{ navaside() }}
 {% endmacro %}
 
 {% macro demographic_charts(value) %}

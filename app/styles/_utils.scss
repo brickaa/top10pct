@@ -74,10 +74,6 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
  }
 }
 
-%content-padding {
-  padding: 0 1rem;
-}
-
 @mixin btn($color, $type: null) {
   @include clearfix;
   border-radius: 4px;
@@ -125,5 +121,136 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
 
   &.active {
     background-color: transparentize($tribune-teal, .8);
+  }
+}
+
+
+%content-padding {
+  padding: 0 1rem;
+}
+// Story Subheader
+%subhead {
+  @include font-size($m);
+  font-family: $sans-serif;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+// Subtitle underneath subheader
+%subtitle {
+  @include font-size($xs);
+  font-family: $sans-serif;
+  font-weight: 400;
+  color: #666;
+  margin: 0 0 1rem 0;
+}
+
+%accent-subhead {
+  @include font-size($xs);
+  color: $tribune-yellow;
+  font-family: $sans-serif;
+  font-weight: 600;
+  margin: 0 0 .15rem;
+}
+
+// Container styles for asides
+%aside-box {
+  border-top: 2px;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: $tribune-yellow;
+  font-family: $sans-serif;
+  margin: 0 0 1rem;
+  max-width: $prose-width;
+  padding: 1rem 0;
+  position: relative;
+}
+
+%right-lock {
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  width: 100%;
+
+  @include susy-media($prose-premobile-bp) {
+    float: right;
+    margin-left: 1rem;
+    width: 40%;
+  }
+}
+
+%link {
+  color: $tribune-teal;
+
+  &:active,
+  &:hover {
+    text-decoration: underline;
+  } 
+}
+
+%part-box {
+  @include font-size($base);
+  background-color: $tribune-yellow;
+  color: #000;
+  display: inline-block;
+  font-family: $sans-serif;
+  font-weight: 600;
+  margin: 0 0 1rem 1rem;
+  padding: .5rem;
+  
+  @include susy-media($page-width) {
+    margin: 0 0 1rem -1rem;
+  }
+}
+
+@mixin story-header($height, $height-desktop, $img-height) {
+
+  &--lead-art {
+    background-image: url(../assets/images/test.jpg);
+    background-size: cover;
+    height: $img-height;
+    width: 100%;
+    background-position: center center;
+
+    @include susy-media($susy-desktop) {
+      height: $height-desktop;
+    }
+  }
+  
+  &--part {
+    @extend %part-box;
+  }
+
+  &--headline-box {
+    background-color: #fff;
+    margin: 0 0 0 1em;
+    padding: .5rem 1rem .5rem .5rem;
+    width: 100%;
+
+    @include susy-media($page-width) {
+      margin: 0;
+      padding: .5rem .5rem .5rem 0;
+    }
+  }
+
+  &--byline {
+    @include font-size($s);
+    font-family: $sans-serif;
+  
+    a {
+      @extend %link;
+    }
+  }
+}
+
+@mixin headline($base, $desktop) {
+  @include font-size($base);
+  font-family: $serif;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 .25rem;
+
+  @include susy-media($susy-desktop) {
+    @include font-size($desktop);
+    line-height: 1.2;
   }
 }

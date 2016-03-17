@@ -6,6 +6,12 @@ import './includes/sticky.js';
 import './includes/inview.js';
 import './includes/demographics.waypoints.js';
 
+// $('#timeline').click(function () {
+//   $('#timeline--list').slideToggle(1000);
+//   $('.collapse').toggle();
+//   $('.expand').toggle();
+// });
+
 var chartHeight,
     chartTopper = $('#chart--topper_explainer_box'),
     chartBottom = $('.chart--bottom'),

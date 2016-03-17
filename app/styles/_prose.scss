@@ -2,7 +2,7 @@
   @include font-size($base);
   font-family: $serif;
   line-height: 1.6;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
 
   @include susy-media($page-width) {
     padding: 0;
@@ -11,44 +11,32 @@
   > p {
     margin-bottom: 1rem;
     max-width: $prose-width;
-  }
 
-  > a {
-    color: $tribune-teal;
-
-    &:hover {
-      text-decoration: underline;
+    a {
+      @extend %link;
     }
   }
 
   //<h2>
   &__subhead {
-    @include font-size($m);
-    font-family: $sans-serif;
-    font-weight: 600;
-    margin: 0 0 1em;
+    @extend %subhead;
+  }
+
+  &__subtitle {
+    @extend %subtitle;
   }
 
   &__blockquote {
-    border-top: 2px;
-    border-bottom: 2px;
-    border-style: solid;
-    border-color: $tribune-yellow;
-    font-family: $sans-serif;
-    margin: 0 0 1em;
-    max-width: $prose-width;
-    padding: 1em 0;
-    position: relative;
+    @extend %aside-box;
 
     &--quote {
       @include font-size($l);
-      margin: 0 0 1em;
+      margin: 0 0 1rem;
     }
 
     &--caption {
       @include font-size($base);
     }
-
   }
 
   // <ul> 
@@ -70,109 +58,46 @@
   }
 
   &--right-lock {
-    margin-bottom: 2rem;
-    margin-right: 1rem;
-    width: 100%;
-
-    @include susy-media($prose-premobile-bp) {
-      float: right;
-      margin-left: 1rem;
-      width: 40%;
-    }
+    @extend %right-lock;
   }
 
 }
 
-.story-header {
-  $header-height-desktop: 30rem;
-  $header-height: 20rem;
-  $header-img-height: 18rem;
-
+.storytop {
+  $height: 20rem;
+  $height-desktop: 30rem;
+  @include story-header($height, $height-desktop, 18rem);
   @include clearfix;
   position: absolute;
   bottom: 0;
 
-  &__wrapper {
+  &--wrapper {
     position: relative;
-    height: $header-height;
-    margin: 0 0 2rem 0;
+    height: $height;
+    margin: 0 0 2rem;
 
     @include susy-media($susy-desktop) {
-      height: $header-height-desktop;
+      height: $height-desktop;
     }
   }
 
-  &__lead-art {
-    background-image: url(../assets/images/test.jpg);
-    background-size: cover;
-    height: $header-img-height;
-    width: 100%;
-    background-position: center center;
-
-    @include susy-media($susy-desktop) {
-      height: $header-height-desktop;
-    }
-  }
-
-  &__part {
-    @include font-size($base);
-    background-color: $tribune-yellow;
-    color: #000;
-    display: inline-block;
-    font-family: $sans-serif;
-    font-weight: 600;
-    margin: 0 0 1em 1em;
-    padding: .5rem;
-    
-    @include susy-media($page-width) {
-      margin: 0 0 1em -1em;
-    }
-  }
-
-  &__headline-box {
-    background-color: #fff;
-    margin: 0 0 0 1em;
-    padding: .5rem 1rem .5rem .5rem;
-    width: 100%;
-
-    @include susy-media($page-width) {
-      margin: 0;
-      padding: .5rem .5rem .5rem 0;
-    }
-  }
-
-  &__headline {
-    @include font-size($l);
-    font-family: $serif;
-    font-weight: 400;
-    line-height: 1.1;
-    margin: 0 0 .25em;
-
-    @include susy-media($susy-desktop) {
-      @include font-size($xl);
-      line-height: 1.2;
-    }
-  }
-
-  &__byline {
-    @include font-size($s);
-    font-family: $sans-serif;
-  
-    a {
-      color: $tribune-teal;
-      font-weight: 800;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  &--headline {
+    @include headline($l, $xl);
   }
 }
 
-.timeline {
+.timeline { 
+  &--list {
+    @include font-size($s);
+    font-family: $sans-serif;
+
+    li {
+      margin: 0 0 .5em;
+    }
+  } 
+
   &--date {
-    color: $tribune-yellow;
+    @extend %accent-subhead;
   }
 }
 
