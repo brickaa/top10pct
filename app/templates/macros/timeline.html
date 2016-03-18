@@ -1,4 +1,7 @@
-{% macro build_timeline() %}
+{% macro build_timeline(value) %}
+  {% if value.date %}
+    <span class="timeline--">{{ value.date }}</span>
+  {% endif %}
   <div class="timeline">
     <header>
       <h3 class="prose__subhead">A Brief History of the Texas Top 10 Percent Rule</h3>

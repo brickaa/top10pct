@@ -12,40 +12,19 @@
 
 {% block content %}
 <main class="main-body">
-  <div class="story-header__wrapper">
-    <div class="story-header__lead-art"></div>
-    <header class="story-header">
-      <div class="story-header__part">Part 1</div>
-      <div class="story-header__headline-box">
-        <h1 class="story-header__headline">Republish: {{ context.headline }}</h1>
-        <p class="story-header__byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
+  <div class="storytop--wrapper">
+    <div class="storytop--lead-art"></div>
+    <header class="storytop">
+      <div class="storytop--part">Part {{ context.id }}</div>
+      <div class="storytop--headline-box">
+        <h1 class="storytop--headline">{{ context.headline }}</h1>
+        <p class="storytop--byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
       </div>     
     </header>
   </div>
-
-  </div>
-
   <article class="prose republish">
     <p>You’re welcome to republish our articles and graphics for free using the following ground rules. (Please let us know if you republish our stories; it makes us happy!)</p>
-
-    <p>Here’s what you need to know:</p>
-      <ol>
-        <li>You can’t change the story in any way except with two exceptions:
-          <ul>
-            <li>Changing references to timing (say, “today” to “yesterday”) or to suit your in-house style rules (“Beaumont” to “Beaumont, Tex.”).</li>
-            <li>Shortening a story for length. Just include “This story has been edited for length.”</li>
-          </ul>
-        </li>
-        <li>You can republish our photos and graphics as long as you’re running them on the stories with which they originally appeared. If you want to run a photo or graphic apart from that story, you must seek permission. (We don’t always have the copyrights to pass along!). Email our art department or our managing editor, Ayan Mittra, for help.</li>
-        <li>Give us credit. Please publish the author’s name using the following format: by Author Name, The Texas Tribune. Link back to our home page, texastribune.org, in that credit line.</li>
-        <li>At the end of the story, when possible, please add the following: The Texas Tribune is a nonpartisan, nonprofit media organization that informs Texans — and engages with them – about public policy, politics, government and statewide issues.</li>
-        <li>Don’t resell the story to someone else.</li>
-        <li>Don’t sell ads against our story. Feel free, however, to publish it on a page surrounded by ads you’ve already sold.</li>
-        <li>If you publish our story online, please try your best to include all of our internal links and link to texastribune.org.</li>
-        <li>If we send you a request to remove the content from your site, you must agree to do so immediately.</li>
-        <li>Link back to the original article, which is located at http://www.texastribune.org/2016/03/15/chief-justice-says-judges-need-report-any-every-th/.</li>
-      </ol>
-    <p>See a full list of multimedia republishing terms here. For questions please contact Natalie Choate, director of media relations and partnerships, at <a href="mailto:nchoate@texastribune.org">nchoate@texastribune.org</a>.</p>
+    <p>See a full list of multimedia republishing terms <a href="http://www.texastribune.org/republishing-guidelines/">here</a>. For questions please contact Natalie Choate, director of media relations and partnerships, at <a href="mailto:nchoate@texastribune.org">nchoate@texastribune.org</a>.</p>
     <p>Select which option you'd prefer and then click "Copy" to copy the story text or story html:</p>
     <button id="text-btn" data-clipboard-target="#copytext" class="ghost-button active">Story Text</button>
     <button id="html-btn" data-clipboard-target="#copytext-html" class="ghost-button">Story HTML</button>

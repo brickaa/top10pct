@@ -40,7 +40,10 @@
 
 {% macro timeline(value) %}
   <aside class="nav__aside prose--{{ value.alignment }}">
-  {{ build_timeline() }}
+  {% if value.date %}
+    <span class="timeline--">{{ value.date }}</span>
+  {% endif %}
+  {{ build_timeline(value) }}
   </aside>
 {% endmacro %}
 

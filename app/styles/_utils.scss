@@ -196,6 +196,7 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
   font-weight: 600;
   margin: 0 0 1rem 1rem;
   padding: .5rem;
+  text-transform: uppercase;
   
   @include susy-media($page-width) {
     margin: 0 0 1rem -1rem;
