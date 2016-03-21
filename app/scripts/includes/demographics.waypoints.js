@@ -29,7 +29,7 @@ pos4.click(function() {
 });
 
 pos5.click(function() {
-  $('body, html').animate({ scrollTop: $('#waypoint5').offset().top - 500 }, 500);
+  $('body, html').animate({ scrollTop: $('#waypoint5').offset().top - 600 }, 500);
 });
 
 var sticky = new Waypoint.Sticky({
@@ -41,15 +41,15 @@ var inview6 = new Waypoint.Inview({
   enter: function(direction) {
     if (direction === 'down') {
       $('.sticky-charts').removeClass('stuck');
-      $('.chart-wrapper').css('position', 'absolute');
-      $('.chart-wrapper').css('bottom', 0);
+      $('.chart--wrapper').css('position', 'absolute');
+      $('.chart--wrapper').css('bottom', 0);
     }  
   },
   exit: function(direction) {
     if (direction === 'up') {
       $('.sticky-charts').addClass('stuck');
-      $('.chart-wrapper').css('position', 'relative');
-      $('.chart-wrapper').css('bottom', '');
+      $('.chart--wrapper').css('position', 'relative');
+      $('.chart--wrapper').css('bottom', '');
     }
   }
 });
@@ -136,22 +136,22 @@ var inview4 = new Waypoint.Inview({
   }
 });
 
-// var inview5 = new Waypoint.Inview({
-//   element: $('#waypoint5')[0],
-//   enter: function(direction) {
-//     if (direction === 'down') {
-//       text4.animate({ opacity: 0});
-//       text5.animate({ opacity: 1});
-//       pos4.removeClass('fa-circle').addClass('fa-circle-thin');
-//       pos5.removeClass('fa-circle-thin').addClass('fa-circle');
-//     }
-//   },
-//   exit: function(direction) {
-//     if (direction === 'up') {
-//       text4.animate({ opacity: 1});
-//       text5.animate({ opacity: 0});
-//       pos5.removeClass('fa-circle').addClass('fa-circle-thin');
-//       pos4.removeClass('fa-circle-thin').addClass('fa-circle');
-//     }
-//   }
-// });
+var inview5 = new Waypoint.Inview({
+  element: $('#waypoint5')[0],
+  enter: function(direction) {
+    if (direction === 'down') {
+      text4.animate({ opacity: 0});
+      text5.animate({ opacity: 1});
+      pos4.removeClass('fa-circle').addClass('fa-circle-thin');
+      pos5.removeClass('fa-circle-thin').addClass('fa-circle');
+    }
+  },
+  exit: function(direction) {
+    if (direction === 'up') {
+      text4.animate({ opacity: 1});
+      text5.animate({ opacity: 0});
+      pos5.removeClass('fa-circle').addClass('fa-circle-thin');
+      pos4.removeClass('fa-circle-thin').addClass('fa-circle');
+    }
+  }
+});

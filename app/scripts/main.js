@@ -34,7 +34,7 @@ function getHeights() {
 
 getHeights();
 
-var margin = {top: 10, right: 10, bottom: 30, left: 30},
+var margin = {top: 10, right: 10, bottom: 30, left: 40},
     width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
     height = chartHeight - margin.top - margin.bottom;
 
@@ -405,8 +405,8 @@ charts.forEach(function(race, index) {
       }
     });
 
-    var inview4 = new Waypoint.Inview({
-      element: $('#waypoint4')[0],
+    var inview5 = new Waypoint.Inview({
+      element: $('#waypoint5')[0],
       enter: function(direction) {
         if (direction === 'down') {
           rescale();
