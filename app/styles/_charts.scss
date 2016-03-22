@@ -5,43 +5,251 @@ $chart-bp: 630px;
   position: relative;
 }
 
-.charts {
+.chart {
+  display: block; 
   font-family: $sans-serif;
   margin: 0 auto;
-  // padding: 0 1.25em 0 0;
   width: 100%;
-  
-  // text {
-  //   @include font-size($xs);
-  // }
 
-  &--info {
+  p {
+    @include font-size($base);
+    color: $color-dk-gray;
+    font-family: $serif;
+    margin: 0 0 1rem;
+  }
+
+  &__header {
+    @include font-size($base);
+    margin: 0 0 1em;
+    text-align: center;
+  }
+
+  &__subhead {
+    @extend %subhead;
+  }
+
+  &__subtitle {
+    @extend %subtitle;
+  }
+
+  &__info {
     @include clearfix;
+    padding: 0 1rem;
 
-    &_box {
-      float: left;
-      width: 33%;
-      text-align: center;
-      padding: 0 2em;
+    @include susy-media($page-width) {
+      padding: 0;
     }
 
-    &_header {
+    &--box {      
+      @include susy-media($prose-width) {
+        float: left;
+        width: 33%;
+        text-align: center;
+        padding: 0 2em;       
+      }
+
+    }
+
+    &--header {
       @include font-size($xs);
-      height: 2.5em;
     }
 
-    &_value {
-      @include font-size($l);
-      color: $tribune-yellow;
-      height: 2em;
+    &--value {
+      @include font-size($m);
+      color: $color-primary;
+      font-family: $serif;
+      display: inline-block;
+
+      @include susy-media($prose-width) {
+        @include font-size($xl);
+        display: block;
+      }
     }
   }
+
+  &__scroll_prompt {
+    text-align: center;
+
+    .fa {
+      @include font-size($l);
+      padding: .5em 0;
+    }
+  }
+
+  &__legend {
+    bottom: 0;
+    display: inline-block;
+    font-family: $sans-serif;
+    text-align: center;
+    width: 100%;
+
+    &--ut,
+    &--tx,
+    &--wrapper {
+      display: inline-block;
+      margin: .25em 1.5em .25em 0;
+    }
+
+    &--key {
+      @include font-size($base);
+      display: inline-block;
+      vertical-align: top;
+      line-height: 1.1;
+
+      .legend--wrapper & {
+        @include font-size($s);
+      }
+    }
+
+    &--color_box {
+      display: inline-block;
+      height: 1.3em;
+      margin: -.25em .25em 0 0;
+      width: 1.3em;
+
+      &.color__tertiary {
+        background: $color-tertiary;
+      }
+
+      &.color__secondary {
+        background: $color-secondary;
+      }
+    }
+
+    &--ut {
+      opacity: 0;
+    }
+  }   
+
+  &__wrapper {
+    width: 100%;
+    padding: 0 2.5rem 0 0;
+  }
+
+  &__container {
+    display: inline-block;
+    margin: 0;
+
+    &--demographics {
+      width: 32%;
+    }
+
+    &--scatter {
+      width: 100%;
+
+      @include susy-media($prose-premobile-bp) {
+        float: left;
+        width: 50%;        
+      }
+    }
+  }
+
+  // Line charts
+  &__topper {
+    font-family: $sans-serif;
+    position: relative;
+    margin: 0 1.5em 0 1em;
+
+    &--explainer {
+      @include font-size($base, .8);
+      display: inline-block;
+
+      &_box {
+        display: inline-block;
+      }
+
+      &_text {
+        margin: .5em 0 0;
+        width: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+      }
+
+      &_text_highlight {
+        font-weight: 600;
+      }
+    }
   
+    &--scrollposition {
+      float: left;
+      margin: 1em .5em 0 0;
+      vertical-align: top;
+
+      .fa {
+        display: block;
+        margin: 0 .25em .25em -1em;
+      }
+    }
+  }
+
+  &__options {
+    margin: 0 0 1rem 0;
+    padding: 0 1rem;
+
+    @include susy-media($page-width) {
+      padding: 0;
+    }
+
+    &--header {
+      font-weight: 600;
+      margin: 0 0 1rem 0;
+      display: block;
+      @include susy-media($prose-width) {
+        display: inline-block;
+      }
+    }
+
+    &--button {
+      @include font-size($base);
+      border: 0;
+      background-color: $white;
+      font-family: $serif;
+      margin: 0 .5rem .5rem 0;
+
+      &.active,
+      &:active,
+      &:hover {
+        border-bottom: 3px solid $color-primary;
+      }
+    }
+
+    &--reset {
+      @include font-size($s);
+      background-color: $color-lt-gray;
+      border: 0;
+      border-bottom: 2px solid $color-lt-gray;
+      color: $color-dk-gray;
+      display: block;
+      font-weight: 600;
+      padding: 0 1em;
+      min-height: 32px;
+
+      &:active,
+      &:hover {
+        background-color: $color-gray;
+        border-bottom: 2px solid $color-gray;
+        color: $white;
+      }
+
+      @include susy-media($prose-premobile-bp) {
+        display: inline-block;
+      }
+    }
+  }
 }
 
-.chart--wrapper {
-  width: 100%;
+.scroll-space {
+  height: 500px;
+}
+
+.stuck {
+  position: fixed;
   padding: 0 2.5rem 0 0;
+  top: 0;
+  margin: 0 auto;
+  max-width: $page-width;
+  width: 100%;
 }
 
 .axis {
@@ -85,142 +293,4 @@ $chart-bp: 630px;
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px;
-}
-
-.chart {
-  display: block;    
-
-  &-container {
-    display: inline-block;
-    margin: 0;
-
-    &_demographics {
-      width: 32%;
-    }
-
-    &_scatter {
-      width: 100%;
-
-      @include susy-media($prose-premobile-bp) {
-        float: left;
-        width: 50%;        
-      }
-    }
-  }
-
-  // Line charts
-  &--topper {
-    font-family: $sans-serif;
-    position: relative;
-    margin: 0 1.5em 0 1em;
-
-    &_explainer_box {
-      display: inline-block;
-    }
-
-    &_explainer {
-      @include font-size($base, .8);
-      display: inline-block;
-    }
-
-    &_explainer_text {
-      margin: .5em 0 0;
-      width: 100%;
-      opacity: 0;
-      position: absolute;
-      top: 0;
-    }
-
-    &_explainer_text_highlight {
-      font-weight: 600;
-    }
-  
-    &_scrollposition {
-      float: left;
-      margin: 1em .5em 0 0;
-      vertical-align: top;
-
-      .fa {
-        display: block;
-        margin: 0 .25em .25em -1em;
-      }
-    }
-
-  }
-
-  &--header {
-    @include font-size($base);
-    margin: 0 0 1em;
-    text-align: center;
-  }
-
-  &-scroll_prompt {
-    text-align: center;
-
-    .fa {
-      @include font-size($l);
-      padding: .5em 0;
-    }
-  }
-}
-
-.scroll-space {
-  height: 500px;
-}
-
-.stuck {
-  position: fixed;
-  padding: 0 2.5rem 0 0;
-  top: 0;
-  margin: 0 auto;
-  max-width: $page-width;
-  width: 100%;
-}
-
-.legend {
-  $light-blue: #90d3c8;
-  $orange: #ff6249;
-
-  bottom: 0;
-  display: inline-block;
-  font-family: $sans-serif;
-  text-align: center;
-  width: 100%;
-
-  &_ut,
-  &_tx,
-  &--wrapper {
-    display: inline-block;
-    margin: .25em 1.5em .25em 0;
-  }
-
-  &--key {
-    @include font-size($base);
-    display: inline-block;
-    vertical-align: top;
-    line-height: 1.1;
-
-    .legend--wrapper & {
-      @include font-size($s);
-    }
-  }
-
-  &--color_box {
-    display: inline-block;
-    height: 1.3em;
-    margin: -.25em .25em 0 0;
-    width: 1.3em;
-
-    &.color-light-blue {
-      background: $light-blue;
-    }
-
-    &.color-orange {
-      background: $orange;
-    }
-  }
-
-  &_ut {
-    opacity: 0;
-  }
 }

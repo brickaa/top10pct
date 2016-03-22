@@ -13,17 +13,17 @@ import './includes/demographics.waypoints.js';
 // });
 
 var chartHeight,
-    chartTopper = $('#chart--topper_explainer_box'),
-    chartBottom = $('.chart--bottom'),
+    chartTopper = $('#chart__topper--explainer_box'),
+    chartBottom = $('.chart__bottom'),
     height;
 
 function getHeights() {
   var windowHeight = $(window).height();
 
-  var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
+  var maxTextHeight = Math.max.apply(null, $('.chart__topper--explainer_text')
     .map(function () { return $(this).height(); }).get());
 
-  var chartHeader = $('.chart--header').height(),
+  var chartHeader = $('.chart__header').height(),
       chartBottomHeight = chartBottom.height(),
       chartTopHeight = maxTextHeight + chartHeader + 34;
 
@@ -35,7 +35,7 @@ function getHeights() {
 getHeights();
 
 var margin = {top: 10, right: 10, bottom: 30, left: 40},
-    width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
+    width = parseInt(d3.select('.chart__container').style('width'), 10) - margin.left - margin.right,
     height = chartHeight - margin.top - margin.bottom;
 
 var parseDate = d3.time.format('%Y%m%d').parse;
@@ -228,7 +228,7 @@ charts.forEach(function(race, index) {
     function resize() {
       getHeights();
       // update width
-      width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
+      width = parseInt(d3.select('.chart__container').style('width'), 10) - margin.left - margin.right;
       height = chartHeight - margin.top - margin.bottom;
 
       d3.select('#' + race).select('svg')

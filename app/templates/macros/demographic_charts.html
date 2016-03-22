@@ -2,9 +2,9 @@
 <div class="demographics-wrapper">
   <div id="waypoint1"></div>  
   <div class="sticky-charts">
-    <div class="chart--wrapper">
-      <div class="chart--topper">
-        <div class="chart--topper_scrollposition">
+    <div class="chart__wrapper">
+      <div class="chart__topper">
+        <div class="chart__topper--scrollposition">
         {% for key, x in value %}
           {% if key == '1' %}
           <i id="explainerPos{{ key }}" class="fa fa-circle"></i>
@@ -13,44 +13,44 @@
           {% endif %}
         {% endfor %}
         </div>
-        <div id="chart--topper_explainer_box" class="chart--topper_explainer">
+        <div id="chart__topper--explainer_box" class="chart__topper--explainer">
         {% for key, x in value %}
-          <p id="explainer{{ key }}" class="chart--topper_explainer_text">{{ x }}</p> 
+          <p id="explainer{{ key }}" class="chart__topper--explainer_text">{{ x }}</p> 
         {% endfor %}
         </div>
 
       </div>
       <div id="charts" class="charts">
-        <div class="chart-container chart-container_demographics">
-          <header class="chart--header">
+        <div class="chart__container chart__container--demographics">
+          <header class="chart__header">
             <h2>White or Asian</h2>
           </header>
           <div id="white"></div>
         </div>
 
-        <div class="chart-container chart-container_demographics">
-          <header class="chart--header">
+        <div class="chart__container chart__container--demographics">
+          <header class="chart__header">
             <h2>Black</h2>
           </header>
           <div id="black"></div>
         </div>
 
-        <div class="chart-container chart-container_demographics">
-          <header class="chart--header">
+        <div class="chart__container chart__container--demographics">
+          <header class="chart__header">
             <h2>Hispanic</h2>
           </header>
           <div id="hispanic"></div>
         </div>
       </div>
-      <div class="chart--bottom">
-        <div class="legend">
-          <div class="legend_tx">
-            <div class="legend--color_box color-light-blue"></div>
-            <p class="legend--key">17-19 year olds in Texas</p>
+      <div class="chart__bottom">
+        <div class="chart__legend">
+          <div class="chart__legend--tx">
+            <div class="chart__legend--color_box color__tertiary"></div>
+            <p class="chart__legend--key">17-19 year olds in Texas</p>
           </div>
-          <div class="legend_ut">
-            <div class="legend--color_box color-orange"></div>
-            <p class="legend--key">UT freshman class</p>
+          <div class="chart__legend--ut">
+            <div class="chart__legend--color_box color__secondary"></div>
+            <p class="chart__legend--key">UT freshman class</p>
           </div> 
         </div>
 

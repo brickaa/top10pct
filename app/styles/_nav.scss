@@ -7,12 +7,13 @@
   &--container {
     margin: 0 auto;
     max-width: $page-width;
+    text-align: center;
     width: 100%;
   }
 
   &--logo_tt {
     display: inline-block;
-    padding: .25em 1em .5em 0;
+    padding: .5em 1em .25em 0;
   }
 
   &--sections {

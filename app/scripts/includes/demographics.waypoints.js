@@ -41,15 +41,15 @@ var inview6 = new Waypoint.Inview({
   enter: function(direction) {
     if (direction === 'down') {
       $('.sticky-charts').removeClass('stuck');
-      $('.chart--wrapper').css('position', 'absolute');
-      $('.chart--wrapper').css('bottom', 0);
+      $('.chart__wrapper').css('position', 'absolute');
+      $('.chart__wrapper').css('bottom', 0);
     }  
   },
   exit: function(direction) {
     if (direction === 'up') {
       $('.sticky-charts').addClass('stuck');
-      $('.chart--wrapper').css('position', 'relative');
-      $('.chart--wrapper').css('bottom', '');
+      $('.chart__wrapper').css('position', 'relative');
+      $('.chart__wrapper').css('bottom', '');
     }
   }
 });
@@ -60,16 +60,16 @@ var inview1 = new Waypoint.Inview({
     if (direction === 'down') {
       text1.animate({ opacity: 1});
       pos1.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_tx').animate({ opacity: 1});
-      $('.chart--header').animate({ opacity: 1});
+      $('.chart__legend--tx').animate({ opacity: 1});
+      $('.chart__header').animate({ opacity: 1});
     } 
   },
   exit: function(direction) {
     if (direction === 'up') {
       text1.animate({ opacity: 0});
       pos1.removeClass('fa-circle').addClass('fa-circle-thin');
-      $('.legend_tx').animate({ opacity: 0});
-      $('.chart--header').animate({ opacity: 0});
+      $('.chart__legend--tx').animate({ opacity: 0});
+      $('.chart__header').animate({ opacity: 0});
     }
   }
 });
@@ -82,7 +82,7 @@ var inview2 = new Waypoint.Inview({
       text2.animate({ opacity: 1});
       pos1.removeClass('fa-circle').addClass('fa-circle-thin');
       pos2.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_ut').animate({ opacity: 1});
+      $('.chart__legend--ut').animate({ opacity: 1});
     }
   },
   exit: function(direction) {
@@ -91,7 +91,7 @@ var inview2 = new Waypoint.Inview({
       text2.animate({ opacity: 0});
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
       pos1.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.legend_ut').animate({ opacity: 0});
+      $('.chart__legend--ut').animate({ opacity: 0});
     }
   }
 });

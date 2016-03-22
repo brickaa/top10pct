@@ -1,71 +1,70 @@
 {% macro scatter() %}
 
-<div id="charts" class="charts">
-  <header>
-    <h2>Demographic Trends: How Texas high schools with fewer economically disadvantaged students and more "college ready" students send greater percentages of their senior class to UT-Austin</h2>
-  </header>
-
-  <div class="charts--metro_options">
-    <span>Shows schools by metro area:</span>
-    <button id="data" class="ghost-button active">All</button>
-    <button id="austin" class="ghost-button">Austin</button>
-    <button id="dallas" class="ghost-button">Dallas</button>
-    <button id="houston" class="ghost-button">Houston</button>
-    <button id="sanantonio" class="ghost-button">San Antonio</button>
+<div id="charts" class="chart">
+  <div class="chart__options">
+    <header>
+      <h2 class="chart__subhead">Demographic Trends</h2>
+      <p>How Texas high schools with fewer economically disadvantaged students and more "college ready" students send greater percentages of their senior class to UT-Austin</p>
+    </header>
+    <p class="chart__options--header">Shows schools by metro area:</p>
+    <button id="data" class="chart__options--button active">All</button>
+    <button id="austin" class="chart__options--button">Austin</button>
+    <button id="dallas" class="chart__options--button">DFW</button>
+    <button id="houston" class="chart__options--button">Houston</button>
+    <button id="sanantonio" class="chart__options--button">San Antonio</button>
   </div>
-  
-  <div class="chosen_information">
-    <select data-placeholder="Find your school" id="chosen-select" tabindex="2">
-      <option value=""></option>
-      <optgroup id="austin-group" label="Austin-Round Rock"></optgroup>
-      <optgroup id="dallas-group" label="Dallas-Fort Worth-Arlington"></optgroup>
-      <optgroup id="houston-group" label="Houston-The Woodlands-Sugar Land"></optgroup>
-      <optgroup id="sanantonio-group" label="San Antonio-New Braunfels"></optgroup>
-      <optgroup id="other-group" label="Other"></optgroup>
-    </select>
-
-    <button id="reset-highlights">Reset</button>
-  </div>
-
-  <div class="charts--info">
-    <div class="charts--info_box">
-      <header>
-        <h4 class="charts--info_header">Percent of Seniors Enrolled at UT:</h4>
-      </header>
-      <div class="charts--info_value" id="chosen_enrolledpct"></div>
-    </div>
-    <div class="charts--info_box">
-      <header>
-        <h4 class="charts--info_header">Percent of High School "Economically Disadvantaged":</h4>
-      </header>
-      <div class="charts--info_value" id="chosen_ecodis"></div>
-    </div>
-    <div class="charts--info_box">
-      <header>
-        <h4 class="charts--info_header">Percent of High School "College-Ready":</h4>
-      </header>
-      <div class="charts--info_value" id="chosen_collegeready"></div>
-    </div>
-  </div>
-
-  <div class="chart-container_scatter">
+  <div class="chart__container--scatter">
     <div id="ecoDis"></div>
   </div>
 
-  <div class="chart-container_scatter">
+  <div class="chart__container--scatter">
     <div id="collegeReady"></div>
   </div>
-  <div class="legend">
-    <div class="legend--wrapper">
-      <div class="legend--color_box color-light-blue"></div>
-      <p class="legend--key">White and Asian Majority Schools</p>
+  <div class="chart__legend">
+    <div class="chart__legend--wrapper">
+      <div class="chart__legend--color_box color__tertiary"></div>
+      <p class="chart__legend--key">White and Asian Majority Schools</p>
     </div>
-    <div class="legend--wrapper">
-      <div class="legend--color_box color-orange"></div>
-      <p class="legend--key">Black, Hispanic or Multiracial Majority Schools</p>
+    <div class="chart__legend--wrapper">
+      <div class="chart__legend--color_box color__secondary"></div>
+      <p class="chart__legend--key">Black, Hispanic or Multiracial Majority Schools</p>
     </div> 
   </div>
-  <p>Note: This visualization excludes high schools with fewer than 100 seniors, high schools with no students admitted or enrolled to UT Austin in 2015, and high schools that the Texas Education Agency masked.</p>
+  <div class="chart__info">
+    <div class="chosen_information">
+      <select data-placeholder="Find your school" id="chosen-select" tabindex="2">
+        <option value=""></option>
+        <optgroup id="austin-group" label="Austin-Round Rock"></optgroup>
+        <optgroup id="dallas-group" label="Dallas-Fort Worth-Arlington"></optgroup>
+        <optgroup id="houston-group" label="Houston-The Woodlands-Sugar Land"></optgroup>
+        <optgroup id="sanantonio-group" label="San Antonio-New Braunfels"></optgroup>
+        <optgroup id="other-group" label="Other"></optgroup>
+      </select>
+
+      <button id="reset-highlights" class="chart__options--reset">Reset</button>
+    </div>
+    <div class="chart__info--box">
+      <header>
+        <h4 class="chart__info--header">Percent of Seniors Enrolled at UT:</h4>
+      </header>
+      <div class="chart__info--value" id="chosen_enrolledpct">%</div>
+    </div>
+    <div class="chart__info--box">
+      <header>
+        <h4 class="chart__info--header">Percent of High School "Economically Disadvantaged":</h4>
+      </header>
+      <div class="chart__info--value" id="chosen_ecodis">%</div>
+    </div>
+    <div class="chart__info--box">
+      <header>
+        <h4 class="chart__info--header">Percent of High School "College-Ready":</h4>
+      </header>
+      <div class="chart__info--value" id="chosen_collegeready">%</div>
+    </div>
+
+    <p>Note: This visualization excludes high schools with fewer than 100 seniors, high schools with no students admitted or enrolled to UT Austin in 2015, and high schools that the Texas Education Agency masked.</p>
+  </div>
+
 </div>
 
 {% endmacro %}

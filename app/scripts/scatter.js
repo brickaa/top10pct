@@ -3,9 +3,9 @@
 import './includes/chosen.jquery.js';
 
 var margin = {top: 10, right: 10, bottom: 30, left: 60},
-    width = parseInt(d3.select('.chart-container_scatter').style('width'), 10) - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
-
+    width = parseInt(d3.select('.chart__container--scatter').style('width'), 10) - margin.left - margin.right,
+    height = 200 - margin.top - margin.bottom;
+    
 //   // setup x 
 var xScale = d3.scale.linear().range([0, width]), // value -> display
     xAxis = d3.svg.axis().scale(xScale).orient('bottom');
@@ -91,7 +91,7 @@ charts.forEach(function(chart, index) {
   // Load Data
   d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
     // Color assignments
-    var color = d3.scale.ordinal().range(['#90D3C8','#FF6249','#8DC967','#8DC967','#FFD454']);
+    var color = d3.scale.ordinal().range(['#356D97','#99cc33']);
       
     data = data.map( function (d) {
       return { 
@@ -153,7 +153,7 @@ charts.forEach(function(chart, index) {
       var dots = svg.selectAll('.dot');
       dots.remove();
 
-      xScale.domain([0, .18]);
+      xScale.domain([0, 0.18]);
       yScale.domain([0, 1]);
 
       // draw dots
@@ -161,7 +161,7 @@ charts.forEach(function(chart, index) {
           .data(data)
           .enter().append('circle')
             .attr('class', 'dot')
-            .attr('r', 2)
+            .attr('r', 1.5)
             .attr('cx', xMap)
             .attr('cy', yMap)
             .style('fill', function(d) { return color(d.color); })
@@ -171,11 +171,11 @@ charts.forEach(function(chart, index) {
               $('#chosen-select').trigger('change');
             })
             .on('mouseover', function(d) {
-              $('#chosen-select').val(d.id);
-              $('#chosen-select').trigger('chosen:updated');
-              $('#chosen-select').trigger('change');              
-            })
-            .on('mouseout', function(d) {
+              if($(window).width() > 480) {
+                 $('#chosen-select').val(d.id);
+                 $('#chosen-select').trigger('chosen:updated');
+                 $('#chosen-select').trigger('change');            
+              }     
             });
     }
 
@@ -183,7 +183,7 @@ charts.forEach(function(chart, index) {
     d3.select(window).on('resize.' + chart, resize).transition();
 
     function resize() {
-      width = parseInt(d3.select('.chart-container_scatter').style('width'), 10) - margin.left - margin.right;
+      width = parseInt(d3.select('.chart__container--scatter').style('width'), 10) - margin.left - margin.right;
       d3.select('#' + chart).select('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom);
@@ -214,7 +214,7 @@ charts.forEach(function(chart, index) {
     yScale.domain([0, 1]);
 
     // x-axis
-    xScale.domain([0, .18]);
+    xScale.domain([0, 0.18]);
     svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
@@ -280,9 +280,9 @@ charts.forEach(function(chart, index) {
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
       $('#chosen-select').val('').trigger('chosen:updated');
-      $('#chosen_enrolledpct').empty();
-      $('#chosen_ecodis').empty();
-      $('#chosen_collegeready').empty();
+      $('#chosen_enrolledpct').html('%');
+      $('#chosen_ecodis').html('%');
+      $('#chosen_collegeready').html('%');
     }
 
     $('#reset-highlights').click(resetValues);
@@ -294,7 +294,6 @@ charts.forEach(function(chart, index) {
           ecodis = Math.round(object[0].ecodis * 100),
           collegeready = Math.round(object[0].collegeready * 100);
 
-      console.log(enrolledpct);
       $('#chosen_enrolledpct').html(enrolledpct + '%');
       $('#chosen_ecodis').html(ecodis + '%');
       $('#chosen_collegeready').html(collegeready + '%');
@@ -311,7 +310,7 @@ charts.forEach(function(chart, index) {
           .enter().append('circle')
             .attr('class', 'highlight')
             .filter(function(d){ return d.id === id; })        // <== This line
-            .style('fill', 'rgb(255, 194, 0)')                            // <== and this one
+            .style('fill', 'rgb(163, 31, 58)')                            // <== and this one
             .attr('r', 3)
             .attr('cx', xMap)
             .attr('cy', yMap);
