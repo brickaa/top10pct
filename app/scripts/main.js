@@ -63,6 +63,8 @@ var line = d3.svg.line()
 
 var charts = ['white', 'black', 'hispanic'];
 
+// $('.chart-container').width($('.prose').width()/3.1);
+
 charts.forEach(function(race, index) {
   // Build SVG Container
   var svg = d3.select('#' + race).append('svg')

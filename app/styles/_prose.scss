@@ -28,10 +28,15 @@
 
   &__blockquote {
     @extend %aside-box;
+    font-family: $serif;
 
     &--quote {
       @include font-size($l);
       margin: 0 0 1rem;
+
+      &:before {
+        content: open-quote;
+      }
     }
 
     &--caption {
@@ -68,8 +73,13 @@
   $height-desktop: 30rem;
   @include story-header($height, $height-desktop, 18rem);
   @include clearfix;
+  margin: 0 0 0 1em;
   position: absolute;
   bottom: 0;
+
+  @include susy-media($susy-desktop) {
+    margin: 0;
+  }
 
   &--wrapper {
     position: relative;

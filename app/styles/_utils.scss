@@ -6,6 +6,9 @@ $tribune-black: rgb(17, 17, 17);
 $tribune-teal: rgb(0, 137, 144);
 $tribune-yellow: rgb(255, 194, 0);
 $white: rgb(255, 255, 255);
+$color-primary: rgb(163,31,58); // #a31f3a; dark red
+$color-secondary: rgb(53,109,151); // #356D97 blue
+$color-tertiary: rgb(202,206,76); // #cace4c chartreuse
 
 // Sample Breakpoints
 $small: new-breakpoint(min-width 460px max-width 810px);
@@ -44,7 +47,7 @@ $xs: 12;
 $xxs: 9;
 
 // Font Stuff
-$serif: "Georgia", "Cambria", "Times New Roman", "Times", serif;
+$serif: "utopia-std", "Georgia", "Cambria", "Times New Roman", "Times", serif;
 $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
 
 @mixin font-size($f, $pct:1, $bp:480px) {
@@ -155,11 +158,6 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
 
 // Container styles for asides
 %aside-box {
-  border-top: 2px;
-  border-bottom: 2px;
-  border-style: solid;
-  border-color: $tribune-yellow;
-  font-family: $sans-serif;
   margin: 0 0 1rem;
   max-width: $prose-width;
   padding: 1rem 0;
@@ -179,7 +177,7 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
 }
 
 %link {
-  color: $tribune-teal;
+  color: $color-secondary;
 
   &:active,
   &:hover {
@@ -187,20 +185,16 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
   } 
 }
 
-%part-box {
-  @include font-size($base);
-  background-color: $tribune-yellow;
-  color: #000;
+@mixin part-box($size) {
+  @include font-size($size);
+  background-color: $color-primary;
+  color: $white;
   display: inline-block;
-  font-family: $sans-serif;
+  font-family: $serif;
   font-weight: 600;
-  margin: 0 0 1rem 1rem;
-  padding: .5rem;
+  letter-spacing: .1em;
+  padding: $size/32 +rem;
   text-transform: uppercase;
-  
-  @include susy-media($page-width) {
-    margin: 0 0 1rem -1rem;
-  }
 }
 
 @mixin story-header($height, $height-desktop, $img-height) {
@@ -218,18 +212,21 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
   }
   
   &--part {
-    @extend %part-box;
+    @include part-box($base);
+    @include susy-media($page-width) {
+      margin: 0 0 1rem -1rem;
+    }
   }
 
   &--headline-box {
     background-color: #fff;
-    margin: 0 0 0 1em;
-    padding: .5rem 1rem .5rem .5rem;
+    padding: 1rem;
     width: 100%;
 
     @include susy-media($page-width) {
+      max-width: $prose-width;
       margin: 0;
-      padding: .5rem .5rem .5rem 0;
+      padding: 1rem 1rem 0 0;
     }
   }
 
@@ -238,7 +235,14 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
     font-family: $sans-serif;
   
     a {
-      @extend %link;
+      color: $color-secondary;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:active,
+      &:hover {
+        text-decoration: underline;
+      }      
     }
   }
 }

@@ -1,24 +1,26 @@
 {% macro nav(id) %}
   <nav class="nav">
-    <div class="nav--logo_tt">
-      <img src="{{ PATH_PREFIX }}assets/images/tt-logo.svg">
+    <div class="nav--container">
+      <div class="nav--logo_tt">
+        <img src="{{ PATH_PREFIX }}assets/images/tt-logo.svg">
+      </div>
+      <ul class="nav--sections">
+  <!--       <li>The Price of Admission</li>
+   --><!--     {% if id == '1' %}
+        <li class="nav--sections_active"><a href="{{ PATH_PREFIX }}"><span>Part 1</span></a></li>
+        <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
+        <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
+      {% elif id == '2' %}
+        <li><a href="{{ PATH_PREFIX }}">1</a></li>
+        <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ id }}"><span>Part 2</span></a></li>
+        <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
+      {% else %}
+        <li><a href="{{ PATH_PREFIX }}">1</a></li>
+        <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
+        <li class="nav--sections_active"><a href="{{ PATH_PREFIX }}"><span>Part 3</span></a></li>
+      {% endif %} -->
+      </ul>
     </div>
-    <ul class="nav--sections">
-      <li>The Price of Admission</li>
-<!--     {% if id == '1' %}
-      <li class="nav--sections_active"><a href="{{ PATH_PREFIX }}"><span>Part 1</span></a></li>
-      <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
-      <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
-    {% elif id == '2' %}
-      <li><a href="{{ PATH_PREFIX }}">1</a></li>
-      <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ id }}"><span>Part 2</span></a></li>
-      <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
-    {% else %}
-      <li><a href="{{ PATH_PREFIX }}">1</a></li>
-      <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
-      <li class="nav--sections_active"><a href="{{ PATH_PREFIX }}"><span>Part 3</span></a></li>
-    {% endif %} -->
-    </ul>
   </nav>
 {% endmacro %}
 
@@ -29,24 +31,21 @@
     <p class="nav__aside--subtitle">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</p>
   </header>
   <ul>
-    <a class="nav__aside--link" href=""><li class="nav__aside--story_wrapper">
-<!--       <figure class="nav__aside--thumbnail">
-        <img src="http://placehold.it/75x75">
-      </figure> -->
+    <a class="nav__aside--link" href="{{ PATH_PREFIX }}"><li class="nav__aside--story_wrapper">
       <div class="nav__aside--part-wrapper">
-        <p class="nav__aside--part">Part 1</p>
+        <p class="nav__aside--part">Part I</p>
         <p class="nav__aside--headline">This is a sample headline</p>
       </div>    
     </li></a>
-    <a class="nav__aside--link" href=""><li class="nav__aside--story_wrapper">
+    <a class="nav__aside--link" href="{{ PATH_PREFIX }}story_two"><li class="nav__aside--story_wrapper">
       <div class="nav__aside--part-wrapper">
-        <p class="nav__aside--part">Part 2</p>
+        <p class="nav__aside--part">Part II</p>
         <p class="nav__aside--headline">This is a sample headline</p>
       </div>    
     </li></a>
-    <a class="nav__aside--link" href=""><li class="nav__aside--story_wrapper">
+    <a class="nav__aside--link" href="{{ PATH_PREFIX }}story_three"><li class="nav__aside--story_wrapper">
       <div class="nav__aside--part-wrapper">
-        <p class="nav__aside--part">Part 3</p>
+        <p class="nav__aside--part">Part III</p>
         <p class="nav__aside--headline">This is a sample headline</p>
       </div>    
     </li></a>

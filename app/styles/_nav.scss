@@ -4,9 +4,15 @@
   background-color: $tribune-black;
   font-family: $sans-serif;
 
+  &--container {
+    margin: 0 auto;
+    max-width: $page-width;
+    width: 100%;
+  }
+
   &--logo_tt {
     display: inline-block;
-    padding: .25em 1em;
+    padding: .25em 1em .5em 0;
   }
 
   &--sections {
@@ -80,7 +86,7 @@
     }
 
     &--part {
-      @extend %accent-subhead;
+      @include part-box($xxs);
     }
 
     &--headline {

@@ -8,7 +8,7 @@ $chart-bp: 630px;
 .charts {
   font-family: $sans-serif;
   margin: 0 auto;
-  padding: 0 1.25em 0 0;
+  // padding: 0 1.25em 0 0;
   width: 100%;
   
   // text {
@@ -41,6 +41,7 @@ $chart-bp: 630px;
 
 .chart--wrapper {
   width: 100%;
+  padding: 0 2.5rem 0 0;
 }
 
 .axis {
