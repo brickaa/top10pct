@@ -9,7 +9,7 @@ var node = document.getElementsByTagName('script')[0];
 node.parentNode.insertBefore(gads, node);
 
 googletag.cmd.push(function () {
-  googletag.pubads().setTargeting('tribpedia', 'bordering-on-insecurity');
+  googletag.pubads().setTargeting('tribpedia', 'price-of-admission');
 
   // BANNER SIZING
   // var bannerMapping = googletag.sizeMapping()

@@ -50,14 +50,8 @@
     @include susy-media($prose-desktop-bp) {
       float: right;
       margin-left: 1rem;
-      // margin-right: -10rem;
       width: 40%;      
     }
-
-    // @include susy-media($prose-desktop-bp) {
-    //   margin-right: -15rem;
-    //   width: 70%;      
-    // }
   }
 
   &__img {
@@ -72,22 +66,8 @@
     letter-spacing: .05em;
     line-height: 1.3;
 
-    .gallery-content & {
-      @extend %content-padding;
-      @include font-size($s);
-
-      @include susy-media($sidebar-break) {
-        @include font-size($base);
-      }
-    }
-
     .invert & {
       color: $white;
-    }
-
-    .image--left &,
-    .image--right & {
-      @extend %content-padding;
     }
   }
 }

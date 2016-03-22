@@ -50,7 +50,7 @@
 
   // Inside Story Navigation
   &__aside {
-    @extend %right-lock;
+    @extend %left-lock;
 
     &--header {
       @extend %subhead;

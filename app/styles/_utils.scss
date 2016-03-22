@@ -2,13 +2,18 @@ $font-georgia: Georgia, Times, 'Times New Roman', serif;
 $font-helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Tribune Colors
-$tribune-black: rgb(17, 17, 17);
+$color-dk-gray: rgb(17, 17, 17);
 $tribune-teal: rgb(0, 137, 144);
 $tribune-yellow: rgb(255, 194, 0);
+$tribune-black: #000;
 $white: rgb(255, 255, 255);
-$color-primary: rgb(163,31,58); // #a31f3a; dark red
-$color-secondary: rgb(53,109,151); // #356D97 blue
-$color-tertiary: rgb(202,206,76); // #cace4c chartreuse
+$color-primary: rgb(163, 31, 58); // #a31f3a; dark red/burgundy
+$color-secondary: rgb(53, 109, 151); // #356D97 steel blue
+$color-tertiary: rgb(153, 204, 51); // #99cc33 lime
+$color-lt-gray: rgb(153, 204, 51); //#e1e1e1
+$color-gray: rgb(137, 136, 149); //#898895
+$color-dk-gray: rgb(58, 58, 79); // #3a3a4f
+
 
 // Sample Breakpoints
 $small: new-breakpoint(min-width 460px max-width 810px);
@@ -20,7 +25,7 @@ $default-mobile: new-breakpoint(max-width 480px);
 
 // Max page width
 $page-width: 60em;
-$prose-width: 40em;
+$prose-width: 48em;
 $prose-premobile-bp: 38em;
 $prose-desktop-bp: 60em;
 
@@ -96,7 +101,7 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
     padding: .4em .75em .5em;
   } @else {
     background: $color;
-    @if $color == $tribune-teal {
+    @if $color == $color-primary {
       color: $white;
     } @else {
       color: #000;
@@ -116,52 +121,27 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
 }
 
 .button {
-  @include btn($tribune-yellow);
+  @include btn($color-primary);
 }
 
 .ghost-button {
-  @include btn($tribune-teal, ghost);
+  @include btn($color-primary, ghost);
 
   &.active {
-    background-color: transparentize($tribune-teal, .8);
+    background-color: transparentize($color-primary, .8);
   }
 }
-
 
 %content-padding {
   padding: 0 1rem;
 }
-// Story Subheader
-%subhead {
-  @include font-size($m);
-  font-family: $sans-serif;
-  font-weight: 600;
-  margin: 0 0 1rem;
-}
 
-// Subtitle underneath subheader
-%subtitle {
-  @include font-size($xs);
-  font-family: $sans-serif;
-  font-weight: 400;
-  color: #666;
-  margin: 0 0 1rem 0;
-}
+%left-padding {
+  padding: 0 1rem;
 
-%accent-subhead {
-  @include font-size($xs);
-  color: $tribune-yellow;
-  font-family: $sans-serif;
-  font-weight: 600;
-  margin: 0 0 .15rem;
-}
-
-// Container styles for asides
-%aside-box {
-  margin: 0 0 1rem;
-  max-width: $prose-width;
-  padding: 1rem 0;
-  position: relative;
+  @include susy-media($prose-desktop-bp) {
+    padding: 0 1rem 0 4rem;
+  }
 }
 
 %right-lock {
@@ -176,86 +156,13 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
   }
 }
 
-%link {
-  color: $color-secondary;
+%left-lock {
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  width: 100%;
 
-  &:active,
-  &:hover {
-    text-decoration: underline;
-  } 
-}
-
-@mixin part-box($size) {
-  @include font-size($size);
-  background-color: $color-primary;
-  color: $white;
-  display: inline-block;
-  font-family: $serif;
-  font-weight: 600;
-  letter-spacing: .1em;
-  padding: $size/32 +rem;
-  text-transform: uppercase;
-}
-
-@mixin story-header($height, $height-desktop, $img-height) {
-
-  &--lead-art {
-    background-image: url(../assets/images/test.jpg);
-    background-size: cover;
-    height: $img-height;
-    width: 100%;
-    background-position: center center;
-
-    @include susy-media($susy-desktop) {
-      height: $height-desktop;
-    }
-  }
-  
-  &--part {
-    @include part-box($base);
-    @include susy-media($page-width) {
-      margin: 0 0 1rem -1rem;
-    }
-  }
-
-  &--headline-box {
-    background-color: #fff;
-    padding: 1rem;
-    width: 100%;
-
-    @include susy-media($page-width) {
-      max-width: $prose-width;
-      margin: 0;
-      padding: 1rem 1rem 0 0;
-    }
-  }
-
-  &--byline {
-    @include font-size($s);
-    font-family: $sans-serif;
-  
-    a {
-      color: $color-secondary;
-      font-weight: 600;
-      text-decoration: none;
-
-      &:active,
-      &:hover {
-        text-decoration: underline;
-      }      
-    }
-  }
-}
-
-@mixin headline($base, $desktop) {
-  @include font-size($base);
-  font-family: $serif;
-  font-weight: 400;
-  line-height: 1.1;
-  margin: 0 0 .25rem;
-
-  @include susy-media($susy-desktop) {
-    @include font-size($desktop);
-    line-height: 1.2;
+  @include susy-media($prose-premobile-bp) {
+    float: left;
+    width: 40%;
   }
 }
