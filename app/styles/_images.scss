@@ -10,10 +10,6 @@
     width: 100%;
   }
 
-  &--basic {
-    max-width: 40.625rem;
-  }
-
   &--left {
     @include susy-media($sidebar-break) {
       float: left;
@@ -65,9 +61,18 @@
     font-family: $sans-serif;
     letter-spacing: .05em;
     line-height: 1.3;
+    padding: 0 1rem;
+
+    @include susy-media($page-width) {
+      padding: 0;
+    }
 
     .invert & {
       color: $white;
+    }
+
+    > .prose--basic {
+      padding: 0;
     }
   }
 }

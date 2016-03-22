@@ -4,6 +4,11 @@
   font-family: $sans-serif;
   font-weight: 600;
   margin: 0 0 1rem;
+  padding: 0 1rem;
+
+  @include susy-media($page-width) {
+    padding: 0;
+  }
 }
 
 // Subtitle underneath subheader
@@ -48,8 +53,9 @@
   font-family: $serif;
   font-weight: 600;
   letter-spacing: .1em;
-  padding: $size/24 +rem;
+  padding: $size/40 +rem $size/24 +rem;
   margin-bottom: $size/8+rem;
+  min-width: $size/16*3+rem;
   text-transform: uppercase;
 }
 
@@ -63,23 +69,21 @@
 
     @include susy-media($prose-desktop-bp) {
       height: $height-desktop;
+      margin-left: 2rem;
     }
   }
   
   &--part {
     @include part-box($m);
-    @include susy-media($page-width + 2em) {
-      margin-left: -2rem;
-    }
   }
 
   &--headline-box {
     background-color: #fff;
-    padding: 1rem;
+    padding: 0 1rem 1rem;
     width: 100%;
 
-    @include susy-media($prose-desktop-bp) {
-      padding: 1rem 1rem 1rem 2rem;
+    @include susy-media($prose-width) {
+      padding: 1rem 1rem 1rem 3rem;
       max-width: $prose-width;
       margin: 0;
     }
@@ -126,8 +130,8 @@
     margin-bottom: 1rem;
     max-width: $prose-width;
 
-    @include susy-media($prose-desktop-bp) {
-      padding: 0 1rem 0 2rem;
+    @include susy-media($prose-width) {
+      padding: 0 1rem 0 3rem;
     }
     
     a {
@@ -183,16 +187,17 @@
 }
 
 .storytop {
-  $height: 20rem;
+  $height: 26rem;
   $height-desktop: 30rem;
   @include story-header($height, $height-desktop, 18rem);
   @include clearfix;
   position: absolute;
-  bottom: 1em;
+  bottom: 0;
 
-  @include susy-media($prose-desktop-bp) {
-    bottom: 0;
-  }
+  // @include susy-media($prose-desktop-bp) {
+  //   position: absolute;
+  //   bottom: 0;
+  // }
 
   &--wrapper {
     color: $color-dk-gray;
