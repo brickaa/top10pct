@@ -1,6 +1,6 @@
 {% macro scatter() %}
 
-<div id="charts" class="chart">
+<div id="charts" class="chart chart__wrapper">
   <div class="chart__options">
     <header>
       <h2 class="chart__subhead">Demographic Trends</h2>
@@ -43,7 +43,7 @@
 
       <button id="reset-highlights" class="chart__options--reset">Reset</button>
     </div>
-    <div class="chart__info--box-wrapper">
+    <div class="chart__info--box-wrapper title">
       <div class="chart__info--box">
         <header>
           <h4 class="chart__info--header">Percent of Seniors Enrolled at UT:</h4>
@@ -60,7 +60,7 @@
         </header>
       </div>
     </div>
-    <div class="chart__info--box-wrapper">
+    <div class="chart__info--box-wrapper value">
       <div class="chart__info--box">
         <div class="chart__info--value" id="chosen_enrolledpct">%</div>
       </div>
