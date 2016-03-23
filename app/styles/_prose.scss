@@ -203,6 +203,8 @@
 
   .ad-slot {
     margin-bottom: 1rem;
+    max-width: $prose-width;
+    text-align: center;
   }
 
   &--left-lock {
