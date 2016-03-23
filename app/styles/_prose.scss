@@ -245,7 +245,7 @@
 }
 
 .timeline { 
-  &--list {
+  &__list {
     @include font-size($s);
     font-family: $sans-serif;
 
@@ -254,7 +254,19 @@
     }
   } 
 
-  &--date {
+  &__date {
+    @include font-size($base);
+    color: $color-primary;
+    font-family: $serif;
+    font-weight: 600;
+  }
+
+  &__subhead {
+    @extend %subhead;
+  }
+
+  &__subtitle {
+    @extend %subtitle;
   }
 }
 

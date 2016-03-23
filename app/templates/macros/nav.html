@@ -2,24 +2,8 @@
   <nav class="nav">
     <div class="nav--container">
       <div class="nav--logo_tt">
-        <img src="{{ PATH_PREFIX }}assets/images/tt-logo.svg">
+        <a href="http://www.texastribune.org"><img src="{{ PATH_PREFIX }}assets/images/tt-logo.svg"></a>
       </div>
-      <ul class="nav--sections">
-  <!--       <li>The Price of Admission</li>
-   --><!--     {% if id == '1' %}
-        <li class="nav--sections_active"><a href="{{ PATH_PREFIX }}"><span>Part 1</span></a></li>
-        <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
-        <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
-      {% elif id == '2' %}
-        <li><a href="{{ PATH_PREFIX }}">1</a></li>
-        <li class="nav--sections_active"><a href="{{ data.PATH_PREFIX}}{{ id }}"><span>Part 2</span></a></li>
-        <li><a href="{{ PATH_PREFIX }}story_three">3</a></li>
-      {% else %}
-        <li><a href="{{ PATH_PREFIX }}">1</a></li>
-        <li><a href="{{ PATH_PREFIX }}story_two">2</a></li>
-        <li class="nav--sections_active"><a href="{{ PATH_PREFIX }}"><span>Part 3</span></a></li>
-      {% endif %} -->
-      </ul>
     </div>
   </nav>
 {% endmacro %}
@@ -67,11 +51,11 @@
 {% macro navfooter(id, headline) %}
   <aside class="nav__footer">
     <div class="nav__footer--wrapper">
-      {% if id == '1' %}
+      {% if id == 'i' %}
       <a href="{{ PATH_PREFIX }}story_two">
       <div class="nav__footer--lead-art"></div>
       <header class="nav__footer--box">
-        <div class="nav__footer--part">Part 2</div>
+        <div class="nav__footer--part">Part II</div>
         <div class="nav__footer--headline-box">
           <h1 class="nav__footer--headline">This is a test headline</h1>
         </div>     
@@ -81,7 +65,7 @@
       <a href="{{ PATH_PREFIX }}">
       <div class="nav__footer--lead-art"></div>
       <header class="nav__footer--box">
-        <div class="nav__footer--part">Part 1</div>
+        <div class="nav__footer--part">Part I</div>
         <div class="nav__footer--headline-box">
           <h1 class="nav__footer--headline">This is a test headline</h1>
         </div>     
@@ -90,11 +74,11 @@
       {% endif %}
     </div>
     <div class="nav__footer--wrapper">
-      {% if id == '3' %}
+      {% if id == 'iii' %}
       <a href="{{ PATH_PREFIX }}story_two">
       <div class="nav__footer--lead-art"></div>
       <header class="nav__footer--box">
-        <div class="nav__footer--part">Part 2</div>
+        <div class="nav__footer--part">Part II</div>
         <div class="nav__footer--headline-box">
           <h1 class="nav__footer--headline">This is a test headline</h1>
         </div>     
@@ -104,7 +88,7 @@
       <a href="{{ PATH_PREFIX }}story_three">
       <div class="nav__footer--lead-art"></div>
       <header class="nav__footer--box">
-        <div class="nav__footer--part">Part 3</div>
+        <div class="nav__footer--part">Part III</div>
         <div class="nav__footer--headline-box">
           <h1 class="nav__footer--headline">This is a test headline</h1>
         </div>     

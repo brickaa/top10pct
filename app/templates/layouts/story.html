@@ -6,6 +6,21 @@
 
 {% import 'macros/prose.html' as prose %}
 
+{% block meta %}
+<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "headline": "{{ context.headline }}",
+      "url": "{{ data.PATH_FULL }}",
+      "thumbnailUrl": "",
+      "dateCreated": "2016-02-09T06:00:00-06:00",
+      "articleSection": "FRONT PAGE, HIGHER EDUCATION",
+      "creator": ["Becca Aaronson, The Texas Tribune"]
+    }
+</script>
+{% endblock %}
+
 {% block header %}
   {{ nav(context.id, context.short_head) }}
 {% endblock %}

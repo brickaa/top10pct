@@ -1,22 +1,17 @@
 {% macro build_timeline(value) %}
-  {% if value.date %}
-    <span class="timeline--">{{ value.date }}</span>
-  {% endif %}
   <div class="timeline">
     <header>
-      <h3 class="prose__subhead">A Brief History of the Texas Top 10 Percent Rule</h3>
-      <p class="prose__subtitle">Here's a sentence</p>
+      <h3 class="timeline__subhead">A Brief History of the Texas Top 10 Percent Rule</h3>
     </header>
-<!--     <button id="timeline" class="ghost-button"><span class="expand">Expand</span><span class="collapse" style="display: none;">Collapse</span></button> -->
-    <ul id="timeline--list" class="timeline--list">
-      <li><span class="timeline--date">1996 - </span>Fifth Circuit Court of Appeals rules that UT Law must use a race-neutral admissions process, effectively ending the use of affirmative action in Texas.</li>
-      <li><span class="timeline--date">1997 - </span>The Texas Legislature creates the top 10 percent rule promising  students who graudate at the top of their class automatic admission to public universities.</li>
-      <li><span class="timeline--date">2003 - </span>The U.S. Supreme Court upholds the use of affirmative action. UT-Austin begins to again consider race when evaluating non-top 10 percent applicants.</li>
-      <li><span class="timeline--date">2008 - </span>Abigail Fisher, a white student from Sugar Land, is denied admission to UT-Austin and later sues the university claiming that she was denied because of her race.</li>
-      <li><span class="timeline--date">2009 - </span>The Texas Legislature tweaks the top 10 percent rule, allowing UT-Austin to cap the number of students it automatically admits at 75 percent.</li>
-      <li><span class="timeline--date">2012 - </span>Fisher's lawsuit reaches the U.S. Supreme Court.</li>
-      <li><span class="timeline--date">2013 - </span>The Supreme Court issues a limited ruling on Fisher's lawsuit, effectively upholding affirmative action.</li>
-      <li><span class="timeline--date">2015 - </span>The U.S. Supreme Court agrees to re-hear the Fisher case.</li>
+    <ul class="timeline__list">
+      <li><span class="timeline__date">1996 - </span>Fifth Circuit Court of Appeals rules that UT Law must use a race-neutral admissions process, effectively ending the use of affirmative action in Texas.</li>
+      <li><span class="timeline__date">1997 - </span>The Texas Legislature creates the top 10 percent rule promising  students who graudate at the top of their class automatic admission to public universities.</li>
+      <li><span class="timeline__date">2003 - </span>The U.S. Supreme Court upholds the use of affirmative action. UT-Austin begins to again consider race when evaluating non-top 10 percent applicants.</li>
+      <li><span class="timeline__date">2008 - </span>Abigail Fisher, a white student from Sugar Land, is denied admission to UT-Austin and later sues the university claiming that she was denied because of her race.</li>
+      <li><span class="timeline__date">2009 - </span>The Texas Legislature tweaks the top 10 percent rule, allowing UT-Austin to cap the number of students it automatically admits at 75 percent.</li>
+      <li><span class="timeline__date">2012 - </span>Fisher's lawsuit reaches the U.S. Supreme Court.</li>
+      <li><span class="timeline__date">2013 - </span>The Supreme Court issues a limited ruling on Fisher's lawsuit, effectively upholding affirmative action.</li>
+      <li><span class="timeline__date">2015 - </span>The U.S. Supreme Court agrees to re-hear the Fisher case.</li>
     </ul>
   </div>
 {% endmacro %}
