@@ -217,6 +217,28 @@
 
 }
 
+.logo {
+  img { 
+    margin: .25em auto;
+    max-height: 5em;
+  }
+
+  &__mobile {
+    display: block;
+
+    @include susy-media($prose-width) {
+      display: none;
+    }
+  }
+
+  &__desktop {
+    display: none;
+
+    @include susy-media($prose-width) {
+      display: block;
+    }
+  }
+}
 .storytop {
   $height: 26rem;
   $height-desktop: 30rem;
