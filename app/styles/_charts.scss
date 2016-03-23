@@ -6,12 +6,12 @@ $chart-bp: 630px;
   margin: 0 auto;
   width: 100%;
 
-  p {
-    @include font-size($base);
-    color: $color-dk-gray;
-    font-family: $serif;
-    margin: 0 0 1rem;
-  }
+  // p {
+  //   @include font-size($base);
+  //   color: $color-dk-gray;
+  //   font-family: $serif;
+  //   margin: 0 0 1rem;
+  // }
 
   &__header {
     @include font-size($base);
@@ -38,7 +38,12 @@ $chart-bp: 630px;
       padding: 0;
     }
 
-    &--box {      
+    &--box-wrapper {
+      @include clearfix;
+    }
+
+    &--box {
+      @include clearfix;   
       @include susy-media($prose-width) {
         float: left;
         padding: 0 2em;       
@@ -124,14 +129,36 @@ $chart-bp: 630px;
     &--ut {
       opacity: 0;
     }
-  }   
+  }  
+
+  &__source {
+    @include font-size($xxs);
+    color: $color-dk-gray;
+    text-align: left;
+    padding: 0;
+    margin: 0 0 2em;
+
+
+    @include susy-media($prose-width) {
+      padding: 0 1rem 0 2rem;
+    }
+
+    a {
+      color: $color-secondary;
+
+      &:active,
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  } 
 
   &__position--wrapper {
     position: relative;
   }
 
   &__wrapper {
-    margin: 0 1.25em;
+    margin: 0 1em;
     width: 100%;
   }
 
@@ -157,7 +184,7 @@ $chart-bp: 630px;
   &__top {
     font-family: $sans-serif;
     position: relative;
-    margin: 16px 1.5em .5em 1em;
+    margin: 16px 1.5em .5em 0;
 
     &--explainer {
       @include font-size($base, .8);
@@ -188,13 +215,13 @@ $chart-bp: 630px;
     &--scrollposition {
       color: $color-dk-gray;
       float: left;
-      margin: 8px .5em 0 0;
+      margin: 8px 0 0 0;
       vertical-align: top;
 
       .fa {
-        @include font-size($s);
+        @include font-size($xs);
         display: block;
-        margin: 0 .25em .25em -1em;
+        margin: 0 .5em .5em -1em;
       }
     }
   }
@@ -208,9 +235,11 @@ $chart-bp: 630px;
     }
 
     &--header {
+      font-family: $serif;
       font-weight: 600;
       margin: 0 0 1rem 0;
       display: block;
+
       @include susy-media($prose-width) {
         display: inline-block;
       }
