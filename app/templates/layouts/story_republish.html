@@ -38,7 +38,8 @@
         {{ prose[item.type](item.value, data) }}
       {% endif %}
     {% endfor %}
-    <p>This article originally appeared in The Texas Tribune at <a href="{{ data.PATH_PREFIX }}{{ context.slug }}">http://apps.texastribune.org/top10/{{ context.slug }}</a></p>
+    <p>This story is part of The Texas Tribune's <a href="http://apps.texastribune.org/price-of-admission">Price of Admission</a> series.</p>
+    <p><a href="http://www.texastribune.org/">The Texas Tribune</a> is a nonpartisan, nonprofit media organization that informs Texans — and engages with them – about public policy, politics, government and statewide issues. Learn more at <a href="http://www.texastribune.org/">texastribune.org.</a></p>
     </div>
     <div id="html">
 <!--       <pre style="display:block;">
@@ -48,7 +49,8 @@
             {{ prose['html_text'](item.value, data) }}
           {% endif %}
         {% endfor %}
-        &lt;p>This article originally appeared in The Texas Tribune at &lt;a href="{{ data.PATH_PREFIX }}{{ context.slug }}">http://apps.texastribune.org/top10/{{ context.slug }}&lt;/a>&lt;/p>
+        &lt;p>This story is part of The Texas Tribune's &lt;a href="http://apps.texastribune.org/price-of-admission">Price of Admission&lt;/a> series.&lt;/p>
+        &lt;p>&lt;a href="http://www.texastribune.org/">The Texas Tribune&lt;/a> is a nonpartisan, nonprofit media organization that informs Texans — and engages with them – about public policy, politics, government and statewide issues. Learn more at a href="http://www.texastribune.org/">texastribune.org&lt;/a>.&lt;/p>
 <!--         </code>
       </pre>  -->
     </div>

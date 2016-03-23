@@ -53,8 +53,23 @@
   &__aside {
     @extend %left-lock;
 
+    li {
+      &:active,
+      &:hover {
+        h4 {
+          text-decoration: underline;
+        }
+      }
+    }
+
+
     &--header {
       @extend %subhead;
+    }
+
+    &--subhead {
+      @extend %subhead;
+      color: $color-secondary;
     }
 
     &--subtitle {
@@ -65,20 +80,19 @@
       @include clearfix;
     }
 
-    // &--thumbnail {
-    //   float: left;
-    //   max-width: 25%;
-    //   margin: 0 .5em 0 0;
-    // }
+    &--thumbnail {
+      background-image: url(../assets/images/test.jpg);
+      background-size: cover;
+      height: 80px;
+      position: absolute;
+      width: 80px;
+      background-position: center center;
+    }
 
     &--part-wrapper {
+      position: relative;
       margin: 0 0 .5rem;
-      // background-image: url(../assets/images/test.jpg);
-      // background-size: cover;
-      // height: 50px;
-      // width: 100%;
-      // background-position: center center;
-      // max-width: 71%;
+      height: 5em;
     }
 
     &--link {
@@ -88,10 +102,18 @@
 
     &--part {
       @include part-box($xxs);
+      margin: 0 0 .5em 88px;
+      position: absolute;
+      width: 54px;
+
     }
 
     &--headline {
-      @include headline($m, $l);
+      @include headline($base, $m);
+      color: $color-secondary;
+      position: absolute;
+      margin: 1.75em 0 0 88px;
+
       &:hover,
       &:active {
         text-decoration: underline;
@@ -100,11 +122,7 @@
 
     &--extra {
       &_wrapper {
-        float: left;
-        width: 50%;
-        &:first-child {
-          padding: 0 .5rem 0 0;
-        }
+
       }
       &_subject {
         @include headline($s, $base);
@@ -120,13 +138,9 @@
   &__footer {
     $footer-nav-bp: 700px;
     $footer-height-desktop: 18rem;
-
-    @include story-header(32rem, $footer-height-desktop, 15rem); 
-    margin: 0 0 2rem 0;
-
-    @include susy-media($footer-nav-bp) {
-      height: $footer-height-desktop;
-    }
+    @include clearfix;
+    @include story-header(12rem, $footer-height-desktop, 12rem); 
+    margin: 0 0 1rem 0;
 
     &--headline {
       @include headline($m, $l);
@@ -138,6 +152,12 @@
       bottom: 0;   
     }
 
+    &--part {
+      @include susy-media($prose-width) {
+        margin: 0 0 1rem 2rem;
+      }
+    }
+
     &--wrapper {
       position: relative;
       float: left;
@@ -147,7 +167,6 @@
       @include susy-media($footer-nav-bp) {
         margin: 0 2rem 2rem 0;
         width: 45%;
-
       }
     }
   }

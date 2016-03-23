@@ -33,7 +33,7 @@ pos4.click(function() {
 // });
 
 $('.chart__scroll-prompt').click(function() {
-  var y = $(window).scrollTop();  //your current y position on the page
+  var y = $(window).scrollTop();
   $(window).scrollTop(y+500);
 })
 

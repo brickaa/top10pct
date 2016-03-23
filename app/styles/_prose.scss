@@ -10,11 +10,11 @@
 // Subtitle underneath subheader
 %subtitle {
   @include font-size($base);
-  color: $color-dk-gray;
+  color: $color-gray;
   font-family: $serif;
   font-weight: 400;
-  color: #666;
-  margin: 0 0 1rem 0;
+  line-height: 1.1;
+  margin: 0 0 1rem;
 }
 
 %accent-subhead {
@@ -158,7 +158,7 @@
 
   &__blockquote {
     @include susy-media($page-width) {
-      padding: 0;
+      padding: 0 0 0 1em;
     }
 
     &--quotemark {
@@ -197,6 +197,7 @@
   }
 
   &__republish {
+    @include font-size($base);
     font-family: $sans-serif;
   }
 
