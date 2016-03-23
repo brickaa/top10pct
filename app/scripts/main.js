@@ -26,14 +26,15 @@ function getHeights() {
   var chartHeaderHeight = $('.chart__header').height(),
       chartBottomHeight = $('#chart__bottom').height(),
       scrollPositionHeight = $('.chart__top--scrollposition').height(),
-      notAvailableHeight;
+      notAvailableHeight,
+      magicNumber = 48;
 
   if(maxTextHeight < scrollPositionHeight) {
-    $('#chart__top').height(scrollPositionHeight);
-    notAvailableHeight = scrollPositionHeight + chartHeaderHeight + chartBottomHeight;
+    $('#chart__top').height(scrollPositionHeight + magicNumber);
+    notAvailableHeight = scrollPositionHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
   } else {
-    $('#chart__top').height(maxTextHeight);
-    notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight;
+    $('#chart__top').height(maxTextHeight + magicNumber);
+    notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
   }
 
   console.log(notAvailableHeight);

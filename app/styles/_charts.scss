@@ -15,6 +15,7 @@ $chart-bp: 630px;
 
   &__header {
     @include font-size($base);
+    color: $color-dk-gray;
     font-family: $serif;
     font-weight: 600;
     margin: 0;
@@ -40,9 +41,9 @@ $chart-bp: 630px;
     &--box {      
       @include susy-media($prose-width) {
         float: left;
-        width: 33%;
-        text-align: center;
         padding: 0 2em;       
+        text-align: center;
+        width: 33%;
       }
 
     }
@@ -54,8 +55,8 @@ $chart-bp: 630px;
     &--value {
       @include font-size($m);
       color: $color-primary;
-      font-family: $serif;
       display: inline-block;
+      font-family: $serif;
 
       @include susy-media($prose-width) {
         @include font-size($xl);
@@ -65,49 +66,59 @@ $chart-bp: 630px;
   }
 
   &__scroll_prompt {
+    color: $color-dk-gray;
+    margin: 8px 0;
     text-align: center;
+
+    span {
+      @include font-size($xs);
+      text-transform: uppercase;
+      vertical-align: top;
+    }
 
     .fa {
       @include font-size($l);
-      padding: .5em 0;
       margin: -1em 0 0;
+      padding: .5em 0;
     }
   }
 
   &__legend {
     bottom: 0;
+    color: $color-dk-gray;
     display: inline-block;
     font-family: $sans-serif;
-    text-align: center;
     margin-bottom: 1em;
+    text-align: center;
     width: 100%;
 
     &--ut,
     &--tx,
     &--wrapper {
       display: inline-block;
-      margin: .25em 1.5em 0 0;
+      margin: 0 1.5em 0 0;
     }
 
     &--key {
       @include font-size($s);
       display: inline-block;
-      vertical-align: top;
       line-height: 1.5;
+      margin: 0 .5em;
+      vertical-align: top;
     }
 
     &--color_box {
       display: inline-block;
       height: 1em;
       width: 1em;
+    }
 
-      &.color__tertiary {
-        background: $color-tertiary;
-      }
+    .color__tertiary {
+      background: $color-tertiary;
+    }
 
-      &.color__secondary {
-        background: $color-secondary;
-      }
+    .color__secondary {
+      background: $color-secondary;
     }
 
     &--ut {
@@ -120,6 +131,7 @@ $chart-bp: 630px;
   }
 
   &__wrapper {
+    margin: 0 1.25em;
     width: 100%;
   }
 
@@ -145,19 +157,23 @@ $chart-bp: 630px;
   &__top {
     font-family: $sans-serif;
     position: relative;
-    margin: 0 1.5em .5em 1em;
+    margin: 16px 1.5em .5em 1em;
 
     &--explainer {
       @include font-size($base, .8);
       display: inline-block;
       line-height: 1.2;
 
+      @include susy-media($page-width) {
+        @include font-size($m);
+      }
+
       &_box {
         display: inline-block;
       }
 
       &_text {
-        margin: .25em 0 0;
+        margin: 32px 0 0;
         width: 100%;
         opacity: 0;
         position: absolute;
@@ -170,12 +186,13 @@ $chart-bp: 630px;
     }
 
     &--scrollposition {
+      color: $color-dk-gray;
       float: left;
-      margin: .25em .5em 0 0;
+      margin: 8px .5em 0 0;
       vertical-align: top;
 
       .fa {
-        @include font-size($xs);
+        @include font-size($s);
         display: block;
         margin: 0 .25em .25em -1em;
       }
@@ -259,13 +276,13 @@ $chart-bp: 630px;
 }
 
 .x.axis path {
-  stroke: black;
+  stroke: $color-dk-gray;
   stroke-width: 1;
 
 }
 
 .y.axis path {
-  stroke: black;
+  stroke: $color-dk-gray;
   stroke-width: 1;
 }
 
@@ -281,6 +298,7 @@ $chart-bp: 630px;
   @each $tick in $empty-ticks {
     .tick:nth-of-type(#{$tick}) {
       text {
+        color: $color-dk-gray;
         display: none;
       }
     } 
@@ -289,6 +307,6 @@ $chart-bp: 630px;
 
 .line {
   fill: none;
-  stroke: steelblue;
+  stroke: $color-dk-gray;
   stroke-width: 1.5px;
 }

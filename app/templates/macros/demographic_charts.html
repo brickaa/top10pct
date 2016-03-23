@@ -13,6 +13,9 @@
             {% endif %}
           {% endfor %}
           </div>
+          <header>
+            <h2 class="chart__subhead">Chart Title</h2>
+          </header>
           <div id="chart__top--explainer_box" class="chart__top--explainer">
           {% for key, x in value %}
             <p id="explainer{{ key }}" class="chart__top--explainer_text">{{ x }}</p> 
@@ -52,6 +55,7 @@
               <p class="chart__legend--key">UT freshman class</p>
             </div> 
             <div class="chart__scroll_prompt">
+              <span>Scroll Down</span>
               <i class="fa fa-chevron-circle-down"></i>
             </div>
           </div> 

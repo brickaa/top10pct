@@ -32,6 +32,11 @@ pos4.click(function() {
 //   $('body, html').animate({ scrollTop: $('#waypoint5').offset().top - 600 }, 500);
 // });
 
+$('.chart__scroll-prompt').click(function() {
+  var y = $(window).scrollTop();  //your current y position on the page
+  $(window).scrollTop(y+500);
+})
+
 var sticky = new Waypoint.Sticky({
   element: $('.sticky-charts')[0]
 });
