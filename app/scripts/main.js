@@ -13,23 +13,33 @@ import './includes/demographics.waypoints.js';
 // });
 
 var chartHeight,
-    chartTopper = $('#chart__topper--explainer_box'),
-    chartBottom = $('.chart__bottom'),
     height;
 
 function getHeights() {
+  // // Find browser height
   var windowHeight = $(window).height();
 
-  var maxTextHeight = Math.max.apply(null, $('.chart__topper--explainer_text')
+  // // Find max-height of all explainer texts
+  var maxTextHeight = Math.max.apply(null, $('.chart__top--explainer_text')
     .map(function () { return $(this).height(); }).get());
 
-  var chartHeader = $('.chart__header').height(),
-      chartBottomHeight = chartBottom.height(),
-      chartTopHeight = maxTextHeight + chartHeader + 34;
+  var chartHeaderHeight = $('.chart__header').height(),
+      chartBottomHeight = $('#chart__bottom').height(),
+      scrollPositionHeight = $('.chart__top--scrollposition').height(),
+      notAvailableHeight;
 
-  chartTopper.css('min-height', maxTextHeight + chartHeader);
-  chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * 0.95;
-  console.log('chartHeight: ' + chartHeight);
+  if(maxTextHeight < scrollPositionHeight) {
+    $('#chart__top').height(scrollPositionHeight);
+    notAvailableHeight = scrollPositionHeight + chartHeaderHeight + chartBottomHeight;
+  } else {
+    $('#chart__top').height(maxTextHeight);
+    notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight;
+  }
+
+  console.log(notAvailableHeight);
+  chartHeight = windowHeight - notAvailableHeight;
+  // console.log('chartHeight: ' + chartHeight);
+  // chartHeight = 300;
 }
 
 getHeights();
@@ -77,7 +87,7 @@ charts.forEach(function(race, index) {
   d3.csv(CONFIG.projectPath + 'assets/data/data.csv', function(error, data) {
 
     // Color assignments
-    var color = d3.scale.ordinal().range(['#90D3C8','#FF6249','#8DC967','#8DC967','#FFD454']);
+    var color = d3.scale.ordinal().range(['#99cc33','#356D97']);
         
     // Map the data to key values in an array
     data = data.map( function (d) { 
@@ -407,8 +417,8 @@ charts.forEach(function(race, index) {
       }
     });
 
-    var inview5 = new Waypoint.Inview({
-      element: $('#waypoint5')[0],
+    var inview4 = new Waypoint.Inview({
+      element: $('#waypoint4')[0],
       enter: function(direction) {
         if (direction === 'down') {
           rescale();

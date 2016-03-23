@@ -1,10 +1,5 @@
 $chart-bp: 630px;
 
-.demographics-wrapper {
-  background-color: $white;
-  position: relative;
-}
-
 .chart {
   display: block; 
   font-family: $sans-serif;
@@ -20,7 +15,9 @@ $chart-bp: 630px;
 
   &__header {
     @include font-size($base);
-    margin: 0 0 1em;
+    font-family: $serif;
+    font-weight: 600;
+    margin: 0;
     text-align: center;
   }
 
@@ -73,6 +70,7 @@ $chart-bp: 630px;
     .fa {
       @include font-size($l);
       padding: .5em 0;
+      margin: -1em 0 0;
     }
   }
 
@@ -81,31 +79,27 @@ $chart-bp: 630px;
     display: inline-block;
     font-family: $sans-serif;
     text-align: center;
+    margin-bottom: 1em;
     width: 100%;
 
     &--ut,
     &--tx,
     &--wrapper {
       display: inline-block;
-      margin: .25em 1.5em .25em 0;
+      margin: .25em 1.5em 0 0;
     }
 
     &--key {
-      @include font-size($base);
+      @include font-size($s);
       display: inline-block;
       vertical-align: top;
-      line-height: 1.1;
-
-      .legend--wrapper & {
-        @include font-size($s);
-      }
+      line-height: 1.5;
     }
 
     &--color_box {
       display: inline-block;
-      height: 1.3em;
-      margin: -.25em .25em 0 0;
-      width: 1.3em;
+      height: 1em;
+      width: 1em;
 
       &.color__tertiary {
         background: $color-tertiary;
@@ -121,9 +115,12 @@ $chart-bp: 630px;
     }
   }   
 
+  &__position--wrapper {
+    position: relative;
+  }
+
   &__wrapper {
     width: 100%;
-    padding: 0 2.5rem 0 0;
   }
 
   &__container {
@@ -145,21 +142,22 @@ $chart-bp: 630px;
   }
 
   // Line charts
-  &__topper {
+  &__top {
     font-family: $sans-serif;
     position: relative;
-    margin: 0 1.5em 0 1em;
+    margin: 0 1.5em .5em 1em;
 
     &--explainer {
       @include font-size($base, .8);
       display: inline-block;
+      line-height: 1.2;
 
       &_box {
         display: inline-block;
       }
 
       &_text {
-        margin: .5em 0 0;
+        margin: .25em 0 0;
         width: 100%;
         opacity: 0;
         position: absolute;
@@ -170,13 +168,14 @@ $chart-bp: 630px;
         font-weight: 600;
       }
     }
-  
+
     &--scrollposition {
       float: left;
-      margin: 1em .5em 0 0;
+      margin: .25em .5em 0 0;
       vertical-align: top;
 
       .fa {
+        @include font-size($xs);
         display: block;
         margin: 0 .25em .25em -1em;
       }
@@ -245,7 +244,6 @@ $chart-bp: 630px;
 
 .stuck {
   position: fixed;
-  padding: 0 2.5rem 0 0;
   top: 0;
   margin: 0 auto;
   max-width: $page-width;

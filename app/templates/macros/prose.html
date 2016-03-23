@@ -24,8 +24,9 @@
 {% endmacro %}
 
 {% macro blockquote(value) %}
-<aside class="{% if value.alignment %}prose--{{ value.alignment }}{% endif %}">
+<aside{% if value.alignment %} class="prose--{{ value.alignment }}{% endif %}">
   <blockquote class="prose__blockquote">
+    <div class="prose__blockquote--quotemark">&ldquo;</div>
     <p class="prose__blockquote--quote{% if value.quote_class %} blockquote__quote--{{ value.quote_class }}{% endif %}">{{ value.quote }}</p>
     {% if value.caption %}<cite class="prose__blockquote--caption">{{ value.caption }}</cite>{% endif %}
   </blockquote>
@@ -39,12 +40,12 @@
 {% endmacro %}
 
 {% macro timeline(value) %}
-  <aside class="nav__aside prose--{{ value.alignment }}">
+<!--   <aside class="prose--{{ value.alignment }}">
   {% if value.date %}
     <span class="timeline--">{{ value.date }}</span>
   {% endif %}
   {{ build_timeline(value) }}
-  </aside>
+  </aside> -->
 {% endmacro %}
 
 {% macro nav_aside(value) %}
