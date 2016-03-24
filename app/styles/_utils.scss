@@ -152,13 +152,13 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
   @include susy-media($prose-premobile-bp) {
     float: right;
     margin-left: 1rem;
-    width: 40%;
+    width: 50%;
   }
 }
 
 %left-lock {
   margin-bottom: 2rem;
-  margin-right: 1rem;
+  margin-right: 1.5rem;
   padding: 0 1rem;
   width: 100%;
 

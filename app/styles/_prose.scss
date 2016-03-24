@@ -180,7 +180,7 @@
       float: left;
       font-family: $serif;
       line-height: 1;
-      margin: 0 .25em 0 0;
+      margin: 0;
     }
 
     &--quote {
@@ -188,7 +188,7 @@
       color: $color-dk-gray;
       font-family: $serif;
       font-weight: 600;
-      margin: 0 0 .25rem;
+      margin: 0 0 .25rem 1.5em;
     }
 
     &--caption {
@@ -218,6 +218,18 @@
     margin-bottom: 1rem;
     max-width: $prose-width;
     text-align: center;
+
+    &--right-lock {
+      margin-bottom: 2rem;
+      margin-right: 1rem;
+      width: 100%;
+
+      @include susy-media($prose-premobile-bp) {
+        float: right;
+        margin-left: 1rem;
+        width: 40%;
+      } 
+    }
   }
 
   &--left-lock {

@@ -28,13 +28,13 @@
   <blockquote class="prose__blockquote">
     <div class="prose__blockquote--quotemark">&ldquo;</div>
     <p class="prose__blockquote--quote{% if value.quote_class %} blockquote__quote--{{ value.quote_class }}{% endif %}">{{ value.quote }}</p>
-    {% if value.caption %}<cite class="prose__blockquote--caption">{{ value.caption }}</cite>{% endif %}
+    {% if value.caption %}<cite class="prose__blockquote--caption">&mdash; {{ value.caption }}</cite>{% endif %}
   </blockquote>
 </aside>
 {% endmacro %}
 
 {% macro ad(value) %}
-<aside class="ad-slot ad-slot__{{ value.type }}{% if value.alignment %} prose--{{ value.alignment }}{% endif %}">
+<aside class="ad-slot ad-slot__{{ value.type }}{% if value.alignment %} ad-slot--{{ value.alignment }}{% endif %}">
   <div id="ad-{{ value.type }}-{{ value.id }}"></div>
 </aside>
 {% endmacro %}
