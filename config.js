@@ -29,10 +29,10 @@ config.data = {
   ],
   sheets: [
     {
-      fileid: '1EACmSpajC1V7nJtwIxfA9aR-HAbTSDugSjStSSKWEaE',
-      name: 'metadata',
+      fileid: '1fED8tkWrmr-BbjjEDiP6ZqIb49vTck73Q_nGo6wTMmE',
+      name: 'meta',
       copytext: {
-        basetype: 'objectlist'
+        basetype: 'keyvalue'
       }
     }
   ]
