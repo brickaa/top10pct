@@ -6,13 +6,6 @@ $chart-bp: 630px;
   margin: 0 auto;
   width: 100%;
 
-  // p {
-  //   @include font-size($base);
-  //   color: $color-dk-gray;
-  //   font-family: $serif;
-  //   margin: 0 0 1rem;
-  // }
-
   &__header {
     @include font-size($base);
     color: $color-dk-gray;
@@ -105,19 +98,15 @@ $chart-bp: 630px;
 
   &__scroll_prompt {
     color: $color-dk-gray;
-    margin: 8px 0;
     text-align: center;
 
     span {
       @include font-size($xs);
       text-transform: uppercase;
-      vertical-align: top;
     }
 
     .fa {
-      @include font-size($l);
-      margin: -1em 0 0;
-      padding: .5em 0;
+      @include font-size($xs);
     }
   }
 
@@ -223,6 +212,9 @@ $chart-bp: 630px;
       @include font-size($base, .8);
       display: inline-block;
       line-height: 1.2;
+      position: absolute;
+      top: 0;
+
 
       @include susy-media($page-width) {
         @include font-size($m);
@@ -232,12 +224,24 @@ $chart-bp: 630px;
         display: inline-block;
       }
 
+      &_subhead {
+        // @include font-size($base);
+        color: $color-dk-gray;
+        // font-family: $sans-serif;
+        font-weight: 600;
+        margin: 0 0 .5rem;
+
+        @include susy-media($prose-premobile-bp) {
+          @include font-size($m)
+        }
+      }
+
       &_text {
-        margin: 32px 0 0;
         width: 100%;
-        opacity: 0;
-        position: absolute;
-        top: 0;
+        display: none;
+        // opacity: 0;
+        // position: absolute;
+        // top: 0;
       }
 
       &_text_highlight {

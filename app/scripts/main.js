@@ -23,11 +23,11 @@ function getHeights() {
   var maxTextHeight = Math.max.apply(null, $('.chart__top--explainer_text')
     .map(function () { return $(this).height(); }).get());
 
-  var chartHeaderHeight = $('.chart__header').height(),
+  var chartHeaderHeight = $('.chart__top--explainer_subhead').height(),
       chartBottomHeight = $('#chart__bottom').height(),
       scrollPositionHeight = $('.chart__top--scrollposition').height(),
       notAvailableHeight,
-      magicNumber = 48;
+      magicNumber = 32;
 
   if(maxTextHeight < scrollPositionHeight) {
     $('#chart__top').height(scrollPositionHeight + magicNumber);
@@ -37,10 +37,11 @@ function getHeights() {
     notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
   }
 
-  console.log(notAvailableHeight);
   chartHeight = windowHeight - notAvailableHeight;
-  // console.log('chartHeight: ' + chartHeight);
-  // chartHeight = 300;
+
+  if (chartHeight > 600) {
+    chartHeight = 600;
+  }
 }
 
 getHeights();

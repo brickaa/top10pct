@@ -58,13 +58,13 @@
 
 @mixin story-header($height, $height-desktop, $img-height) {
   &--lead-art {
-    background-image: url(../assets/images/test.jpg);
     background-size: cover;
     height: $img-height;
     width: 100%;
     background-position: center center;
 
     @include susy-media($prose-width) {
+      height: $height;
       margin: 0 0 0 2rem;
     }
 
@@ -73,7 +73,19 @@
       margin-left: 2rem;
     }
   }
-  
+
+  &--lead-art_i {
+    background-image: url(../assets/images/POA-Lead-Story1-960x480-001.jpg);
+  }
+
+  &--lead-art_ii {
+    background-image: url(../assets/images/POA-Lead-Story2-960x480-001.jpg);
+  }
+
+  &--lead-art_iii {
+    background-image: url(../assets/images/POA-Lead-Story3-960x480-001.jpg);
+  }
+
   &--part {
     @include part-box($m);
   }
@@ -93,6 +105,7 @@
   &--byline {
     @include font-size($s);
     font-family: $sans-serif;
+    line-height: 1.3;
   
     a {
       color: $color-secondary;
@@ -219,7 +232,7 @@
 
 .logo {
   img { 
-    margin: .25em auto;
+    margin: .5em auto;
     max-height: 5em;
   }
 
@@ -240,17 +253,12 @@
   }
 }
 .storytop {
-  $height: 26rem;
-  $height-desktop: 30rem;
-  @include story-header($height, $height-desktop, $height);
+  $height: 26;
+  $height-desktop: 30;
+  @include story-header($height+rem, $height-desktop+rem, $height - 4+rem);
   @include clearfix;
   position: absolute;
   bottom: 0;
-
-  // @include susy-media($prose-desktop-bp) {
-  //   position: absolute;
-  //   bottom: 0;
-  // }
 
   &--wrapper {
     color: $color-dk-gray;
@@ -264,7 +272,7 @@
   }
 
   &--headline {
-    @include headline($xl, $xxl);
+    @include headline($l, $xl);
   }
 }
 

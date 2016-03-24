@@ -63,18 +63,18 @@ var inview1 = new Waypoint.Inview({
   element: $('#waypoint1')[0],
   enter: function(direction) {
     if (direction === 'down') {
-      text1.animate({ opacity: 1});
+      text1.show();
       pos1.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.chart__legend--tx').animate({ opacity: 1});
-      $('.chart__header').animate({ opacity: 1});
+      $('.chart__legend--tx').show();
+      $('.chart__header').show();
     } 
   },
   exit: function(direction) {
     if (direction === 'up') {
-      text1.animate({ opacity: 0});
+      text1.hide();
       pos1.removeClass('fa-circle').addClass('fa-circle-thin');
-      $('.chart__legend--tx').animate({ opacity: 0});
-      $('.chart__header').animate({ opacity: 0});
+      $('.chart__legend--tx').hide();
+      $('.chart__header').hide();
     }
   }
 });
@@ -83,20 +83,22 @@ var inview2 = new Waypoint.Inview({
   element: $('#waypoint2')[0],
   enter: function(direction) {
     if (direction === 'down') {
-      text1.animate({ opacity: 0});
-      text2.animate({ opacity: 1});
+      text1.hide();
+      text2.show();
+      $('.chart__scroll_prompt').hide();
       pos1.removeClass('fa-circle').addClass('fa-circle-thin');
       pos2.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.chart__legend--ut').animate({ opacity: 1});
+      $('.chart__legend--ut').show();
     }
   },
   exit: function(direction) {
     if (direction === 'up') {
-      text1.animate({ opacity: 1});
-      text2.animate({ opacity: 0});
+      text1.show();
+      text2.hide();
+      $('.chart__scroll_prompt').show();
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
       pos1.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.chart__legend--ut').animate({ opacity: 0});
+      $('.chart__legend--ut').hide();
     }
   }
 });
@@ -105,16 +107,16 @@ var inview3 = new Waypoint.Inview({
   element: $('#waypoint3')[0],
   enter: function(direction) {
     if (direction === 'down') {
-      text2.animate({ opacity: 0});
-      text3.animate({ opacity: 1});
+      text2.hide();
+      text3.show();
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
       pos3.removeClass('fa-circle-thin').addClass('fa-circle');
     }
   },
   exit: function(direction) {
     if (direction === 'up') {
-      text2.animate({ opacity: 1});
-      text3.animate({ opacity: 0});
+      text2.show();
+      text3.hide();
       pos3.removeClass('fa-circle').addClass('fa-circle-thin');
       pos2.removeClass('fa-circle-thin').addClass('fa-circle');
     }
@@ -125,16 +127,16 @@ var inview4 = new Waypoint.Inview({
   element: $('#waypoint4')[0],
   enter: function(direction) {
     if (direction === 'down') {
-      text3.animate({ opacity: 0});
-      text4.animate({ opacity: 1});
+      text3.hide();
+      text4.show();
       pos3.removeClass('fa-circle').addClass('fa-circle-thin');
       pos4.removeClass('fa-circle-thin').addClass('fa-circle');
     }
   },
   exit: function(direction) {
     if (direction === 'up') {
-      text3.animate({ opacity: 1});
-      text4.animate({ opacity: 0});
+      text3.show();
+      text4.hide();
       pos4.removeClass('fa-circle').addClass('fa-circle-thin');
       pos3.removeClass('fa-circle-thin').addClass('fa-circle');
     }
@@ -145,16 +147,16 @@ var inview4 = new Waypoint.Inview({
 //   element: $('#waypoint5')[0],
 //   enter: function(direction) {
 //     if (direction === 'down') {
-//       text4.animate({ opacity: 0});
-//       text5.animate({ opacity: 1});
+//       text4.hide();
+//       text5.show();
 //       pos4.removeClass('fa-circle').addClass('fa-circle-thin');
 //       pos5.removeClass('fa-circle-thin').addClass('fa-circle');
 //     }
 //   },
 //   exit: function(direction) {
 //     if (direction === 'up') {
-//       text4.animate({ opacity: 1});
-//       text5.animate({ opacity: 0});
+//       text4.show();
+//       text5.hide();
 //       pos5.removeClass('fa-circle').addClass('fa-circle-thin');
 //       pos4.removeClass('fa-circle-thin').addClass('fa-circle');
 //     }
