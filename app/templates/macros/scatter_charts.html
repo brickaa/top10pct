@@ -1,10 +1,10 @@
-{% macro scatter() %}
+{% macro scatter(value) %}
 
 <div id="charts" class="chart chart__wrapper">
   <div class="chart__options">
     <header>
-      <h2 class="chart__subhead">Demographic Trends</h2>
-      <p class="chart__subtitle">How Texas high schools with fewer economically disadvantaged students and more "college ready" students send greater percentages of their senior class to UT-Austin</p>
+      <h2 class="chart__subhead">{{ value.title }}</h2>
+      <p class="chart__subtitle">{{ value.intro }}</p>
     </header>
     <p class="chart__options--header">Shows schools by metro area:</p>
     <button id="data" class="chart__options--button active">All</button>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>
-    <p class="chart__source">Note: This visualization excludes high schools with fewer than 100 seniors, high schools with no students admitted or enrolled to UT Austin in 2015, and high schools that the Texas Education Agency masked. You can find more information on the definition of "college-ready" students and why certain values are masked <a href="http://schools.texastribune.org/about/#college-ready">here</a>, and the definition of "economically disadvantaged" students <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/glossary.pdf">here</a>.</p>
+    <p class="chart__source">{{ value.note }}</p>
     
   </div>
 

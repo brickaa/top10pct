@@ -28,6 +28,10 @@ $chart-bp: 630px;
 
   &__subtitle {
     @extend %subtitle;
+
+    a {
+      @extend %link;
+    }
   }
 
   &__info {

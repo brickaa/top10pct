@@ -6,7 +6,8 @@
         <div id="chart__top" class="chart__top">
           <div class="chart__top--scrollposition">
           {% for key, x in value %}
-            {% if key == '1' %}
+            {% if key == 'title' %}
+            {% elif key == '1' %}
             <i id="explainerPos{{ key }}" class="fa fa-circle"></i>
             {% else %}
             <i id="explainerPos{{ key }}" class="fa fa-circle-thin"></i>
