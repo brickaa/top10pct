@@ -62,6 +62,11 @@
       }
     }
 
+    &--logo {
+      img {
+        width: 100%;
+      }
+    }
 
     &--header {
       @extend %subhead;

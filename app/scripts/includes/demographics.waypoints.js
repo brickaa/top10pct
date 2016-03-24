@@ -88,7 +88,7 @@ var inview2 = new Waypoint.Inview({
       $('.chart__scroll_prompt').hide();
       pos1.removeClass('fa-circle').addClass('fa-circle-thin');
       pos2.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.chart__legend--ut').show();
+      $('.chart__legend--ut').animate({opacity: 1});
     }
   },
   exit: function(direction) {
@@ -98,7 +98,7 @@ var inview2 = new Waypoint.Inview({
       $('.chart__scroll_prompt').show();
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
       pos1.removeClass('fa-circle-thin').addClass('fa-circle');
-      $('.chart__legend--ut').hide();
+      $('.chart__legend--ut').animate({opacity: 0});
     }
   }
 });

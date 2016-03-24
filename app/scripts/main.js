@@ -27,7 +27,7 @@ function getHeights() {
       chartBottomHeight = $('#chart__bottom').height(),
       scrollPositionHeight = $('.chart__top--scrollposition').height(),
       notAvailableHeight,
-      magicNumber = 32;
+      magicNumber = 16;
 
   if(maxTextHeight < scrollPositionHeight) {
     $('#chart__top').height(scrollPositionHeight + magicNumber);
@@ -37,7 +37,7 @@ function getHeights() {
     notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
   }
 
-  chartHeight = windowHeight - notAvailableHeight;
+  chartHeight = windowHeight - notAvailableHeight - 16;
 
   if (chartHeight > 600) {
     chartHeight = 600;
@@ -199,8 +199,8 @@ charts.forEach(function(race, index) {
         .selectAll('text')
           .attr('y', 0)
           .attr('x', 9)
-          .attr('dy', '.35em')
-          .attr('transform', 'rotate(90)')
+          .attr('dy', '.85em')
+          .attr('transform', 'rotate(20)')
           .style('text-anchor', 'start');
     }
 
