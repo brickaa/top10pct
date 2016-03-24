@@ -26,6 +26,8 @@ d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
       name: d.Name,
       metro: d.Metro_Area,
       city: d.City,
+      seniorcount: d.twelfthcount,
+      schoolcount: d.allstudentscount,
       enrolledpct: d.enrolled2015PctSeniors,
       minority: d.BlackHispMulti,
       white: d.WhiteOther,
@@ -109,7 +111,9 @@ charts.forEach(function(chart, index) {
         avgact: d.avgACT,
         admitted: d.Admitted2015,
         enrolled: d.Enrolled2015,
-        color: d.Color
+        color: d.Color,
+        seniorcount: d.twelfthcount,
+        schoolcount: d.allstudentscount
       };
     });
 
@@ -205,11 +209,10 @@ charts.forEach(function(chart, index) {
           .attr('x', 0)
           .attr('y', 28)
           .style('text-anchor', 'start')
-          .text('Percent of Seniors Enrolled at UT-Austin');
+          .text('Percent of high school seniors enrolled at UT-Austin');
 
       dot(dataKey);
     }  
-
 
     yScale.domain([0, 1]);
 
@@ -228,7 +231,7 @@ charts.forEach(function(chart, index) {
           .attr('x', 0)
           .attr('y', 28)
           .style('text-anchor', 'start')
-          .text('Percent of Seniors Enrolled at UT-Austin');
+          .text('Percent of high school seniors enrolled at UT-Austin');
 
     // y-axis
     svg.append('g')
@@ -237,15 +240,7 @@ charts.forEach(function(chart, index) {
           .scale(yScale)
           .orient('left')
           .ticks(5, '%')
-          .outerTickSize(0))
-        .append('text')
-          .attr('class', 'label')
-          .attr('transform', 'rotate(-90)')
-          .attr('y', -(margin.left))
-          .attr('x', 0)
-          .attr('dy', '.71em')
-          .style('text-anchor', 'end')
-          .text('Percent ' + yLabel);
+          .outerTickSize(0));
 
     dot(dataKey);
 
@@ -288,13 +283,24 @@ charts.forEach(function(chart, index) {
     $('#reset-highlights').click(resetValues);
 
     function chosenChange(selected) {
+      function addCommas(intNum) {
+        return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+      }
       var id = selected,
           object = $.grep(data, function(e){ return e.id === id; }),
+          majority = object[0].color,
+          seniorcount = addCommas(object[0].seniorcount),
+          schoolcount = addCommas(object[0].schoolcount),
+          enrolled = addCommas(object[0].enrolled),
           enrolledpct = Math.round(object[0].enrolledpct * 100),
           ecodis = Math.round(object[0].ecodis * 100),
           collegeready = Math.round(object[0].collegeready * 100);
 
-      $('#chosen_enrolledpct').html(enrolledpct + '%');
+      console.log(object[0]);
+      $('#chosen_majority').html(majority);
+      $('#chosen_seniorcount').html(seniorcount);
+      $('#chosen_schoolcount').html(schoolcount);
+      $('#chosen_seniorsenrolled').html(enrolled);
       $('#chosen_ecodis').html(ecodis + '%');
       $('#chosen_collegeready').html(collegeready + '%');
 
