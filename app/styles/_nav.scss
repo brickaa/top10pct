@@ -68,6 +68,14 @@
       }
     }
 
+    &--reveal {
+      img {
+        float: left;
+        height: 80px;
+        margin: 0 .5rem 0 0;
+      }
+    }
+
     &--header {
       @extend %subhead;
     }
@@ -83,12 +91,14 @@
 
     &--story_wrapper {
       @include clearfix;
+      margin-bottom: .65rem;
     }
 
     &--thumbnail { 
       background-size: cover;
+      float: left;
       height: 80px;
-      position: absolute;
+      // position: absolute;
       width: 80px;
       background-position: center center;
 
@@ -106,21 +116,22 @@
     }
 
     &--part-wrapper {
-      position: relative;
-      margin: 0 0 .5rem;
-      height: 5em;
+      // position: relative;
+      margin: 0 0 .75rem;
+      // height: 5em;
     }
 
     &--link {
+      @include clearfix;
       color: #000;
       text-decoration: none;
     }
 
     &--part {
       @include part-box($xxs);
-      margin: 0 0 .5em 88px;
+      margin: 0 0 .5em 8px;
       position: absolute;
-      width: 54px;
+      width: 68px;
 
     }
 
@@ -128,7 +139,7 @@
       @include headline($base, $m);
       color: $color-secondary;
       position: absolute;
-      margin: 1.75em 0 0 88px;
+      margin: 1.75rem 0 0 88px;
 
       &:hover,
       &:active {
@@ -138,8 +149,9 @@
 
     &--extra {
       &_wrapper {
-
+        @include clearfix;
       }
+
       &_subject {
         @include headline($s, $base);
         &:hover,
@@ -161,6 +173,14 @@
     &--headline {
       @include headline($m, $l);
       color: $color-secondary;
+    }
+
+    &--headline-box {
+      padding: 1rem;
+
+      @include susy-media($prose-width) {
+        padding: 1rem 1rem 1rem 3rem;
+      }
     }
 
     &--box {
