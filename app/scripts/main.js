@@ -27,7 +27,7 @@ function getHeights() {
       chartBottomHeight = $('#chart__bottom').height(),
       scrollPositionHeight = $('.chart__top--scrollposition').height(),
       notAvailableHeight,
-      magicNumber = 16;
+      magicNumber = 32;
 
   if(maxTextHeight < scrollPositionHeight) {
     $('#chart__top').height(scrollPositionHeight + magicNumber);
@@ -37,11 +37,12 @@ function getHeights() {
     notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
   }
 
-  chartHeight = windowHeight - notAvailableHeight - 16;
+  chartHeight = windowHeight - notAvailableHeight - 32;
 
-  if (chartHeight > 600) {
-    chartHeight = 600;
-  }
+  // if (chartHeight > 600) {
+  //   chartHeight = 600;
+  // }
+  console.log(chartHeight);
 }
 
 getHeights();

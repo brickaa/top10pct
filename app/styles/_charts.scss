@@ -110,6 +110,7 @@ $chart-bp: 630px;
   &__scroll_prompt {
     color: $color-dk-gray;
     text-align: center;
+    margin: .5rem 0 0;
 
     span {
       @include font-size($xs);
@@ -248,7 +249,7 @@ $chart-bp: 630px;
       }
 
       &_text {
-        width: 100%;
+        width: 90%;
         display: none;
         // opacity: 0;
         // position: absolute;
@@ -262,9 +263,12 @@ $chart-bp: 630px;
 
     &--scrollposition {
       color: $color-dk-gray;
-      float: left;
-      margin: 8px 0 0 0;
+      // float: left;
+      margin: 1.5rem 0 0 0;
       vertical-align: top;
+      position: absolute;
+      top: 0;
+      right: 0;
 
       .fa {
         @include font-size($xs);
