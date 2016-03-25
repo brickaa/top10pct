@@ -13,7 +13,7 @@
   color: $color-gray;
   font-family: $serif;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.4;
   margin: 0 0 1rem;
 }
 
@@ -136,6 +136,7 @@
 
 .prose {
   @include font-size($base);
+  color: $color-dk-gray;
   font-family: $serif;
   line-height: 1.6;
   

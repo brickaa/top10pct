@@ -275,12 +275,16 @@ charts.forEach(function(chart, index) {
       var highlight = svg.selectAll('.highlight');
           highlight.remove();
       $('#chosen-select').val('').trigger('chosen:updated');
-      $('#chosen_enrolledpct').html('%');
-      $('#chosen_ecodis').html('%');
-      $('#chosen_collegeready').html('%');
+      $('#chosen_seniorcount').empty();
+      $('#chosen_enrolledpct').empty();
+      $('#chosen_seniorsenrolled').empty();
+      $('#chosen_ecodis').empty();
+      $('#chosen_collegeready').empty();
+      $('#chosen_select_chosen').removeClass('White').removeClass('Minority');
+      $('.chart__info--box').hide();
     }
 
-    $('#reset-highlights').click(resetValues);
+    // $('#reset-highlights').click(resetValues);
 
     function chosenChange(selected) {
       function addCommas(intNum) {
@@ -290,19 +294,18 @@ charts.forEach(function(chart, index) {
           object = $.grep(data, function(e){ return e.id === id; }),
           majority = object[0].color,
           seniorcount = addCommas(object[0].seniorcount),
-          schoolcount = addCommas(object[0].schoolcount),
           enrolled = addCommas(object[0].enrolled),
           enrolledpct = Math.round(object[0].enrolledpct * 100),
           ecodis = Math.round(object[0].ecodis * 100),
           collegeready = Math.round(object[0].collegeready * 100);
 
-      console.log(object[0]);
-      $('#chosen_majority').html(majority);
+      $('.chart__info--box').show();
       $('#chosen_seniorcount').html(seniorcount);
-      $('#chosen_schoolcount').html(schoolcount);
+      $('#chosen_enrolledpct').html(enrolledpct+ '%');
       $('#chosen_seniorsenrolled').html(enrolled);
       $('#chosen_ecodis').html(ecodis + '%');
       $('#chosen_collegeready').html(collegeready + '%');
+      $('#chosen_select_chosen').removeClass('White').removeClass('Minority').addClass(majority);
 
       var highlight = svg.selectAll('.highlight');
           highlight.remove();

@@ -4,14 +4,7 @@
   <div class="chart__options">
     <header>
       <h2 class="chart__subhead">{{ value.title }}</h2>
-      <p class="chart__subtitle">{{ value.intro }}</p>
     </header>
-    <p class="chart__options--header">Shows schools by metro area:</p>
-    <button id="data" class="chart__options--button active">All</button>
-    <button id="austin" class="chart__options--button">Austin</button>
-    <button id="dallas" class="chart__options--button">DFW</button>
-    <button id="houston" class="chart__options--button">Houston</button>
-    <button id="sanantonio" class="chart__options--button">San Antonio</button>
   </div>
   <div class="chart__container--scatter">
     <header class="chart__header">
@@ -26,6 +19,7 @@
     </header>
     <div id="collegeReady"></div>
   </div>
+
   <div class="chart__legend">
     <div class="chart__legend--wrapper">
       <div class="chart__legend--color_box color__tertiary"></div>
@@ -36,9 +30,16 @@
       <p class="chart__legend--key">Black, Hispanic or Multiracial Majority Schools</p>
     </div> 
   </div>
+
   <div class="chart__info">
+    <p class="chart__options--header">Show schools by metro area:</p>
+    <button id="data" class="chart__options--button active">All</button>
+    <button id="austin" class="chart__options--button">Austin</button>
+    <button id="dallas" class="chart__options--button">DFW</button>
+    <button id="houston" class="chart__options--button">Houston</button>
+    <button id="sanantonio" class="chart__options--button">San Antonio</button>
     <div class="chosen_information">
-      <p class="chart__options--header">High school stats:</p>
+      <p class="chart__options--header">Find a high school on the graphs:</p>
       <select data-placeholder="Search for your school" id="chosen-select" tabindex="2">
         <option value=""></option>
         <optgroup id="austin-group" label="Austin-Round Rock"></optgroup>
@@ -47,41 +48,18 @@
         <optgroup id="sanantonio-group" label="San Antonio-New Braunfels"></optgroup>
         <optgroup id="other-group" label="Other"></optgroup>
       </select>
-<!-- 
-      <button id="reset-highlights" class="chart__options--reset">Reset</button> -->
+
+<!--       <button id="reset-highlights" class="chart__options--reset">Reset</button> -->
     </div>
     <div class="chart__info--box-wrapper title">
       <div class="chart__info--box">
         <header>
-          <h4 class="chart__info--header">Demographic Majority</h4>
+          <h4 class="chart__info--header">Number of students enrolled in UT-Austin's 2015 freshman class</h4>
         </header>
       </div>
       <div class="chart__info--box">
         <header>
-          <h4 class="chart__info--header">Size of 2015 graduating class</h4>
-        </header>
-      </div>
-      <div class="chart__info--box">
-        <header>
-          <h4 class="chart__info--header">Number of students enrolled at UT-Austin's 2015 freshman class</h4>
-        </header>
-      </div>
-    </div>
-    <div class="chart__info--box-wrapper value">
-      <div class="chart__info--box">
-        <div class="chart__info--value" id="chosen_majority"></div>
-      </div>
-      <div class="chart__info--box">
-        <div class="chart__info--value" id="chosen_seniorcount"></div>
-      </div>
-      <div class="chart__info--box">
-        <div class="chart__info--value" id="chosen_seniorsenrolled"></div>
-      </div>
-    </div>
-    <div class="chart__info--box-wrapper title">
-      <div class="chart__info--box">
-        <header>
-          <h4 class="chart__info--header">Total school population</h4>
+          <h4 class="chart__info--header">Percent of 2015 senior class enrolled at UT-Austin</h4>
         </header>
       </div>
       <div class="chart__info--box">
@@ -97,7 +75,10 @@
     </div>
     <div class="chart__info--box-wrapper value">
       <div class="chart__info--box">
-        <div class="chart__info--value" id="chosen_schoolcount"></div>
+        <div class="chart__info--value" id="chosen_seniorsenrolled"></div>
+      </div>
+      <div class="chart__info--box">
+        <div class="chart__info--value" id="chosen_enrolledpct"></div>
       </div>
       <div class="chart__info--box">
         <div class="chart__info--value" id="chosen_ecodis"></div>
@@ -106,9 +87,8 @@
         <div class="chart__info--value" id="chosen_collegeready"></div>
       </div>
     </div>
-    <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>
-    <p class="chart__source">{{ value.note }}</p>
-    
+    <p class="chart__subtitle">{{ value.intro }}</p>
+    <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>  
   </div>
 
 </div>
