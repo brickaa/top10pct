@@ -5,17 +5,19 @@
     <header>
       <h2 class="chart__subhead">{{ value.title }}</h2>
     </header>
+    <p class="chart__subtitle">{{ value.intro }}</p>
+    <p class="chart__subtitle">{{ value.intro2 }}</p>
   </div>
   <div class="chart__container--scatter">
     <header class="chart__header">
-      <h2>Economically Disadvantaged</h2>
+      <h2>Percent of high school "economically disadvantaged"</h2>
     </header>
     <div id="ecoDis"></div>
   </div>
 
   <div class="chart__container--scatter">
     <header class="chart__header">
-      <h2>College-Ready</h2>
+      <h2>Percent of high school "college ready"</h2>
     </header>
     <div id="collegeReady"></div>
   </div>
@@ -23,11 +25,11 @@
   <div class="chart__legend">
     <div class="chart__legend--wrapper">
       <div class="chart__legend--color_box color__tertiary"></div>
-      <p class="chart__legend--key">White Majority Schools</p>
+      <p class="chart__legend--key">White majority schools</p>
     </div>
     <div class="chart__legend--wrapper">
       <div class="chart__legend--color_box color__secondary"></div>
-      <p class="chart__legend--key">Black, Hispanic or Multiracial Majority Schools</p>
+      <p class="chart__legend--key">Black, hispanic or multiracial majority schools</p>
     </div> 
   </div>
 
@@ -87,7 +89,6 @@
         <div class="chart__info--value" id="chosen_collegeready"></div>
       </div>
     </div>
-    <p class="chart__subtitle">{{ value.intro }}</p>
     <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>  
   </div>
 

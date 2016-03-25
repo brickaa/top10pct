@@ -13,7 +13,7 @@
   color: $color-gray;
   font-family: $serif;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.3;
   margin: 0 0 1rem;
 }
 
@@ -92,11 +92,11 @@
 
   &--headline-box {
     background-color: #fff;
-    padding: 1rem;
+    padding: 1rem 1rem 0;
     width: 100%;
 
     @include susy-media($prose-width) {
-      padding: 1rem 1rem 1rem 3rem;
+      padding: 1rem 1rem 0 3rem;
       max-width: $prose-width;
       margin: 0;
     }
@@ -106,6 +106,7 @@
     @include font-size($s);
     font-family: $sans-serif;
     line-height: 1.3;
+    margin: .75rem 0 0;
   
     a {
       color: $color-secondary;
@@ -124,7 +125,7 @@
   @include font-size($base);
   color: $color-dk-gray;
   font-family: $serif;
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.1;
   margin: 0 0 .25rem;
 
@@ -138,7 +139,8 @@
   @include font-size($base);
   color: $color-dk-gray;
   font-family: $serif;
-  line-height: 1.6;
+  line-height: 1.5;
+  margin: 1rem 0 0;
   
   > p {
     @extend %left-padding;
@@ -245,7 +247,7 @@
 
 .logo {
   img { 
-    margin: .5em auto;
+    margin: .8em auto;
     max-height: 5em;
   }
 
