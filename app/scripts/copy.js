@@ -5,6 +5,8 @@ const Clipboard = require ('clipboard');
 
 new Clipboard('#copy');
 
+$('#html').hide();
+
 $('#text-btn').click(function() {
   $('#text').show();
   $('#html').hide();

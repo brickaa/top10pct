@@ -16,8 +16,11 @@
     <img class="logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/tt-PoA-logo-stacked.svg">
     <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/tt-PoA-logo.svg">
   </figure>
+  <header>
+    <h1 class="logo__tagline">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</h1>
+  </header>
   <div class="storytop--wrapper">
-    <div class="storytop--lead-art"></div>
+    <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
     <header class="storytop">
       <div class="storytop--part">Part {{ context.id }}</div>
       <div class="storytop--headline-box">
@@ -26,16 +29,19 @@
       </div>     
     </header>
   </div>
-  <article class="prose republish">
+  <article class="prose prose__republish">
     <p>You’re welcome to republish our articles and graphics for free using the following ground rules. (Please let us know if you republish our stories; it makes us happy!)</p>
     <p>See a full list of multimedia republishing terms <a href="http://www.texastribune.org/republishing-guidelines/">here</a>. For questions please contact Natalie Choate, director of media relations and partnerships, at <a href="mailto:nchoate@texastribune.org">nchoate@texastribune.org</a>.</p>
     <p>Select which option you'd prefer and then click "Copy" to copy the story text or story html:</p>
-    <button id="text-btn" data-clipboard-target="#copytext" class="ghost-button active">Story Text</button>
-    <button id="html-btn" data-clipboard-target="#copytext-html" class="ghost-button">Story HTML</button>
-    <button id="copy" data-clipboard-target="#copytext" class="ghost-button">Copy</button>
+    <div class="prose__republish--buttons">
+       <button id="text-btn" data-clipboard-target="#copytext" class="ghost-button active">View as Text</button>
+       <button id="html-btn" data-clipboard-target="#copytext-html" class="ghost-button">View as HTML</button>
+       <button id="copy" data-clipboard-target="#copytext" class="ghost-button">Copy</button>     
+    </div>
+
   </article>
   
-  <article id="copytext" class="prose">
+  <article id="copytext" class="prose prose__republish--body">
     <div id="text">
     {% for item in context.prose %}
       {% if item.type == 'text' %}
