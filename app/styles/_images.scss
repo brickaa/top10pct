@@ -58,8 +58,8 @@
 
   &__caption {
     @include font-size($xs);
+    color: $color-dk-gray;
     font-family: $sans-serif;
-    letter-spacing: .05em;
     line-height: 1.3;
     padding: 0 1rem;
 
