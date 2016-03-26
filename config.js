@@ -16,7 +16,7 @@ config.data = {
   docs: [
     {
       fileid: '1ehh3ISrwq5lHNQS-eEs_i30Wi7UAF9txWgYTo56NFBI',
-      name: 'test'
+      name: 'story_one'
     },
     {
       fileid: '1K8lpUd7bbprtR1It89CGEphItUiw8HMuaStxkvTCHNw',

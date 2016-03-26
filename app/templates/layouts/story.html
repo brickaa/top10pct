@@ -1,23 +1,32 @@
 {% extends 'layouts/base.html' %}
-
 {% from 'macros/authors.html' import authors %}
 {% from 'macros/nav.html' import nav %}
 {% from 'macros/nav.html' import navfooter %}
-
 {% import 'macros/prose.html' as prose %}
-
-{% block meta %}
+{% block social %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@texastribune">
+<meta name="twitter:creator" content="@texastribune">
+<meta property="og:url" content="{{ data.PATH_FULL }}{{ context.slug }}">
+<meta property="og:title" content="{{ context.headline }}">
+<meta property="og:type" content="article">
+<meta property="og:description" content="{{ context.summary }}">
+<meta property="og:site_name" content="The Texas Tribune">
+<meta property="og:image" content="{{ data.PATH_FULL }}assets/images/{{ context.fb_art }}">
+<meta property="fb:app_id" content="154122474650943">
+{% endblock %}
+{% block parsely %}
 <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "NewsArticle",
-      "headline": "{{ context.headline }}",
-      "url": "{{ data.PATH_FULL }}",
-      "thumbnailUrl": "",
-      "dateCreated": "2016-02-09T06:00:00-06:00",
-      "articleSection": "FRONT PAGE, HIGHER EDUCATION",
-      "creator": ["Becca Aaronson, The Texas Tribune"]
-    }
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "headline": "{{ context.headline }}",
+    "url": "{{ data.PATH_FULL }}",
+    "thumbnailUrl": "",
+    "dateCreated": "2016-02-09T06:00:00-06:00",
+    "articleSection": "FRONT PAGE, HIGHER EDUCATION",
+    "creator": ["Becca Aaronson, The Texas Tribune"]
+  }
 </script>
 {% endblock %}
 
@@ -31,6 +40,9 @@
     <img class="logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/tt-PoA-logo-stacked.svg">
     <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/tt-PoA-logo.svg">
   </figure>
+  <header>
+    <h1 class="logo__tagline">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</h1>
+  </header>
   <div class="storytop--wrapper">
     <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
     <header class="storytop">

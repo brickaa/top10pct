@@ -266,6 +266,17 @@
       display: block;
     }
   }
+
+  &__tagline {
+    @include font-size($base);
+    color: $color-gray;
+    font-family: $serif;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: .5em auto;
+    padding: 0 2em;
+    text-align: center;
+  }
 }
 .storytop {
   $height: 26;
