@@ -6,13 +6,39 @@ $chart-bp: 630px;
   margin: 0 auto;
   width: 100%;
 
+  // Default styles for mobile when "Chosen" input not shown
+  select {
+    margin: 0 1rem 0 0;
+    width: 100%;
+  }
+
   &__header {
-    @include font-size($base);
+    @include font-size($s);
     color: $color-dk-gray;
-    font-family: $serif;
-    font-weight: 600;
+    font-family: $sans-serif;
+    font-weight: 800;
     margin: 0;
     text-align: center;
+
+    &--demographics {
+      position: absolute;
+      bottom: 0;
+      text-align: center;
+      width: 33%;
+      min-height: 32px;
+
+      &.white {
+        left: 0;
+      }
+
+      &.black {
+        left: 33%;
+      }
+
+      &.hispanic {
+        left: 66%;
+      }
+    }
   }
 
   &__subhead {
@@ -44,6 +70,7 @@ $chart-bp: 630px;
     &--box-wrapper {
       @include clearfix;
       float: left;
+      margin: .5em 0 0;
       text-align: left;
 
       @include susy-media($prose-width) {
@@ -107,11 +134,33 @@ $chart-bp: 630px;
     }
   }
 
-  &__scroll_prompt {
+  &__explainer {
+    @include font-size($base, .8);
+    display: inline-block;
+    line-height: 1.2;
+    position: absolute;
+    top: 0;
+
+    @include susy-media($page-width) {
+      @include font-size($m);
+    }
+
+    &--text {
+      width: 90%;
+      display: none;
+
+      &_highlight {
+        font-weight: 800;
+      }
+    }
+
+  }
+
+  &__scroll--prompt {
     color: $color-dk-gray;
     text-align: center;
     margin: .5rem 0 0;
-
+    
     span {
       @include font-size($xs);
       text-transform: uppercase;
@@ -119,6 +168,22 @@ $chart-bp: 630px;
 
     .fa {
       @include font-size($xs);
+    }
+  }
+
+  &__scroll--position {
+    color: $color-dk-gray;
+    // float: left;
+    margin: 1.5rem 0 0 0;
+    vertical-align: top;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    .fa {
+      @include font-size($xs);
+      display: block;
+      margin: 0 .5em .5em -1em;
     }
   }
 
@@ -187,6 +252,38 @@ $chart-bp: 630px;
     }
   } 
 
+  &__enrollment {
+
+    &--label {
+      @include font-size($s);
+      display: none;
+      bottom: 64%;
+      position: absolute;
+      right: 0;
+
+      .fa {
+        @include font-size($xs);
+        color: $color-dk-gray;
+        margin: 0 .25em 0 0;
+      }
+    }
+
+    &--barlabels {
+      @include font-size($s);
+      color: $color-dk-gray;
+      font-weight: 800;
+    }
+
+    &--value {
+      color: $color-primary;
+      font-weight: 800;
+
+      &.white {
+        color: $color-dk-gray;
+      }
+    }
+  }
+
   &__position--wrapper {
     position: relative;
   }
@@ -201,6 +298,7 @@ $chart-bp: 630px;
     margin: 0;
 
     &--demographics {
+      position: relative;
       width: 32%;
     }
 
@@ -219,63 +317,6 @@ $chart-bp: 630px;
     font-family: $sans-serif;
     position: relative;
     margin: 16px 1.5em .5em 0;
-
-    &--explainer {
-      @include font-size($base, .8);
-      display: inline-block;
-      line-height: 1.2;
-      position: absolute;
-      top: 0;
-
-
-      @include susy-media($page-width) {
-        @include font-size($m);
-      }
-
-      &_box {
-        display: inline-block;
-      }
-
-      &_subhead {
-        // @include font-size($base);
-        color: $color-dk-gray;
-        // font-family: $sans-serif;
-        font-weight: 600;
-        margin: 0 0 .5rem;
-
-        @include susy-media($prose-premobile-bp) {
-          @include font-size($m)
-        }
-      }
-
-      &_text {
-        width: 90%;
-        display: none;
-        // opacity: 0;
-        // position: absolute;
-        // top: 0;
-      }
-
-      &_text_highlight {
-        font-weight: 600;
-      }
-    }
-
-    &--scrollposition {
-      color: $color-dk-gray;
-      // float: left;
-      margin: 1.5rem 0 0 0;
-      vertical-align: top;
-      position: absolute;
-      top: 0;
-      right: 0;
-
-      .fa {
-        @include font-size($xs);
-        display: block;
-        margin: 0 .5em .5em -1em;
-      }
-    }
   }
 
   &__options {
@@ -374,11 +415,11 @@ $chart-bp: 630px;
 }
 
 .y.axis {
-  @include font-size($xs);
+  @include font-size($xxs);
 }
 
 .x.axis {
-  $empty-ticks: 2, 3, 4, 6, 7, 8, 10, 11, 12;
+  $empty-ticks: 2, 3, 5, 6, 8, 9, 12, 13;
 
   @include font-size($xxs);
 

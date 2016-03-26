@@ -20,34 +20,35 @@ function getHeights() {
   var windowHeight = $(window).height();
 
   // // Find max-height of all explainer texts
-  var maxTextHeight = Math.max.apply(null, $('.chart__top--explainer_text')
-    .map(function () { return $(this).height(); }).get());
+  var maxTextHeight = Math.max.apply(null, $('.chart__explainer--text')
+    .map(function () { 
+      console.log($(this).height());
+      return $(this).height(); 
+    }).get());
 
-  var chartHeaderHeight = $('.chart__top--explainer_subhead').height(),
-      chartBottomHeight = $('#chart__bottom').height(),
-      scrollPositionHeight = $('.chart__top--scrollposition').height(),
-      notAvailableHeight,
-      magicNumber = 32;
+  var chartHeaderHeight = $('#chart__header').height(), // Chart headline
+      chartHeaderRowHeight = $('.chart__header--demographics').height(),
+      chartBottomHeight = $('#chart__bottom').height(), // Chart bottom / legend
+      chartTopHeight = chartHeaderHeight + chartHeaderRowHeight + maxTextHeight + 16,
+      notAvailableHeight = chartTopHeight + chartBottomHeight;
 
-  if(maxTextHeight < scrollPositionHeight) {
-    $('#chart__top').height(scrollPositionHeight + magicNumber);
-    notAvailableHeight = scrollPositionHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
-  } else {
-    $('#chart__top').height(maxTextHeight + magicNumber);
-    notAvailableHeight = maxTextHeight + chartHeaderHeight + chartBottomHeight + magicNumber;
+  console.log('headline ' + chartHeaderHeight);
+  console.log('header row ' + chartHeaderRowHeight);
+  console.log('max text ' + maxTextHeight);
+
+  console.log('added: ' + chartTopHeight);
+  $('#chart__top').height(chartTopHeight);
+  chartHeight = windowHeight - notAvailableHeight;
+
+  if (chartHeight > 500) {
+    chartHeight = 500;
   }
-
-  chartHeight = windowHeight - notAvailableHeight - 32;
-
-  // if (chartHeight > 600) {
-  //   chartHeight = 600;
-  // }
   console.log(chartHeight);
 }
 
 getHeights();
 
-var margin = {top: 10, right: 10, bottom: 30, left: 40},
+var margin = {top: 10, right: 0, bottom: 30, left: 30},
     width = parseInt(d3.select('.chart__container').style('width'), 10) - margin.left - margin.right,
     height = chartHeight - margin.top - margin.bottom;
 
@@ -69,7 +70,7 @@ var yAxis = d3.svg.axis()
 
 var line = d3.svg.line()
     .interpolate('basis')
-    .x(function(d) { return x(d.date); })
+    .x(function(d) { console.log(d.date); return x(d.date); })
     .y(function(d) { 
       return y(d.percent); 
     });
@@ -133,8 +134,15 @@ charts.forEach(function(race, index) {
 
     // Functions to remove chart elements
     function removeBars() {
-      var bars = svg.selectAll('rect');
+      var bars = svg.selectAll('rect'),
+          barLabels = svg.select('chart__enrollment--barlabels');
+
       bars.remove();
+      barLabels.transition()
+          .duration(300)
+        .attr('y', y(0))
+        .attr('height', height - y(0))
+        .remove();
     }
 
     function removeXAxis() {
@@ -168,6 +176,11 @@ charts.forEach(function(race, index) {
         .data(data, function(d) {
           return d.values[0].group;
         });
+
+      var barLabels = svg.selectAll('.chart__enrollment--barlabels')
+        .data(data, function(d) {
+          return d.values[0].group;
+        });
     
       bars.exit()
         .transition()
@@ -177,12 +190,28 @@ charts.forEach(function(race, index) {
         .style('fill-opacity', 1e-6)
         .remove();
 
+      barLabels.exit()
+        .transition()
+          .duration(300)
+        .attr('y', y(0))
+        .attr('height', height - y(0))
+        .remove();
+
       // data that needs DOM = enter() (a set/selection, not an event!)
       bars.enter().append('rect')
         .attr('class', 'bar')
         .attr('fill', function(d, i) { return color(d.values[i].group); })
         .attr('y', y(0))
         .attr('height', height - y(0));
+
+      barLabels.enter().append('text')
+        .text(function(d, i) {
+          var value = d.values[i].percent;
+          return Math.round(value * 100) + '%'; 
+        })
+        .attr('class', 'chart__enrollment--barlabels')
+        .attr('y', function(d, i) { return y(d.values[i].percent) - 5; })
+        .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); });
 
       // the 'UPDATE' set:
       bars.transition().duration(1000)
@@ -198,11 +227,10 @@ charts.forEach(function(race, index) {
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.outerTickSize(0))
         .selectAll('text')
-          .attr('y', 0)
-          .attr('x', 9)
-          .attr('dy', '.85em')
-          .attr('transform', 'rotate(20)')
-          .style('text-anchor', 'start');
+          .attr('x', '-.25em')
+          .attr('dy', '-.25em')
+          .attr('transform', 'rotate(-65)')
+          .style('text-anchor', 'end');
     }
 
     function addSeries(addData) {
@@ -297,13 +325,17 @@ charts.forEach(function(race, index) {
           .attr('stroke-dashoffset', 0);
 
       // Resize bar width/position
-      var bars = svg.selectAll('rect');
+      var bars = svg.selectAll('rect'),
+          barLabels = svg.selectAll('chart__enrollment--barlabels');
 
       bars.attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
         .attr('width', width/4)
         .attr('y', function(d, i) { return y(d.values[i].percent); })
         .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); });
       
+      // barLabels.attr('y', function(d, i) { return y(d.values[i].percent); })
+      //   .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); });
+
     }
 
     function rescale() {
@@ -322,7 +354,7 @@ charts.forEach(function(race, index) {
       // update yAxis, data
       svg.select('.y.axis')
         .transition().duration(1000).ease('sin-in-out')
-        .call(yAxis.ticks('5', '%'));
+        .call(yAxis.outerTickSize(0).ticks('5', '%'));
 
       var series = svg.selectAll('.group');
 
@@ -343,7 +375,6 @@ charts.forEach(function(race, index) {
           .duration(300)
           .ease('linear')
           .attr('stroke-dashoffset', 0);
-
     }
 
     function resetScale() {
@@ -360,7 +391,7 @@ charts.forEach(function(race, index) {
       // update yAxis, data
       svg.select('.y.axis')
         .transition().duration(1000).ease('sin-in-out')
-        .call(yAxis.ticks('5', '%'));
+        .call(yAxis.outerTickSize(0).ticks('5', '%'));
 
       var series = svg.selectAll('.group');
 
@@ -409,11 +440,13 @@ charts.forEach(function(race, index) {
         if (direction === 'down') {
           addXAxis();
           addSeries(dataRace);
+          $('.chart__enrollment--barlabels').hide();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
           addBars(dataRace);
+          $('.chart__enrollment--barlabels').show();
           removeSeries();
           removeXAxis();
         }
@@ -425,11 +458,13 @@ charts.forEach(function(race, index) {
       enter: function(direction) {
         if (direction === 'down') {
           rescale();
+          $('.chart__enrollment--label').show();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
           resetScale();
+          $('.chart__enrollment--label').hide();
         }
       }
     });

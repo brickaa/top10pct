@@ -32,7 +32,7 @@ pos4.click(function() {
 //   $('body, html').animate({ scrollTop: $('#waypoint5').offset().top - 600 }, 500);
 // });
 
-$('.chart__scroll-prompt').click(function() {
+$('.chart__scroll--prompt').click(function() {
   var y = $(window).scrollTop();
   $(window).scrollTop(y+500);
 })
@@ -46,15 +46,16 @@ var inview6 = new Waypoint.Inview({
   enter: function(direction) {
     if (direction === 'down') {
       $('.sticky-charts').removeClass('stuck');
-      $('.chart__wrapper').css('position', 'absolute');
-      $('.chart__wrapper').css('bottom', 0);
+      $('.chart__position--content').css('position', 'absolute');
+      $('.chart__position--content').css('bottom', 0);
+      $('.chart__scroll--prompt').hide();
     }  
   },
   exit: function(direction) {
     if (direction === 'up') {
       $('.sticky-charts').addClass('stuck');
-      $('.chart__wrapper').css('position', 'relative');
-      $('.chart__wrapper').css('bottom', '');
+      $('.chart__position--content').css('position', 'relative');
+      $('.chart__position--content').css('bottom', '');
     }
   }
 });
@@ -85,7 +86,7 @@ var inview2 = new Waypoint.Inview({
     if (direction === 'down') {
       text1.hide();
       text2.show();
-      $('.chart__scroll_prompt').hide();
+      
       pos1.removeClass('fa-circle').addClass('fa-circle-thin');
       pos2.removeClass('fa-circle-thin').addClass('fa-circle');
       $('.chart__legend--ut').animate({opacity: 1});
@@ -95,7 +96,6 @@ var inview2 = new Waypoint.Inview({
     if (direction === 'up') {
       text1.show();
       text2.hide();
-      $('.chart__scroll_prompt').show();
       pos2.removeClass('fa-circle').addClass('fa-circle-thin');
       pos1.removeClass('fa-circle-thin').addClass('fa-circle');
       $('.chart__legend--ut').animate({opacity: 0});
