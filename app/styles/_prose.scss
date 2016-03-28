@@ -79,7 +79,7 @@
   }
 
   &--lead-art_ii {
-    background-image: url(../assets/images/POA-Story2-Lead-001.jpg);
+    background-image: url(../assets/images/POA-Story2-Lead-002.jpg);
   }
 
   &--lead-art_iii {
@@ -87,11 +87,11 @@
   }
 
   &--lead-art_interactive {
-    background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
+    background-image: url(../assets/images/POA-Interactive-Lead-002.jpg);
   }
 
   &--lead-art_podcast {
-    background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
+    background-image: url(../assets/images/POA-Podcast-Lead-001.jpg);
   }
 
   &--part {
@@ -353,6 +353,7 @@
     font-family: $serif;
     font-weight: 600;
     line-height: 1;
+    margin: 0 .25em 0 0;
   }
 
   &__subhead {

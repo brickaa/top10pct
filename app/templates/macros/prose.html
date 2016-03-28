@@ -28,7 +28,7 @@
   <blockquote class="prose__blockquote">
     <div class="prose__blockquote--quotemark">&ldquo;</div>
     <p class="prose__blockquote--quote{% if value.quote_class %} blockquote__quote--{{ value.quote_class }}{% endif %}">{{ value.quote }}</p>
-    {% if value.caption %}<cite class="prose__blockquote--caption">&mdash; {{ value.caption }}</cite>{% endif %}
+    {% if value.caption %}<p class="prose__blockquote--caption">&mdash; {{ value.caption }}</p>{% endif %}
   </blockquote>
 </aside>
 {% endmacro %}

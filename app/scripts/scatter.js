@@ -2,7 +2,7 @@
 
 import './includes/chosen.jquery.js';
 
-var margin = {top: 10, right: 10, bottom: 30, left: 40},
+var margin = {top: 10, right: 10, bottom: 40, left: 40},
     width = parseInt(d3.select('.chart__container--scatter').style('width'), 10) - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
     
@@ -207,7 +207,7 @@ charts.forEach(function(chart, index) {
         .append('text')
           .attr('class', 'label')
           .attr('x', 0)
-          .attr('y', 28)
+          .attr('y', 34)
           .style('text-anchor', 'start')
           .text('Percent of high school seniors enrolled at UT-Austin');
 
@@ -229,7 +229,7 @@ charts.forEach(function(chart, index) {
         .append('text')
           .attr('class', 'label')
           .attr('x', 0)
-          .attr('y', 28)
+          .attr('y', 34)
           .style('text-anchor', 'start')
           .text('Percent of high school seniors enrolled at UT-Austin');
 
@@ -294,6 +294,7 @@ charts.forEach(function(chart, index) {
           object = $.grep(data, function(e){ return e.id === id; }),
           majority = object[0].color,
           seniorcount = addCommas(object[0].seniorcount),
+          schoolcount = addCommas(object[0].schoolcount),
           enrolled = addCommas(object[0].enrolled),
           enrolledpct = Math.round(object[0].enrolledpct * 100),
           ecodis = Math.round(object[0].ecodis * 100),
@@ -301,6 +302,7 @@ charts.forEach(function(chart, index) {
 
       $('.chart__info--box').show();
       $('#chosen_seniorcount').html(seniorcount);
+      $('#chosen_schoolcount').html(schoolcount);
       $('#chosen_enrolledpct').html(enrolledpct+ '%');
       $('#chosen_seniorsenrolled').html(enrolled);
       $('#chosen_ecodis').html(ecodis + '%');
@@ -311,7 +313,7 @@ charts.forEach(function(chart, index) {
           highlight.remove();
 
       xMap = function(d) { return xScale(xValue(d));}; 
-      xScale.domain([0, .18]);
+      xScale.domain([0, 0.18]);
       yScale.domain([0, 1]);
 
       svg.selectAll('.highlight')

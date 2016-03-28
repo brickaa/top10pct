@@ -10,14 +10,14 @@
     <button id="sanantonio" class="chart__options--button">San Antonio</button>
   </div>
   <div class="chart__container--scatter">
-    <header class="chart__header">
+    <header class="chart__header--scatter">
       <h2>Percent of high school "economically disadvantaged"</h2>
     </header>
     <div id="ecoDis"></div>
   </div>
 
   <div class="chart__container--scatter">
-    <header class="chart__header">
+    <header class="chart__header--scatter">
       <h2>Percent of high school "college ready"</h2>
     </header>
     <div id="collegeReady"></div>
@@ -34,7 +34,7 @@
     </div> 
   </div>
 
-  <div class="prose">
+  <div class="chart__info">
     <div class="chosen_information">
       <p class="chart__options--header">Find a high school on the graphs:</p>
       <select data-placeholder="Search for your school" id="chosen-select" tabindex="2">
@@ -54,7 +54,31 @@
       </div>
       <div class="chart__info--box">
         <header>
+          <h4 class="chart__info--header">Total students in 2015 senior class</h4>
+        </header>
+      </div>
+      <div class="chart__info--box">
+        <header>
           <h4 class="chart__info--header">Percent of 2015 senior class enrolled at UT-Austin</h4>
+        </header>
+      </div>
+    </div>
+    <div class="chart__info--box-wrapper value">
+      <div class="chart__info--box">
+        <div class="chart__info--value" id="chosen_seniorsenrolled"></div>
+      </div>
+      <div class="chart__info--box">
+        <div class="chart__info--value" id="chosen_seniorcount"></div>
+      </div>
+      <div class="chart__info--box">
+        <div class="chart__info--value" id="chosen_enrolledpct"></div>
+      </div>
+    </div>
+
+    <div class="chart__info--box-wrapper title">
+      <div class="chart__info--box">
+        <header>
+          <h4 class="chart__info--header">Total School Population</h4>
         </header>
       </div>
       <div class="chart__info--box">
@@ -68,12 +92,10 @@
         </header>
       </div>
     </div>
+
     <div class="chart__info--box-wrapper value">
       <div class="chart__info--box">
-        <div class="chart__info--value" id="chosen_seniorsenrolled"></div>
-      </div>
-      <div class="chart__info--box">
-        <div class="chart__info--value" id="chosen_enrolledpct"></div>
+        <div class="chart__info--value" id="chosen_schoolcount"></div>
       </div>
       <div class="chart__info--box">
         <div class="chart__info--value" id="chosen_ecodis"></div>
@@ -82,9 +104,7 @@
         <div class="chart__info--value" id="chosen_collegeready"></div>
       </div>
     </div>
-    <div class="chart__wrapper">
-      <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>  
-    </div>
+    <p class="chart__source--scatter">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>  
   </div>
 
 </div>

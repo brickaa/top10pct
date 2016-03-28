@@ -96,6 +96,15 @@
         &:active {
           text-decoration: underline;
         }
+
+        a {
+          color: $color-secondary;
+          text-decoration: underline;
+          &:hover,
+          &:active {
+            color: $color-primary;
+          }
+        }
       }
 
       &.unlink {
@@ -124,7 +133,7 @@
       }
 
       &-ii {
-        background-image: url(../assets/images/POA-Story2-Lead-001.jpg);
+        background-image: url(../assets/images/POA-Story2-Lead-002.jpg);
       }
 
       &-iii {
@@ -175,6 +184,7 @@
     }
 
     &--extra {
+
       &_wrapper {
         padding: 0 .5em 0 0;
       }

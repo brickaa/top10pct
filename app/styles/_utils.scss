@@ -159,7 +159,6 @@ $sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-s
 %left-lock {
   margin-bottom: 2rem;
   margin-right: 1.5rem;
-  padding: 0 1rem;
   width: 100%;
 
   @include susy-media($page-width) {

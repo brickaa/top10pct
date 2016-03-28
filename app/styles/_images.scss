@@ -63,7 +63,7 @@
     line-height: 1.3;
     padding: 0 1rem;
 
-    @include susy-media($page-width) {
+    @include susy-media($prose-width) {
       padding: 0;
     }
 

@@ -13,14 +13,23 @@ $chart-bp: 630px;
   }
 
   &__header {
-    @include font-size($s);
     color: $color-dk-gray;
     font-family: $sans-serif;
     font-weight: 800;
     margin: 0;
     text-align: center;
 
+    &--scatter {
+      @include font-size($m);
+      color: $color-dk-gray;
+      font-family: $sans-serif;
+      font-weight: 800;
+      margin: 0;
+      text-align: center;
+    }
+
     &--demographics {
+      @include font-size($s);
       position: absolute;
       bottom: 0;
       text-align: center;
@@ -83,7 +92,7 @@ $chart-bp: 630px;
         width: 80%;
 
         @include susy-media($prose-width) {
-          @include font-size($xxs);
+          @include font-size($s);
           width: 100%;
         }
       }
@@ -115,20 +124,20 @@ $chart-bp: 630px;
     }
 
     &--header {
-      @include font-size($xs);
+      @include font-size($s);
     }
 
     &--value {
-      @include font-size($m);
+      @include font-size($l);
       color: $color-primary;
       display: inline-block;
       font-family: $serif;
       line-height: 1.1;
 
       @include susy-media($prose-width) {
-        @include font-size($l);
+        @include font-size($xl);
         display: block;
-        margin: .25em 0;
+        margin: .25rem 0 1rem;
       }
     }
   }
@@ -229,19 +238,14 @@ $chart-bp: 630px;
     }
   }  
 
-  &__source {
+  &__source,
+  &__source--scatter {
     @include font-size($xs);
     color: $color-dk-gray;
     text-align: left;
     padding: 0;
     margin: 0 0 1em;
     max-width: 90%;
-    
-
-    @include susy-media($prose-width) {
-      padding: 0 0 0 2rem;
-      max-width: $page-width;
-    }
 
     a {
       color: $color-secondary;
@@ -253,20 +257,34 @@ $chart-bp: 630px;
     }
   } 
 
+  &__source {
+    @include susy-media($prose-width) {
+      padding: 0 0 0 2rem;
+      max-width: $page-width;
+    }
+  }
+
+  &__source--scatter {
+    @include susy-media($prose-width) {
+      padding: 0 0 0 3rem;
+      max-width: $page-width;
+    }
+  }
+
   &__enrollment {
 
     &--label {
       @include font-size($s);
       display: none;
-      bottom: 64%;
+      bottom: 62%;
       position: absolute;
       right: 0;
 
-      .fa {
-        @include font-size($xs);
-        color: $color-dk-gray;
-        margin: 0 .25em 0 0;
-      }
+      // .fa {
+      //   @include font-size($xs);
+      //   color: $color-dk-gray;
+      //   margin: 0 0 0 .25em;
+      // }
     }
 
     &--barlabels {
@@ -309,7 +327,9 @@ $chart-bp: 630px;
       width: 100%;
 
       @include susy-media($prose-width) {
-        padding: 0 1rem 0 3rem;
+        float: left;
+        width: 50%;
+        // padding: 0 1rem 0 3rem;
       }
     }
   }
@@ -333,7 +353,7 @@ $chart-bp: 630px;
       color: $color-dk-gray;
       font-family: $serif;
       font-weight: 600;
-      margin: 0 0 .5rem 1rem;
+      margin: 0 0 .5rem;
       display: block;
 
       @include susy-media($prose-width) {
@@ -434,6 +454,10 @@ $chart-bp: 630px;
     } 
   }
 
+}
+
+svg .label {
+  @include font-size($xs);
 }
 
 .line {
