@@ -75,15 +75,23 @@
   }
 
   &--lead-art_i {
-    background-image: url(../assets/images/POA-Lead-Story1-960x480-001.jpg);
+    background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
   }
 
   &--lead-art_ii {
-    background-image: url(../assets/images/POA-Lead-Story2-960x480-001.jpg);
+    background-image: url(../assets/images/POA-Story2-Lead-001.jpg);
   }
 
   &--lead-art_iii {
-    background-image: url(../assets/images/POA-Lead-Story3-960x480-001.jpg);
+    background-image: url(../assets/images/POA-Story3-Lead-002.jpg);
+  }
+
+  &--lead-art_interactive {
+    background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
+  }
+
+  &--lead-art_podcast {
+    background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
   }
 
   &--part {
@@ -294,10 +302,10 @@
     @include font-size($base);
     color: $color-gray;
     font-family: $serif;
-    font-weight: 800;
+    font-weight: 400;
     line-height: 1.2;
-    margin: .5em auto;
-    padding: 0 2em;
+    margin: .5rem auto 1rem;
+    padding: 0 2rem;
     text-align: center;
   }
 }
@@ -367,5 +375,69 @@
   ul {
     margin: 0 0 0 1em;
     list-style-type: circle;
+  }
+}
+
+.credit {
+  &__container {
+    @include clearfix;
+    margin: 0 1rem 1rem;
+    max-width: $page-width;
+
+    @include susy-media($prose-premobile-bp) {
+      margin: 0 2rem 1rem;
+    }
+  }
+
+  &__group {
+    float: left;
+    width: 100%;
+
+    @include susy-media($prose-premobile-bp) {
+      padding: 0 1rem;
+      width: 50%;
+      &:last-child {
+        padding: 0 2rem;
+      }
+    }
+  }
+
+  &__list {
+    margin: 0 0 1rem;
+  }
+
+  &__header {
+    @include font-size($m);
+    color: $color-gray;
+    font-family: $serif;
+    font-style: italic;
+    margin: 1rem 0;
+
+    @include susy-media($prose-premobile-bp) {
+      margin: 1rem;
+    }
+  }
+
+  &__subhead {
+    @extend %subhead;
+    @include font-size($s);
+  }
+
+  &__byline {
+    @include font-size($s);
+    font-family: $sans-serif;
+    line-height: 1.1;
+    margin: .25rem 0 0;
+  
+    a {
+      color: $color-secondary;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:active,
+      &:hover {
+        text-decoration: underline;
+      }      
+    }
   }
 }

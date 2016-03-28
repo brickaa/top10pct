@@ -2,7 +2,7 @@
   <nav class="nav">
     <div class="nav--container">
       <div class="nav--logo_tt">
-        <a href="http://www.texastribune.org"><img src="{{ PATH_PREFIX }}assets/images/tt-logo.svg"></a>
+        <a href="http://www.texastribune.org"><img src="{{ PATH_PREFIX }}assets/images/logos/tt-logo.svg"></a>
       </div>
     </div>
   </nav>
@@ -12,9 +12,9 @@
 <aside class="nav__aside">
   <header>
     <figure class="nav__aside--logo">
-      <img class="" src="{{ PATH_PREFIX }}assets/images/tt-PoA-logo.svg">
+      <img class="" src="{{ PATH_PREFIX }}assets/images/logos/tt-PoA-logo.svg">
     </figure>
-    <p class="nav__aside--subtitle">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</p>
+    <p class="nav__aside--subtitle">See all the stories in this series.</p>
   </header>
   <ul>
     <a class="nav__aside--link" href="{{ PATH_PREFIX }}"><li class="nav__aside--story_wrapper">
@@ -38,24 +38,28 @@
         <h4 class="nav__aside--headline">Getting to Graduation</h4>
       </div>
     </li></a>
-    <a class="nav__aside--link" href="{{ PATH_PREFIX }}"><li class="nav__aside--story_wrapper">
+    <a class="nav__aside--link half" href="{{ PATH_PREFIX }}interactive"><li class="nav__aside--extra_wrapper">
       <div class="nav__aside--part-wrapper">
-        <figure class="nav__aside--reveal">
-          <img src="{{ PATH_PREFIX }}assets/images/reveal-square-logo-black-on-transparent.png">
-        </figure>
-        <p class="nav__aside--subtitle">Listen to a related episode of the podcast Reveal from The Center for Investigative Reporting.</p>
+        <p class="nav__aside--subpart">Interactive</p>
+        <p class="nav__aside--subtitle story">See how many students public high schools send to UT-Austin.</p>
+      </div>
+    </li></a>
+    <a class="nav__aside--link half" href="{{ PATH_PREFIX }}podcast"><li class="nav__aside--extra_wrapper">
+      <div class="nav__aside--part-wrapper">
+        <p class="nav__aside--subpart">Podcast</p>
+        <p class="nav__aside--subtitle story">Coming soon: From The Center for Investigative Reporting.</p>
       </div>
     </li></a>
     <a class="nav__aside--link" href="http://www.texastribune.org/events/2016/03/31/the-price-of-admission/"><li class="nav__aside--extra_wrapper">
-      <h4 class="nav__aside--subhead">Live Event</h4>
-      <p class="nav__aside--subtitle">Learn more about our special event on the Top 10 Percent Rule, featuring a conversation on the issue of fairness and access in education.</p>
+      <p class="nav__aside--subpart">Live Event</p>
+      <p class="nav__aside--subtitle">Learn more about our special event on the Top 10 Percent Rule.</p>
     </li></a>
   </ul>
 </aside>
 {% endmacro %}
 
 {% macro navfooter(id, headline) %}
-  <aside class="nav__footer">
+  <nav class="nav__footer">
     <div class="nav__footer--wrapper">
       {% if id == 'i' %}
       <a href="{{ PATH_PREFIX }}tale-of-two-high-schools">
@@ -80,17 +84,7 @@
       {% endif %}
     </div>
     <div class="nav__footer--wrapper">
-      {% if id == 'iii' %}
-      <a href="{{ PATH_PREFIX }}tale-of-two-high-schools">
-      <div class="nav__footer--lead-art storytop--lead-art_ii"></div>
-      <header class="nav__footer--box">
-        <div class="nav__footer--part">Part II</div>
-        <div class="nav__footer--headline-box">
-          <h1 class="nav__footer--headline">A Tale of Two High Schools</h1>
-        </div>     
-      </header>
-      </a>
-      {% else %}
+      {% if (id == 'i' or id == 'ii' )%}
       <a href="{{ PATH_PREFIX }}getting-to-graduation">
       <div class="nav__footer--lead-art storytop--lead-art_iii"></div>
       <header class="nav__footer--box">
@@ -99,8 +93,98 @@
           <h1 class="nav__footer--headline">Getting to Graduation</h1>
         </div>     
       </header>
-      </a>      
+      </a> 
+      {% else %}
+      <a href="{{ PATH_PREFIX }}tale-of-two-high-schools">
+      <div class="nav__footer--lead-art storytop--lead-art_ii"></div>
+      <header class="nav__footer--box">
+        <div class="nav__footer--part">Part II</div>
+        <div class="nav__footer--headline-box">
+          <h1 class="nav__footer--headline">A Tale of Two High Schools</h1>
+        </div>     
+      </header>
+      </a>     
       {% endif %}
     </div>
-  </aside>
+
+    <div class="nav__footer--wrapper">
+      {% if (id == 'interactive' or id == 'podcast' ) %}
+      <a href="{{ PATH_PREFIX }}getting-to-graduation">
+      <div class="nav__footer--lead-art storytop--lead-art_iii"></div>
+      <header class="nav__footer--box">
+        <div class="nav__footer--part">Part III</div>
+        <div class="nav__footer--headline-box">
+          <h1 class="nav__footer--headline">Getting to Graduation</h1>
+        </div>     
+      </header>
+      </a>
+      {% else %}
+      <a href="{{ PATH_PREFIX }}interactive">
+      <div class="nav__footer--lead-art storytop--lead-art_interactive"></div>
+      <header class="nav__footer--box">
+        <div class="nav__footer--part">Interactive</div>
+        <div class="nav__footer--headline-box">
+          <h1 class="nav__footer--headline">Test Short Head</h1>
+        </div>     
+      </header>
+      </a>     
+      {% endif %}
+    </div>
+    <div class="nav__footer--wrapper">
+      {% if (id == 'podcast' )%}
+      <a href="{{ PATH_PREFIX }}interactive">
+      <div class="nav__footer--lead-art storytop--lead-art_interactive"></div>
+      <header class="nav__footer--box">
+        <div class="nav__footer--part">Interactive</div>
+        <div class="nav__footer--headline-box">
+          <h1 class="nav__footer--headline">Test Short Head</h1>
+        </div>     
+      </header>
+      </a> 
+      {% else %}
+      <a href="{{ PATH_PREFIX }}podcast">
+      <div class="nav__footer--lead-art storytop--lead-art_podcast"></div>
+      <header class="nav__footer--box">
+        <div class="nav__footer--part">Podcast</div>
+        <div class="nav__footer--headline-box">
+          <h1 class="nav__footer--headline">Test Short Head</h1>
+        </div>     
+      </header>
+      </a>     
+      {% endif %}
+    </div>
+  </nav>
+  <div class="credit__container">
+    <header>
+      <h3 class="credit__header">Project Contributors</h3>
+    </header>
+    <div class="credit__group">
+      <header>
+        <h4 class="credit__subhead">Reporting</h4>
+      </header>
+      <ul class="credit__list">
+        <li class="credit__byline"><a href="">Neena Satija</a></li>
+        <li class="credit__byline"><a href="">Matthew Watkins</a></li>
+      </ul>
+<!--     </div>
+    <div class="credit__group"> -->
+      <header>
+        <h4 class="credit__subhead">Data Analysis</h4>
+      </header>
+      <ul class="credit__list">
+        <li class="credit__byline"><a href="">Becca Aaronson</a></li>
+      </ul>
+    </div>
+    <div class="credit__group">
+      <header>
+        <h4 class="credit__subhead">Design and Development</h4>
+      </header>
+      <ul class="credit__list">
+        <li class="credit__byline"><a href="">Becca Aaronson</a></li>
+        <li class="credit__byline"><a href="">Emily Albracht</a></li>
+        <li class="credit__byline"><a href="">Ben Hasson</a></li>
+      </ul>
+    </div>
+
+  </div>
 {% endmacro %}

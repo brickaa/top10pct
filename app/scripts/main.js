@@ -6,12 +6,6 @@ import './includes/sticky.js';
 import './includes/inview.js';
 import './includes/demographics.waypoints.js';
 
-// $('#timeline').click(function () {
-//   $('#timeline--list').slideToggle(1000);
-//   $('.collapse').toggle();
-//   $('.expand').toggle();
-// });
-
 var chartHeight,
     height;
 
@@ -134,15 +128,15 @@ charts.forEach(function(race, index) {
 
     // Functions to remove chart elements
     function removeBars() {
-      var bars = svg.selectAll('rect'),
-          barLabels = svg.select('chart__enrollment--barlabels');
+      var bars = svg.selectAll('rect');
+          // barLabels = svg.select('chart__enrollment--barlabels');
 
       bars.remove();
-      barLabels.transition()
-          .duration(300)
-        .attr('y', y(0))
-        .attr('height', height - y(0))
-        .remove();
+      // barLabels.transition()
+      //     .duration(300)
+      //   .attr('y', y(0))
+      //   .attr('height', height - y(0))
+      //   .remove();
     }
 
     function removeXAxis() {
@@ -177,10 +171,10 @@ charts.forEach(function(race, index) {
           return d.values[0].group;
         });
 
-      var barLabels = svg.selectAll('.chart__enrollment--barlabels')
-        .data(data, function(d) {
-          return d.values[0].group;
-        });
+      // var barLabels = svg.selectAll('.chart__enrollment--barlabels')
+      //   .data(data, function(d) {
+      //     return d.values[0].group;
+      //   });
     
       bars.exit()
         .transition()
@@ -190,12 +184,12 @@ charts.forEach(function(race, index) {
         .style('fill-opacity', 1e-6)
         .remove();
 
-      barLabels.exit()
-        .transition()
-          .duration(300)
-        .attr('y', y(0))
-        .attr('height', height - y(0))
-        .remove();
+      // barLabels.exit()
+      //   .transition()
+      //     .duration(300)
+      //   .attr('y', y(0))
+      //   .attr('height', height - y(0))
+      //   .remove();
 
       // data that needs DOM = enter() (a set/selection, not an event!)
       bars.enter().append('rect')
@@ -204,14 +198,14 @@ charts.forEach(function(race, index) {
         .attr('y', y(0))
         .attr('height', height - y(0));
 
-      barLabels.enter().append('text')
-        .text(function(d, i) {
-          var value = d.values[i].percent;
-          return Math.round(value * 100) + '%'; 
-        })
-        .attr('class', 'chart__enrollment--barlabels')
-        .attr('y', function(d, i) { return y(d.values[i].percent) - 5; })
-        .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); });
+      // barLabels.enter().append('text')
+      //   .text(function(d, i) {
+      //     var value = d.values[i].percent;
+      //     return Math.round(value * 100) + '%'; 
+      //   })
+      //   .attr('class', 'chart__enrollment--barlabels')
+      //   .attr('y', function(d, i) { return y(d.values[i].percent) - 5; })
+      //   .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); });
 
       // the 'UPDATE' set:
       bars.transition().duration(1000)
@@ -325,8 +319,8 @@ charts.forEach(function(race, index) {
           .attr('stroke-dashoffset', 0);
 
       // Resize bar width/position
-      var bars = svg.selectAll('rect'),
-          barLabels = svg.selectAll('chart__enrollment--barlabels');
+      var bars = svg.selectAll('rect');
+          // barLabels = svg.selectAll('chart__enrollment--barlabels');
 
       bars.attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
         .attr('width', width/4)
@@ -440,13 +434,13 @@ charts.forEach(function(race, index) {
         if (direction === 'down') {
           addXAxis();
           addSeries(dataRace);
-          $('.chart__enrollment--barlabels').hide();
+          // $('.chart__enrollment--barlabels').hide();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
           addBars(dataRace);
-          $('.chart__enrollment--barlabels').show();
+          // $('.chart__enrollment--barlabels').show();
           removeSeries();
           removeXAxis();
         }

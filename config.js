@@ -25,6 +25,14 @@ config.data = {
     {
       fileid: '1pvIa8mFx0z1wqSjrtCo1ZUwSHs7KFIjDYiElkiRWVwo',
       name: 'story_three'
+    },
+    {
+      fileid: '1FlyWDzlnqPeQmh5M9cHwcCMvr85zfqdNwOIwiU1EoMQ',
+      name: 'interactive'
+    },
+    {
+      fileid: '1N6-HpWvwgLrDaLsMsmf9gC-0J4zS9NbDASqGdlqs9M8',
+      name: 'podcast'
     }
   ],
   sheets: [

@@ -37,8 +37,8 @@
 {% block content %}
 <main class="main-body">
   <figure class="logo">
-    <img class="logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/tt-PoA-logo-stacked.svg">
-    <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/tt-PoA-logo.svg">
+    <img class="logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo-stacked.svg">
+    <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo.svg">
   </figure>
   <header>
     <h1 class="logo__tagline">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</h1>
@@ -46,7 +46,7 @@
   <div class="storytop--wrapper">
     <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
     <header class="storytop">
-      <div class="storytop--part">Part {{ context.id }}</div>
+      <div class="storytop--part">{% if (context.id != 'interactive' or context.id != 'podcast') %}Part {% endif %}{{ context.id }}</div>
       <div class="storytop--headline-box">
         <h1 class="storytop--headline">{{ context.headline }}</h1>
         <p class="storytop--byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
