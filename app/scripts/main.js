@@ -16,28 +16,21 @@ function getHeights() {
   // // Find max-height of all explainer texts
   var maxTextHeight = Math.max.apply(null, $('.chart__explainer--text')
     .map(function () { 
-      console.log($(this).height());
       return $(this).height(); 
     }).get());
 
   var chartHeaderHeight = $('#chart__header').height(), // Chart headline
       chartHeaderRowHeight = $('.chart__header--demographics').height(),
-      chartBottomHeight = $('#chart__bottom').height(), // Chart bottom / legend
+      chartBottomHeight = $('#chart__bottom').height() + 32, // Chart bottom / legend
       chartTopHeight = chartHeaderHeight + chartHeaderRowHeight + maxTextHeight + 16,
       notAvailableHeight = chartTopHeight + chartBottomHeight;
 
-  console.log('headline ' + chartHeaderHeight);
-  console.log('header row ' + chartHeaderRowHeight);
-  console.log('max text ' + maxTextHeight);
-
-  console.log('added: ' + chartTopHeight);
   $('#chart__top').height(chartTopHeight);
   chartHeight = windowHeight - notAvailableHeight;
 
   if (chartHeight > 500) {
     chartHeight = 500;
   }
-  console.log(chartHeight);
 }
 
 getHeights();
@@ -64,7 +57,7 @@ var yAxis = d3.svg.axis()
 
 var line = d3.svg.line()
     .interpolate('basis')
-    .x(function(d) { console.log(d.date); return x(d.date); })
+    .x(function(d) { return x(d.date); })
     .y(function(d) { 
       return y(d.percent); 
     });
@@ -129,14 +122,7 @@ charts.forEach(function(race, index) {
     // Functions to remove chart elements
     function removeBars() {
       var bars = svg.selectAll('rect');
-          // barLabels = svg.select('chart__enrollment--barlabels');
-
       bars.remove();
-      // barLabels.transition()
-      //     .duration(300)
-      //   .attr('y', y(0))
-      //   .attr('height', height - y(0))
-      //   .remove();
     }
 
     function removeXAxis() {
@@ -170,11 +156,6 @@ charts.forEach(function(race, index) {
         .data(data, function(d) {
           return d.values[0].group;
         });
-
-      // var barLabels = svg.selectAll('.chart__enrollment--barlabels')
-      //   .data(data, function(d) {
-      //     return d.values[0].group;
-      //   });
     
       bars.exit()
         .transition()
@@ -184,28 +165,12 @@ charts.forEach(function(race, index) {
         .style('fill-opacity', 1e-6)
         .remove();
 
-      // barLabels.exit()
-      //   .transition()
-      //     .duration(300)
-      //   .attr('y', y(0))
-      //   .attr('height', height - y(0))
-      //   .remove();
-
       // data that needs DOM = enter() (a set/selection, not an event!)
       bars.enter().append('rect')
         .attr('class', 'bar')
         .attr('fill', function(d, i) { return color(d.values[i].group); })
         .attr('y', y(0))
         .attr('height', height - y(0));
-
-      // barLabels.enter().append('text')
-      //   .text(function(d, i) {
-      //     var value = d.values[i].percent;
-      //     return Math.round(value * 100) + '%'; 
-      //   })
-      //   .attr('class', 'chart__enrollment--barlabels')
-      //   .attr('y', function(d, i) { return y(d.values[i].percent) - 5; })
-      //   .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); });
 
       // the 'UPDATE' set:
       bars.transition().duration(1000)
@@ -411,6 +376,7 @@ charts.forEach(function(race, index) {
     addBars(dataRaceTX);
     addYAxis();
     removeXAxis();
+    resize();
 
     var inview2 = new Waypoint.Inview({
       element: $('#waypoint2')[0],
@@ -451,14 +417,14 @@ charts.forEach(function(race, index) {
       element: $('#waypoint4')[0],
       enter: function(direction) {
         if (direction === 'down') {
-          rescale();
-          $('.chart__enrollment--label').show();
+          // rescale();
+          // $('.chart__enrollment--label').show();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
-          resetScale();
-          $('.chart__enrollment--label').hide();
+          // resetScale();
+          // $('.chart__enrollment--label').hide();
         }
       }
     });

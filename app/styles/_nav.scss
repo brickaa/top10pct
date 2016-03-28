@@ -52,6 +52,11 @@
   // Inside Story Navigation
   &__aside {
     @extend %left-lock;
+    padding: 0 0 0 1rem;
+
+    @include susy-media($prose-desktop-bp) {
+      padding: 0;
+    }
 
     li {
       &:active,
@@ -89,8 +94,10 @@
       @extend %subtitle;
 
       &.story {
+        @include font-size($s);
         color: $color-secondary;
-        font-weight: 800;
+        font-weight: 400;
+        margin-bottom: .25em;
 
         &:hover,
         &:active {
@@ -129,20 +136,20 @@
       width: 80px;
 
       &-i {
-        background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
+        background-image: url(../assets/images/POA-Story1-Lead-004.jpg);
       }
 
       &-ii {
-        background-image: url(../assets/images/POA-Story2-Lead-002.jpg);
+        background-image: url(../assets/images/POA-Story2-Lead-003.jpg);
       }
 
       &-iii {
-        background-image: url(../assets/images/POA-Story3-Lead-001.jpg); 
+        background-image: url(../assets/images/POA-Story3-Lead-003.jpg); 
       }
     }
 
     &--part-wrapper {
-      margin: 0 0 .75rem;
+      margin: 0 0 .5rem;
     }
 
     &--link {
@@ -210,13 +217,18 @@
     &--headline {
       @include headline($m, $l);
       color: $color-secondary;
+
+      &_sub {
+        @include headline($base, $m);
+        color: $color-secondary;
+      }
     }
 
     &--headline-box {
       padding: 1rem;
 
       @include susy-media($prose-width) {
-        padding: 1rem 1rem 1rem 3rem;
+        padding: 1rem 1rem .25rem 3rem;
       }
     }
 

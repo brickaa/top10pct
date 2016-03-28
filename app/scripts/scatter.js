@@ -209,7 +209,7 @@ charts.forEach(function(chart, index) {
           .attr('x', 0)
           .attr('y', 34)
           .style('text-anchor', 'start')
-          .text('Percent of high school seniors enrolled at UT-Austin');
+          .text('Percentage of high school seniors who enrolled at UT-Austin');
 
       dot(dataKey);
     }  
@@ -231,7 +231,7 @@ charts.forEach(function(chart, index) {
           .attr('x', 0)
           .attr('y', 34)
           .style('text-anchor', 'start')
-          .text('Percent of high school seniors enrolled at UT-Austin');
+          .text('Percentage of high school seniors who enrolled at UT-Austin');
 
     // y-axis
     svg.append('g')

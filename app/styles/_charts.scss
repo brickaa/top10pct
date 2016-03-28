@@ -20,11 +20,12 @@ $chart-bp: 630px;
     text-align: center;
 
     &--scatter {
-      @include font-size($m);
+      @include font-size($s);
       color: $color-dk-gray;
       font-family: $sans-serif;
       font-weight: 800;
       margin: 0;
+      min-height: 2.8rem;
       text-align: center;
     }
 
@@ -167,7 +168,7 @@ $chart-bp: 630px;
   &__scroll--prompt {
     color: $color-dk-gray;
     text-align: center;
-    margin: .5rem 0 0;
+    margin: 0;
     
     span {
       @include font-size($xs);
@@ -237,6 +238,25 @@ $chart-bp: 630px;
       opacity: 0;
     }
   }  
+
+  &__lastSlide {
+    display: none;
+    opacity: 0;
+    text-align: center;
+    margin: 0 0 0 1.25rem;
+
+    &--value {
+      @include font-size($xxl, .6);
+      color: $color-primary;
+      font-family: $serif;
+    }
+
+    &--header {
+      @include font-size($m, .8);
+      color: $color-dk-gray;
+      font-family: $sans-serif;
+    }
+  }
 
   &__source,
   &__source--scatter {
@@ -437,9 +457,19 @@ $chart-bp: 630px;
 }
 
 .y.axis {
-  @include font-size($xxs);
-}
+  $empty-ticks: 1;
 
+  @include font-size($xxs);
+
+  @each $tick in $empty-ticks {
+    .tick:nth-of-type(#{$tick}) {
+      text {
+        color: $color-dk-gray;
+        display: none;
+      }
+    } 
+  }
+}
 .x.axis {
   $empty-ticks: 2, 3, 5, 6, 8, 9, 12, 13;
 
@@ -453,7 +483,6 @@ $chart-bp: 630px;
       }
     } 
   }
-
 }
 
 svg .label {

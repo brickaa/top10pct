@@ -41,10 +41,13 @@
     <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo.svg">
   </figure>
   <header>
-    <h1 class="logo__tagline">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</h1>
+    <h1 class="logo__tagline">A series on the fight over the Top 10 Percent Rule and the quest to make Texas’ top universities look more like Texas</h1>
   </header>
   <div class="storytop--wrapper">
     <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
+    <div class="storytop--caption">
+      <p>{{ context.lead_art.caption }} | {{ context.lead_art.credit }}</p>
+    </div>
     <header class="storytop">
       <div class="storytop--part">{% if (context.id == 'i' or context.id == 'ii' or context.id == 'iii') %}Part {% endif %}{{ context.id }}</div>
       <div class="storytop--headline-box">

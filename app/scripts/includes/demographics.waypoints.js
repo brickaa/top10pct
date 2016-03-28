@@ -48,7 +48,7 @@ var inview6 = new Waypoint.Inview({
       $('.sticky-charts').removeClass('stuck');
       $('.chart__position--content').css('position', 'absolute');
       $('.chart__position--content').css('bottom', 0);
-      $('.chart__scroll--prompt').hide();
+      $('.chart__position--content').css('width', '100%');
     }  
   },
   exit: function(direction) {
@@ -131,6 +131,11 @@ var inview4 = new Waypoint.Inview({
       text4.show();
       pos3.removeClass('fa-circle').addClass('fa-circle-thin');
       pos4.removeClass('fa-circle-thin').addClass('fa-circle');
+      $('#white svg').hide();
+      $('#black svg').hide();
+      $('#hispanic svg').hide();
+      $('.chart__lastSlide').height($('#white svg').height()).show();
+      $('.chart__lastSlide').animate({ opacity: 1 });
     }
   },
   exit: function(direction) {
@@ -139,6 +144,11 @@ var inview4 = new Waypoint.Inview({
       text4.hide();
       pos4.removeClass('fa-circle').addClass('fa-circle-thin');
       pos3.removeClass('fa-circle-thin').addClass('fa-circle');
+      $('#white svg').show();
+      $('#black svg').show();
+      $('#hispanic svg').show();
+      $('.chart__lastSlide').hide();
+      $('.chart__lastSlide').css('opacity', '0');
     }
   }
 });

@@ -56,6 +56,15 @@
   {{ demographics(value) }}
 {% endmacro %}
 
+{% macro interactive_plug(value) %}
+  <aside class="prose--{{ value.alignment }}">
+    <header>
+      <h2 class="chart__subhead"><a href="{{ PATH_PREFIX }}interactive">{{ value.title }}</a></h2>
+    </header>
+    <p class="prose__subtitle">{{ value.text }}</p>
+  </aside>
+{% endmacro %}
+
 {% macro scatter_charts(value) %}
   {{ scatter(value) }}
 {% endmacro %}
@@ -65,7 +74,7 @@
 {% endmacro %}
 
 {% macro republish(value) %}
-<p class="prose__disclosure">To republish this story for free, please email <a href="mailto:editors@texastribune.org">editors@texastribune.org</a> or go <a href="../{{ value }}-republish">here</a>.</p>
+<p class="prose__disclosure">To republish this story for free, please email <a href="mailto:editors@texastribune.org">editors@texastribune.org</a>.</p>
 {% endmacro %}
 
 {% macro image(value, data) %}

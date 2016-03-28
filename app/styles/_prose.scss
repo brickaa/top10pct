@@ -75,23 +75,23 @@
   }
 
   &--lead-art_i {
-    background-image: url(../assets/images/POA-Story1-Lead-001.jpg);
+    background-image: url(../assets/images/POA-Story1-Lead-004.jpg);
   }
 
   &--lead-art_ii {
-    background-image: url(../assets/images/POA-Story2-Lead-002.jpg);
+    background-image: url(../assets/images/POA-Story2-Lead-003.jpg);
   }
 
   &--lead-art_iii {
-    background-image: url(../assets/images/POA-Story3-Lead-002.jpg);
+    background-image: url(../assets/images/POA-Story3-Lead-003.jpg);
   }
 
   &--lead-art_interactive {
-    background-image: url(../assets/images/POA-Interactive-Lead-002.jpg);
+    background-image: url(../assets/images/POA-Story3-Lead-002.jpg);
   }
 
   &--lead-art_podcast {
-    background-image: url(../assets/images/POA-Podcast-Lead-001.jpg);
+    background-image: url(../assets/images/POA-Interactive-Lead-001.jpg);
   }
 
   &--part {
@@ -100,7 +100,7 @@
 
   &--headline-box {
     background-color: #fff;
-    padding: 1rem 1rem 0;
+    padding: 2.5rem 1rem 0;
     width: 100%;
 
     @include susy-media($prose-width) {
@@ -186,7 +186,7 @@
     }
 
     &--quotemark {
-      @include font-size($xxl);
+      @include font-size(66, .8);
       color: $color-primary;
       float: left;
       font-family: $serif;
@@ -309,13 +309,19 @@
     text-align: center;
   }
 }
+
 .storytop {
   $height: 26;
   $height-desktop: 30;
   @include story-header($height+rem, $height-desktop+rem, $height - 4+rem);
   @include clearfix;
-  position: absolute;
-  bottom: 0;
+  margin: -6em 0 0;
+
+  @include susy-media($prose-desktop-bp) {
+    bottom: 0;
+    margin: 0;
+    position: absolute;
+  }
 
   &--wrapper {
     color: $color-dk-gray;
@@ -330,6 +336,35 @@
 
   &--headline {
     @include headline($l, $xl);
+  }
+
+  &--headline_sub {
+    @include headline($base, $base);
+  }
+
+  &--caption {
+
+    p {
+      @include font-size($xs);
+      color: $color-gray;
+      font-family: $sans-serif;
+      line-height: 1.1;
+      margin: .5em 1rem;
+    }
+
+    @include susy-media($prose-width) {
+      p { margin: .5em 3rem; }
+    }
+
+    @include susy-media($prose-desktop-bp) {
+      float: right;
+      max-width: 12em;
+
+      p {
+        line-height: 1.3;
+        margin: .5em 0;
+      }
+    }
   }
 }
 
