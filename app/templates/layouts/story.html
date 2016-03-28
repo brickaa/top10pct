@@ -46,7 +46,7 @@
   <div class="storytop--wrapper">
     <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
     <header class="storytop">
-      <div class="storytop--part">{% if (context.id != 'interactive' or context.id != 'podcast') %}Part {% endif %}{{ context.id }}</div>
+      <div class="storytop--part">{% if (context.id == 'i' or context.id == 'ii' or context.id == 'iii') %}Part {% endif %}{{ context.id }}</div>
       <div class="storytop--headline-box">
         <h1 class="storytop--headline">{{ context.headline }}</h1>
         <p class="storytop--byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>

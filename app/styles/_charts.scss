@@ -61,7 +61,6 @@ $chart-bp: 630px;
   &__info {
     @include clearfix;
     padding: 0 1rem;
-    text-align: center;
 
     @include susy-media($page-width) {
       padding: 0;     
@@ -305,11 +304,12 @@ $chart-bp: 630px;
     }
 
     &--scatter {
+      max-width: $prose-width;
+      margin: 0 0 2rem;
       width: 100%;
 
-      @include susy-media($prose-premobile-bp) {
-        float: left;
-        width: 50%;        
+      @include susy-media($prose-width) {
+        padding: 0 1rem 0 3rem;
       }
     }
   }
@@ -333,12 +333,12 @@ $chart-bp: 630px;
       color: $color-dk-gray;
       font-family: $serif;
       font-weight: 600;
-      margin: 0 0 .5rem;
+      margin: 0 0 .5rem 1rem;
       display: block;
 
       @include susy-media($prose-width) {
         display: inline-block;
-        margin: 0 0 1rem;
+        margin: 0 0 1rem 3rem;
       }
     }
 

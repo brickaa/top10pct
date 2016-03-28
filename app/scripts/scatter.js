@@ -2,9 +2,9 @@
 
 import './includes/chosen.jquery.js';
 
-var margin = {top: 10, right: 10, bottom: 30, left: 60},
+var margin = {top: 10, right: 10, bottom: 30, left: 40},
     width = parseInt(d3.select('.chart__container--scatter').style('width'), 10) - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+    height = 300 - margin.top - margin.bottom;
     
 //   // setup x 
 var xScale = d3.scale.linear().range([0, width]), // value -> display
@@ -239,7 +239,7 @@ charts.forEach(function(chart, index) {
         .call(yAxis
           .scale(yScale)
           .orient('left')
-          .ticks(5, '%')
+          .ticks(4, '%')
           .outerTickSize(0));
 
     dot(dataKey);

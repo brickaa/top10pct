@@ -130,10 +130,10 @@ gulp.task('styles', () => {
 
 gulp.task('images', () => {
   return gulp.src('./app/assets/images/**/*')
-    .pipe($.cache($.imagemin({
+    .pipe($.imagemin({
       progressive: true,
       interlaced: true
-    })))
+    }))
     .pipe(gulp.dest('./dist/assets/images'))
     .pipe($.size({title: 'images'}));
 });

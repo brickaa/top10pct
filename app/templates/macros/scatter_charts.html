@@ -1,6 +1,14 @@
 {% macro scatter(value) %}
 
 <div id="charts" class="chart">
+  <div class="prose">
+    <p class="chart__options--header">Show schools by metro area:</p>
+    <button id="data" class="chart__options--button active">All</button>
+    <button id="austin" class="chart__options--button">Austin</button>
+    <button id="dallas" class="chart__options--button">DFW</button>
+    <button id="houston" class="chart__options--button">Houston</button>
+    <button id="sanantonio" class="chart__options--button">San Antonio</button>
+  </div>
   <div class="chart__container--scatter">
     <header class="chart__header">
       <h2>Percent of high school "economically disadvantaged"</h2>
@@ -26,13 +34,7 @@
     </div> 
   </div>
 
-  <div class="chart__info">
-    <p class="chart__options--header">Show schools by metro area:</p>
-    <button id="data" class="chart__options--button active">All</button>
-    <button id="austin" class="chart__options--button">Austin</button>
-    <button id="dallas" class="chart__options--button">DFW</button>
-    <button id="houston" class="chart__options--button">Houston</button>
-    <button id="sanantonio" class="chart__options--button">San Antonio</button>
+  <div class="prose">
     <div class="chosen_information">
       <p class="chart__options--header">Find a high school on the graphs:</p>
       <select data-placeholder="Search for your school" id="chosen-select" tabindex="2">
@@ -43,8 +45,6 @@
         <optgroup id="sanantonio-group" label="San Antonio-New Braunfels"></optgroup>
         <optgroup id="other-group" label="Other"></optgroup>
       </select>
-
-<!--       <button id="reset-highlights" class="chart__options--reset">Reset</button> -->
     </div>
     <div class="chart__info--box-wrapper title">
       <div class="chart__info--box">
@@ -82,7 +82,9 @@
         <div class="chart__info--value" id="chosen_collegeready"></div>
       </div>
     </div>
-    <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>  
+    <div class="chart__wrapper">
+      <p class="chart__source">Sources: The Texas Education Agency's <a href="https://rptsvr1.tea.texas.gov/perfreport//tapr/2015/xplore/DownloadSelData.html">Texas Academic Performance Report</a> and University of Texas at Austin Admissions Research's <a href="http://admissions.utexas.edu/docs/sb175-tx-schools-2013-15.pdf">Texas Feeder School Supplement</a></p>  
+    </div>
   </div>
 
 </div>
