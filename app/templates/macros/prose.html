@@ -74,7 +74,7 @@
 {% endmacro %}
 
 {% macro republish(value) %}
-<p class="prose__disclosure">To republish this story for free, please email <a href="mailto:editors@texastribune.org">editors@texastribune.org</a>.</p>
+<p class="prose__disclosure">To republish this story for free, click <a href="../{% if value.slug != '' %}{{ value.slug }}-{% endif %}republish">here</a> or email <a href="mailto:editors@texastribune.org">editors@texastribune.org</a>.</p>
 {% endmacro %}
 
 {% macro image(value, data) %}
