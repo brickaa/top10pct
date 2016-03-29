@@ -6,7 +6,8 @@ module.exports = {
   entry: {
     main: './main.js',
     scatter: './scatter.js',
-    copy: './copy.js'
+    copy: './copy.js',
+    scrollgraphs: './scrollgraphs.js'
   },
   output: {
     path: path.join(__dirname, '/dist/scripts'),
