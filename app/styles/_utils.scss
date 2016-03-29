@@ -2,20 +2,32 @@ $font-georgia: Georgia, Times, 'Times New Roman', serif;
 $font-helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Tribune Colors
-$tribune-black: rgb(17, 17, 17);
+$color-dk-gray: rgb(17, 17, 17);
 $tribune-teal: rgb(0, 137, 144);
 $tribune-yellow: rgb(255, 194, 0);
+$tribune-black: #000;
 $white: rgb(255, 255, 255);
+$color-primary: rgb(163, 31, 58); // #a31f3a; dark red/burgundy
+$color-secondary: rgb(53, 109, 151); // #356D97 steel blue
+$color-tertiary: rgb(153, 204, 51); // #99cc33 lime
+$color-lt-gray: rgb(225,225,225); //#e1e1e1
+$color-gray: rgb(137, 136, 149);// #898895
+$color-dk-gray: rgb(58, 58, 79); // #3a3a4f
+
 
 // Sample Breakpoints
 $small: new-breakpoint(min-width 460px max-width 810px);
 $medium: new-breakpoint(min-width 811px max-width 1080px);
 $large: new-breakpoint(min-width 1081px);
 $sidebar-break: 768px;
+$susy-desktop: 480px;
 $default-mobile: new-breakpoint(max-width 480px);
 
 // Max page width
-$page-width: 50em;
+$page-width: 60em;
+$prose-width: 48em;
+$prose-premobile-bp: 38em;
+$prose-desktop-bp: 60em;
 
 // Box Sizing
 html {
@@ -27,6 +39,35 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+// Size Scale
+$base: 16;
+$xxl: 36;
+$xl: 28;
+$l: 22;
+$m: 18;
+$s: 14;
+$xs: 12;
+$xxs: 10;
+
+// Font Stuff
+$serif: "utopia-std", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+$sans-serif: open-sans, "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+
+@mixin font-size($f, $pct:1, $bp:480px) {
+  font-size: $f+px; // for IE8
+  font-size: $f/$base+rem;
+
+  @if $pct != 1 {
+    font-size: $f*$pct+px; // for IE8
+    font-size: $f*$pct/$base+rem;
+
+    @include susy-media($bp) {
+      font-size: $f+px; // for IE8
+      font-size: $f/$base+rem;
+    }
+  }
 }
 
 // Clearfix
@@ -41,32 +82,91 @@ html {
  }
 }
 
+@mixin btn($color, $type: null) {
+  @include clearfix;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $sans-serif;
+  letter-spacing: .03rem;
+  margin: 0 0 .3em;
+  text-align: center;
+  vertical-align: middle;
+
+
+  @if $type == ghost {
+    background: transparent;
+    border: 2px solid $color;
+    color: $color;
+    padding: .4em .75em .5em;
+  } @else {
+    background: $color;
+    @if $color == $color-primary {
+      color: $white;
+    } @else {
+      color: #000;
+    }
+    border: 0;
+    padding: .5em .75em .625em;
+  }
+
+  &:active,
+  &:hover {
+    @if $type == ghost {
+      background-color: transparentize($color, .95);
+    } @else {
+      background-color: transparentize($color, .3);
+    }
+  }
+}
+
+.button {
+  @include btn($color-primary);
+}
+
+.ghost-button {
+  @include btn($color-primary, ghost);
+
+  &.active {
+    background-color: transparentize($color-primary, .8);
+  }
+}
+
 %content-padding {
   padding: 0 1rem;
 }
 
-// Sample Scale / Font Sizes
-$base: 16;
-$xxl: 48;
-$xl: 36;
-$l: 22;
-$m: 18;
-$s: 14;
-$xs: 12;
-$xxs: 9;
+%left-padding {
+  padding: 0 1rem;
 
+  @include susy-media($prose-desktop-bp) {
+    padding: 0 1rem 0 4rem;
+  }
+}
 
-@mixin font-size($f, $pct:1, $bp:480px) {
-  font-size: $f+px; // for IE8
-  font-size: $f/$base+rem;
+%right-lock {
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  width: 100%;
 
-  @if $pct != 1 {
-    font-size: $f*$pct+px; // for IE8
-    font-size: $f*$pct/$base+rem;
+  @include susy-media($prose-premobile-bp) {
+    float: right;
+    margin-left: 1rem;
+    width: 50%;
+  }
+}
 
-    @include susy-media($bp) {
-      font-size: $f+px; // for IE8
-      font-size: $f/$base+rem;
-    }
+%left-lock {
+  margin-bottom: 2rem;
+  margin-right: 1.5rem;
+  width: 100%;
+
+  @include susy-media($page-width) {
+    padding: 0;
+  }
+
+  @include susy-media($prose-premobile-bp) {
+    float: left;
+    width: 40%;
   }
 }

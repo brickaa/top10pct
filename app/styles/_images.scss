@@ -10,10 +10,6 @@
     width: 100%;
   }
 
-  &--basic {
-    max-width: 40.625rem;
-  }
-
   &--left {
     @include susy-media($sidebar-break) {
       float: left;
@@ -31,24 +27,27 @@
   }
 
   &--right {
-    @include susy-media($sidebar-break) {
-      float: right;
-      margin-bottom: 2rem;
-      margin-left: 1rem;
-      width: 48%;
+    float: right;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    width: 48%;
+
+    @include susy-media($prose-desktop-bp) {
+      margin-right: -10rem;      
     }
   }
 
   &--right-lock {
-    float: right;
     margin-bottom: 2rem;
-    margin-left: 1rem;
     margin-right: 1rem;
-    width: 48%;
-  }
+    width: 100%;
+    max-width: $prose-width;
 
-  &--lead-art {
-    margin-bottom: 3rem;
+    @include susy-media($prose-desktop-bp) {
+      float: right;
+      margin-left: 1rem;
+      width: 40%;      
+    }
   }
 
   &__img {
@@ -59,28 +58,21 @@
 
   &__caption {
     @include font-size($xs);
-    letter-spacing: .05em;
+    color: $color-dk-gray;
+    font-family: $sans-serif;
     line-height: 1.3;
+    padding: 0 1rem;
 
-    .gallery-content & {
-      @extend %content-padding;
-      @include font-size($s);
-
-      @include susy-media($sidebar-break) {
-        @include font-size($base);
-      }
+    @include susy-media($prose-width) {
+      padding: 0;
     }
 
     .invert & {
       color: $white;
     }
 
-    .image--lead-art &,
-    .image--full &,
-    .image--basic &,
-    .image--left &,
-    .image--right & {
-      @extend %content-padding;
+    > .prose--basic {
+      padding: 0;
     }
   }
 }

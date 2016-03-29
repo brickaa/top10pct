@@ -78,13 +78,15 @@ data.PATH_FULL = fullPath;
 
 const env = nunjucks.configure('./app/templates', {
   autoescape: false,
-  noCache: true
+  noCache: true,
 });
+
+env.addGlobal('PATH_PREFIX', data.PATH_PREFIX);
 
 gulp.task('templates', () => {
   const nunjuckify = map((code, filename) => {
-    return env.renderString(code.toString(), {data: data})
-  })
+    return env.renderString(code.toString(), {data: data});
+  });
 
   // All .html files are valid, unless they are found in templates
   return gulp.src(['./app/**/*.html', '!./app/templates/**/*'])
@@ -128,10 +130,10 @@ gulp.task('styles', () => {
 
 gulp.task('images', () => {
   return gulp.src('./app/assets/images/**/*')
-    .pipe($.cache($.imagemin({
+    .pipe($.imagemin({
       progressive: true,
       interlaced: true
-    })))
+    }))
     .pipe(gulp.dest('./dist/assets/images'))
     .pipe($.size({title: 'images'}));
 });

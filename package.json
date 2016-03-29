@@ -1,8 +1,8 @@
 {
   "private": true,
   "config": {
-    "s3_bucket": "moose.texastribune.org",
-    "slug": "top10"
+    "s3_bucket": "apps.texastribune.org",
+    "slug": "price-of-admission"
   },
   "devDependencies": {
     "archieml": "^0.3.1",
@@ -11,6 +11,7 @@
     "babel-preset-es2015": "^6.5.0",
     "browser-sync": "^2.11.1",
     "bs-fullscreen-message": "^1.0.1",
+    "clipboard": "^1.5.9",
     "copytext": "^1.1.0",
     "del": "^2.2.0",
     "googleapis": "^2.1.7",

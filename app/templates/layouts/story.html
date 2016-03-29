@@ -1,28 +1,63 @@
 {% extends 'layouts/base.html' %}
-
 {% from 'macros/authors.html' import authors %}
 {% from 'macros/nav.html' import nav %}
-
+{% from 'macros/nav.html' import navfooter %}
 {% import 'macros/prose.html' as prose %}
+{% block social %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@texastribune">
+<meta name="twitter:creator" content="@texastribune">
+<meta property="og:url" content="{{ data.PATH_FULL }}{{ context.slug }}">
+<meta property="og:title" content="{{ context.headline }}">
+<meta property="og:type" content="article">
+<meta property="og:description" content="{{ context.summary }}">
+<meta property="og:site_name" content="The Texas Tribune">
+<meta property="og:image" content="{{ data.PATH_FULL }}assets/images/{{ context.fb_art }}">
+<meta property="fb:app_id" content="154122474650943">
+{% endblock %}
+{% block parsely %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "headline": "{{ context.headline }}",
+    "url": "{{ data.PATH_FULL }}",
+    "thumbnailUrl": "",
+    "dateCreated": "2016-02-09T06:00:00-06:00",
+    "articleSection": "FRONT PAGE, HIGHER EDUCATION",
+    "creator": ["Becca Aaronson, The Texas Tribune"]
+  }
+</script>
+{% endblock %}
 
 {% block header %}
-  {{ nav() }}
+  {{ nav(context.id, context.short_head) }}
 {% endblock %}
 
 {% block content %}
 <main class="main-body">
-  <header class="story-header">
-    <h1 class="story-header__headline">{{ context.headline }}</h1>
-    <p class="story-header__byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
-
-    </div>
-  </header>
-
-  <figure class="image image--lead-art">
-    <img class="image__img" src="{{ data.PATH_PREFIX}}assets/images/{{ context.lead_art.photo_url }}">
-    <figcaption class="image__caption">{{ context.lead_art.caption }}{% if context.lead_art.credit %} | {{ context.lead_art.credit }}{% endif %}</figcaption>
+  <figure class="logo">
+    <img class="logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo-stacked.svg">
+    <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo.svg">
   </figure>
+  <header>
+    <h1 class="logo__tagline">A series on the fight over the Top 10 Percent Rule and the quest to make Texas’ top universities look more like Texas</h1>
+  </header>
+  <div class="storytop--wrapper">
+    <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
+    <div class="storytop--caption">
+      <p>{{ context.lead_art.caption }} | {{ context.lead_art.credit }}</p>
+    </div>
+    <header class="storytop">
+      <div class="storytop--part">{% if (context.id == 'i' or context.id == 'ii' or context.id == 'iii') %}Part {% endif %}{{ context.id }}</div>
+      <div class="storytop--headline-box">
+        <h1 class="storytop--headline">{{ context.headline }}</h1>
+        <p class="storytop--byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
+      </div>     
+    </header>
+  </div>
 
+  </div>
   <article class="prose">
   {% for item in context.prose %}
   {{ prose[item.type](item.value, data) }}
@@ -30,16 +65,16 @@
   {% if context.disclosure %}
   {{ prose.disclosure(context.disclosure) }}
   {% endif %}
-  {% if context.republish %}
-  {{ prose.disclosure(context.republish) }}
-  {% endif %}
+  {{ prose.republish(context.slug) }}
   </article>
+  
+  {{ navfooter(context.id, context.headline) }}
 </main>
 <footer class="footer">
   <div class="footer-container">
     <nav>
       <ul>
-        <li class="copywrite">&copy; 2015 <a href="http://www.texastribune.org/">The Texas Tribune</a></li>
+        <li class="copywrite">&copy; 2016 <a href="http://www.texastribune.org/">The Texas Tribune</a></li>
       </ul>
     </nav>
     <nav class="last-nav">
@@ -55,4 +90,9 @@
     </nav>
   </div>
 </footer>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script src="{{ data.PATH_PREFIX }}scripts/{{ context.script }}.js"></script>
 {% endblock %}

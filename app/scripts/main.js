@@ -7,30 +7,34 @@ import './includes/inview.js';
 import './includes/demographics.waypoints.js';
 
 var chartHeight,
-    chartTopper = $('#chart--topper_explainer_box'),
-    chartBottom = $('.chart--bottom'),
     height;
 
 function getHeights() {
+  // // Find browser height
   var windowHeight = $(window).height();
 
-  var maxTextHeight = Math.max.apply(null, $('.chart--topper_explainer_text')
-    .map(function () { return $(this).height(); }).get());
+  // // Find max-height of all explainer texts
+  var maxTextHeight = Math.max.apply(null, $('.chart__explainer--text')
+    .map(function () { 
+      return $(this).height(); 
+    }).get());
 
-  var chartHeader = $('.chart--header').height(),
-      chartBottomHeight = chartBottom.height(),
-      chartTopHeight = maxTextHeight + chartHeader + 34;
+  var chartHeaderHeight = $('#chart__header').height(), // Chart headline
+      chartHeaderRowHeight = $('.chart__header--demographics').height(),
+      chartBottomHeight = $('#chart__bottom').height() + 32, // Chart bottom / legend
+      chartTopHeight = chartHeaderHeight + chartHeaderRowHeight + maxTextHeight + 16,
+      notAvailableHeight = chartTopHeight + chartBottomHeight;
 
-  chartTopper.css('min-height', maxTextHeight + chartHeader);
-  chartHeight = (windowHeight - chartTopHeight - chartBottomHeight) * 0.95;
-  console.log('chartHeight: ' + chartHeight);
+  
+  chartHeight = windowHeight - notAvailableHeight;
+  $('#chart__top').height(chartTopHeight);
 }
 
 getHeights();
 
-var margin = {top: 10, right: 10, bottom: 30, left: 30},
-    width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
-    height = chartHeight - margin.top - margin.bottom;
+var margin = {top: 10, right: 0, bottom: 30, left: 30},
+    width = parseInt(d3.select('.chart__container').style('width'), 10) - margin.left - margin.right,
+    height = chartHeight;
 
 var parseDate = d3.time.format('%Y%m%d').parse;
 
@@ -57,6 +61,8 @@ var line = d3.svg.line()
 
 var charts = ['white', 'black', 'hispanic'];
 
+// $('.chart-container').width($('.prose').width()/3.1);
+
 charts.forEach(function(race, index) {
   // Build SVG Container
   var svg = d3.select('#' + race).append('svg')
@@ -69,7 +75,7 @@ charts.forEach(function(race, index) {
   d3.csv(CONFIG.projectPath + 'assets/data/data.csv', function(error, data) {
 
     // Color assignments
-    var color = d3.scale.ordinal().range(['#90D3C8','#FF6249','#8DC967','#8DC967','#FFD454']);
+    var color = d3.scale.ordinal().range(['#99cc33','#356D97']);
         
     // Map the data to key values in an array
     data = data.map( function (d) { 
@@ -92,7 +98,7 @@ charts.forEach(function(race, index) {
     var yDomain;
 
     // Draw initial chart w/ yAxis 0-100%;
-    y.domain([0, 1]);
+    y.domain([0, .7]);
 
     // Create various data arrays for chart stages
     var dataUT = [],
@@ -135,7 +141,7 @@ charts.forEach(function(race, index) {
     function addYAxis() {
      svg.append('g')
          .attr('class', 'y axis')
-         .call(yAxis.ticks('5', '%').outerTickSize(0));   
+         .call(yAxis.ticks('5', '%').outerTickSize(0).tickPadding(0));   
     }
 
     function addBars(data) {
@@ -177,11 +183,10 @@ charts.forEach(function(race, index) {
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.outerTickSize(0))
         .selectAll('text')
-          .attr('y', 0)
-          .attr('x', 9)
-          .attr('dy', '.35em')
-          .attr('transform', 'rotate(90)')
-          .style('text-anchor', 'start');
+          .attr('x', '-.25em')
+          .attr('dy', '-.25em')
+          .attr('transform', 'rotate(-65)')
+          .style('text-anchor', 'end');
     }
 
     function addSeries(addData) {
@@ -220,10 +225,9 @@ charts.forEach(function(race, index) {
     function resize() {
       getHeights();
       // update width
-      width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right;
+      width = parseInt(d3.select('.chart__container').style('width'), 10) - margin.left - margin.right;
       height = chartHeight - margin.top - margin.bottom;
 
-      console.log(height);
       d3.select('#' + race).select('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom);
@@ -242,14 +246,6 @@ charts.forEach(function(race, index) {
 
       removeYAxis();
       addYAxis();
-
-      // This checks if the chart has been rescaled
-      // so resize() will draw paths on the correct yScale
-      if(yDomain && yDomain === 1) {
-        resetScale();
-      } else if (yDomain) {
-        rescale();
-      }
 
       // Check if series exists, if yes - resize xAxis
       if (!svg.selectAll('.group').empty()) {
@@ -278,12 +274,16 @@ charts.forEach(function(race, index) {
 
       // Resize bar width/position
       var bars = svg.selectAll('rect');
+          // barLabels = svg.selectAll('chart__enrollment--barlabels');
 
       bars.attr('x', function(d, i) { return x(d.values[i].date) + ((width/4) * (i) + 4); })
         .attr('width', width/4)
         .attr('y', function(d, i) { return y(d.values[i].percent); })
         .attr('height', function(d, i) { return y(0) - y(d.values[i].percent); });
       
+      // barLabels.attr('y', function(d, i) { return y(d.values[i].percent); })
+      //   .attr('x', function(d, i) { return x(d.values[i].date) + (width/4 * (i) + 4); });
+
     }
 
     function rescale() {
@@ -302,7 +302,7 @@ charts.forEach(function(race, index) {
       // update yAxis, data
       svg.select('.y.axis')
         .transition().duration(1000).ease('sin-in-out')
-        .call(yAxis.ticks('5', '%'));
+        .call(yAxis.outerTickSize(0).ticks('5', '%'));
 
       var series = svg.selectAll('.group');
 
@@ -323,7 +323,6 @@ charts.forEach(function(race, index) {
           .duration(300)
           .ease('linear')
           .attr('stroke-dashoffset', 0);
-
     }
 
     function resetScale() {
@@ -340,7 +339,7 @@ charts.forEach(function(race, index) {
       // update yAxis, data
       svg.select('.y.axis')
         .transition().duration(1000).ease('sin-in-out')
-        .call(yAxis.ticks('5', '%'));
+        .call(yAxis.outerTickSize(0).ticks('5', '%'));
 
       var series = svg.selectAll('.group');
 
@@ -396,20 +395,6 @@ charts.forEach(function(race, index) {
           addBars(dataRace);
           removeSeries();
           removeXAxis();
-        }
-      }
-    });
-
-    var inview4 = new Waypoint.Inview({
-      element: $('#waypoint4')[0],
-      enter: function(direction) {
-        if (direction === 'down') {
-          rescale();
-        }
-      },
-      exit: function(direction) {
-        if (direction === 'up') {
-          resetScale();
         }
       }
     });

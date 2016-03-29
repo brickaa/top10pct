@@ -1,33 +1,214 @@
-.prose {
+// Story Subheader
+%subhead {
+  @include font-size($m);
+  color: $color-dk-gray;
+  font-family: $sans-serif;
+  font-weight: 600;
+  margin: 0 0 .5rem;
+}
+
+// Subtitle underneath subheader
+%subtitle {
   @include font-size($base);
-  font-family: $font-georgia;
-  line-height: 1.6;
+  color: $color-gray;
+  font-family: $serif;
+  font-weight: 400;
+  line-height: 1.3;
+  margin: 0 0 1rem;
+}
 
-  > p {
-    margin-bottom: 1rem;
-  }
+%accent-subhead {
+  @include font-size($xs);
+  color: $tribune-yellow;
+  font-family: $sans-serif;
+  font-weight: 600;
+  margin: 0 0 .15rem;
+}
 
-  > a {
-    color: $tribune-teal;
+%link {
+  color: $color-secondary;
 
-    &:hover {
-      text-decoration: underline;
+  &:active,
+  &:hover {
+    text-decoration: underline;
+  } 
+}
+
+// Container styles for asides
+%aside-box {
+  margin: 0 0 1rem;
+  max-width: $prose-width;
+  padding: 1rem 0;
+  position: relative;
+}
+
+@mixin part-box($size) {
+  @include font-size($size);
+  background-color: $color-primary;
+  color: $white;
+  display: inline-block;
+  font-family: $serif;
+  font-weight: 600;
+  letter-spacing: .1em;
+  padding: $size/40 +rem $size/24 +rem;
+  margin-bottom: $size/8+rem;
+  min-width: $size/16*3+rem;
+  text-transform: uppercase;
+}
+
+@mixin story-header($height, $height-desktop, $img-height) {
+  &--lead-art {
+    background-size: cover;
+    height: $img-height;
+    width: 100%;
+    background-position: center center;
+
+    @include susy-media($prose-width) {
+      height: $height;
+      margin: 0 0 0 2rem;
+    }
+
+    @include susy-media($prose-desktop-bp) {
+      height: $height-desktop;
+      margin-left: 2rem;
     }
   }
 
-  &__drop-cap {
-    &:first-letter {
-      @include font-size(72);
-      float: left;
-      font-weight: 900;
-      line-height: 1;
-      padding: 0 .25em;
+  &--lead-art_i {
+    background-image: url(../assets/images/POA-Story1-Lead-005.jpg);
+  }
+
+  &--lead-art_ii {
+    background-image: url(../assets/images/POA-Story2-Lead-003.jpg);
+  }
+
+  &--lead-art_iii {
+    background-image: url(../assets/images/POA-Story3-Lead-003.jpg);
+  }
+
+  &--lead-art_interactive {
+    background-image: url(../assets/images/POA-Interactive-Lead-001.jpg);
+  }
+
+  &--lead-art_podcast {
+    background-image: url(../assets/images/POA-Podcast-Lead-001.jpg);
+  }
+
+  &--part {
+    @include part-box($m);
+  }
+
+  &--headline-box {
+    background-color: #fff;
+    padding: 2.5rem 1rem 0;
+    width: 100%;
+
+    @include susy-media($prose-width) {
+      padding: 1rem 1rem 0 3rem;
+      max-width: $prose-width;
+      margin: 1rem 0 0;
+    }
+  }
+
+  &--byline {
+    @include font-size($s);
+    font-family: $sans-serif;
+    line-height: 1.3;
+    margin: .75rem 0 0;
+  
+    a {
+      color: $color-secondary;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:active,
+      &:hover {
+        text-decoration: underline;
+      }      
+    }
+  }
+}
+
+@mixin headline($base, $desktop) {
+  @include font-size($base);
+  color: $color-dk-gray;
+  font-family: $serif;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 .25rem;
+
+  @include susy-media($prose-premobile-bp) {
+    @include font-size($desktop);
+    line-height: 1.2;
+  }
+}
+
+.prose {
+  @include font-size($base);
+  color: $color-dk-gray;
+  font-family: $serif;
+  line-height: 1.5;
+  margin: 1rem 0 0;
+  
+  > p {
+    @extend %left-padding;
+    color: $color-dk-gray;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    max-width: $prose-width;
+
+    @include susy-media($prose-width) {
+      padding: 0 1rem 0 3rem;
+    }
+    
+    a {
+      @extend %link;
     }
   }
 
   //<h2>
   &__subhead {
-    font-weight: 600;
+    @extend %subhead;
+    padding: 0 1rem;
+
+    @include susy-media($prose-width) {
+      padding: 0 1rem 0 3rem;
+    }
+  }
+
+  &__subtitle {
+    @extend %subtitle;
+  }
+
+  &__blockquote {
+    @include susy-media($page-width) {
+      padding: 0 0 0 1em;
+    }
+
+    &--quotemark {
+      @include font-size(66, .8);
+      color: $color-primary;
+      float: left;
+      font-family: $serif;
+      line-height: 1;
+      margin: 0;
+    }
+
+    &--quote {
+      @include font-size($l);
+      color: $color-dk-gray;
+      font-family: $serif;
+      font-weight: 600;
+      line-height: 1.3;
+      margin: 0 0 .25rem 1.5em;
+    }
+
+    &--caption {
+      @include font-size($m);
+      color: $color-gray;
+      font-family: $sans-serif;
+      margin: 0 0 0 1.75em;
+    }
   }
 
   // <ul> 
@@ -39,37 +220,260 @@
   &__disclosure {
     font-style: italic;
   }
-}
 
-.story-header {
-  @include clearfix;
-  margin: 0 0 1rem;
+  &__republish {
+    @include font-size($base);
+    font-family: $sans-serif;
 
-  &__headline {
-    @include font-size($xl);
-    font-weight: 700;
-    line-height: 1.1;
-    margin: 0 0 .25em;
+    &--body {
+      padding: 0 1rem;
+      margin-bottom: 1rem;
+      max-width: $prose-width;
 
-    @include susy-media($sidebar-break) {
-      @include font-size($xxl);
-      line-height: 1.2;
+      @include susy-media($prose-width) {
+        padding: 0 1rem 0 3rem;
+      }
+
+      p { margin-bottom: 1em;}
     }
 
+    &--buttons {
+      padding: 0 1rem;
+      margin-bottom: 1rem;
+      max-width: $prose-width;
+
+      @include susy-media($prose-width) {
+        padding: 0 1rem 0 3rem;
+      }
+    }
+  }
+
+  .ad-slot {
+    margin-bottom: 1rem;
+    max-width: $prose-width;
+    text-align: center;
+
+    &--right-lock {
+      margin-bottom: 2rem;
+      margin-right: 1rem;
+      width: 100%;
+
+      @include susy-media($prose-premobile-bp) {
+        float: right;
+        margin-left: 1rem;
+        width: 40%;
+      } 
+    }
+  }
+
+  &--left-lock {
+    @extend %left-lock;
+  }
+
+  &--right-lock {
+    @extend %right-lock;
+  }
+
+}
+
+.logo {
+  img { 
+    margin: .8em auto;
+    max-height: 5em;
+  }
+
+  &__mobile {
+    display: block;
+
+    @include susy-media($prose-width) {
+      display: none;
+    }
+  }
+
+  &__desktop {
+    display: none;
+
+    @include susy-media($prose-width) {
+      display: block;
+    }
+  }
+
+  &__tagline {
+    @include font-size($base);
+    color: $color-gray;
+    font-family: $serif;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: .5rem auto 1rem;
+    padding: 0 2rem;
+    text-align: center;
+  }
+}
+
+.storytop {
+  $height: 26;
+  $height-desktop: 30;
+  @include story-header($height+rem, $height-desktop+rem, $height - 4+rem);
+  @include clearfix;
+  margin: -6em 0 0;
+
+  @include susy-media($prose-desktop-bp) {
+    bottom: 0;
+    margin: 0;
+    position: absolute;
+  }
+
+  &--wrapper {
+    color: $color-dk-gray;
+    height: $height;
+    position: relative;
+
+    @include susy-media($prose-desktop-bp) {
+      height: $height-desktop;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &--headline {
+    @include headline($l, $xl);
+  }
+
+  &--headline_sub {
+    @include headline($base, $base);
+  }
+
+  &--caption {
+
+    p {
+      @include font-size($xxs);
+      color: $color-gray;
+      font-family: $sans-serif;
+      line-height: 1.1;
+      margin: .5em 1rem;
+    }
+
+    @include susy-media($prose-width) {
+      p { margin: .5em 3rem; }
+    }
+
+    @include susy-media($prose-desktop-bp) {
+      float: right;
+      max-width: 12em;
+
+      p {
+        line-height: 1.3;
+        margin: .5em 0;
+      }
+    }
+  }
+}
+
+.timeline {
+  background-color: transparentize($color-lt-gray, .5);
+  padding: .5em 1em;
+
+  &__list {
+    @include font-size($xs);
+    font-family: $sans-serif;
+
+    li {
+      line-height: 1.5;
+      margin: 0 0 .75em;
+    }
+  } 
+
+  &__date {
+    @include font-size($m);
+    color: $color-primary;
+    font-family: $serif;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 .25em 0 0;
+  }
+
+  &__subhead {
+    @extend %subhead;
+  }
+
+  &__subtitle {
+    @extend %subtitle;
+  }
+}
+
+.republish {
+  ol {
+    @include font-size($s);
+    list-style: inherit;
+    list-style-type: decimal;
+    margin: 0 0 1em 1em;
+  }
+
+  ul {
+    margin: 0 0 0 1em;
+    list-style-type: circle;
+  }
+}
+
+.credit {
+  &__container {
+    @include clearfix;
+    margin: 0 1rem 1rem;
+    max-width: $page-width;
+
+    @include susy-media($prose-premobile-bp) {
+      margin: 0 2rem 1rem;
+    }
+  }
+
+  &__group {
+    float: left;
+    width: 100%;
+
+    @include susy-media($prose-premobile-bp) {
+      padding: 0 1rem;
+      width: 50%;
+      &:last-child {
+        padding: 0 2rem;
+      }
+    }
+  }
+
+  &__list {
+    margin: 0 0 1rem;
+  }
+
+  &__header {
+    @include font-size($m);
+    color: $color-gray;
+    font-family: $serif;
+    font-style: italic;
+    margin: 1rem 0;
+
+    @include susy-media($prose-premobile-bp) {
+      margin: 1rem;
+    }
+  }
+
+  &__subhead {
+    @extend %subhead;
+    @include font-size($s);
   }
 
   &__byline {
     @include font-size($s);
-    margin: 0 0 2rem;
-  }
+    font-family: $sans-serif;
+    line-height: 1.1;
+    margin: .25rem 0 0;
+  
+    a {
+      color: $color-secondary;
+      font-weight: 600;
+      text-decoration: none;
 
-  &__byline-link {
-    color: $tribune-teal;
-    font-weight: 500;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
+      &:active,
+      &:hover {
+        text-decoration: underline;
+      }      
     }
   }
 }

@@ -1,11 +1,14 @@
 {% from 'macros/demographic_charts.html' import demographics %}
+{% from 'macros/scatter_charts.html' import scatter %}
+{% from 'macros/nav.html' import navaside, navfooter %}
+{% from 'macros/timeline.html' import build_timeline %}
 
 {% macro text(value) %}
-<p>{{ value }}</p>
+<p>{{ value|safe }}</p>
 {% endmacro %}
 
-{% macro first(value) %}
-<p class="prose__drop-cap">{{ value }}</p>
+{% macro html_text(value) %}
+&lt;p>{{ value|escape }}&lt;/p>
 {% endmacro %}
 
 {% macro subhead(value) %}
@@ -21,30 +24,61 @@
 {% endmacro %}
 
 {% macro blockquote(value) %}
-<aside class="inline{% if value.align %} inline--{{ value.align }}{% endif %}">
-  <blockquote class="blockquote">
-    <p class="blockquote__quote{% if value.quote_class %} blockquote__quote--{{ value.quote_class }}{% endif %}">{{ value.quote }}</p>
-    {% if value.caption %}<cite class="blockquote__caption">{{ value.caption }}</cite>{% endif %}
+<aside{% if value.alignment %} class="prose--{{ value.alignment }}{% endif %}">
+  <blockquote class="prose__blockquote">
+    <div class="prose__blockquote--quotemark">&ldquo;</div>
+    <p class="prose__blockquote--quote{% if value.quote_class %} blockquote__quote--{{ value.quote_class }}{% endif %}">{{ value.quote }}</p>
+    {% if value.caption %}<p class="prose__blockquote--caption">&mdash; {{ value.caption }}</p>{% endif %}
   </blockquote>
 </aside>
 {% endmacro %}
 
 {% macro ad(value) %}
-<aside class="ad-slot ad-slot__{{ value.type }}">
-  <div id="gpt-ad-{{ value.type }}-{{ value.id }}"></div>
+<aside class="ad-slot ad-slot__{{ value.type }}{% if value.alignment %} ad-slot--{{ value.alignment }}{% endif %}">
+  <div id="ad-{{ value.type }}-{{ value.id }}"></div>
 </aside>
+{% endmacro %}
+
+{% macro timeline(value) %}
+  <aside class="prose--{{ value.alignment }}">
+  {% if value.date %}
+    <span class="timeline--">{{ value.date }}</span>
+  {% endif %}
+  {{ build_timeline(value) }}
+  </aside>
+{% endmacro %}
+
+{% macro nav_aside(value) %}
+  {{ navaside() }}
 {% endmacro %}
 
 {% macro demographic_charts(value) %}
   {{ demographics(value) }}
 {% endmacro %}
 
+{% macro interactive_plug(value) %}
+  <aside class="prose--{{ value.alignment }}">
+    <header>
+      <h2 class="chart__subhead"><a href="{{ PATH_PREFIX }}interactive">{{ value.title }}</a></h2>
+    </header>
+    <p class="prose__subtitle">{{ value.text }}</p>
+  </aside>
+{% endmacro %}
+
+{% macro scatter_charts(value) %}
+  {{ scatter(value) }}
+{% endmacro %}
+
 {% macro disclosure(value) %}
-<p>{{ value }}</p>
+<p class="prose__disclosure">{{ value }}</p>
+{% endmacro %}
+
+{% macro republish(value) %}
+<p class="prose__disclosure">To republish this story for free, please email <a href="mailto:editors@texastribune.org">editors@texastribune.org</a>.</p>
 {% endmacro %}
 
 {% macro image(value, data) %}
-<figure class="image{% if value.alignment %} image--{{ value.alignment }}{% else %} image--full{% endif %}">
+<figure class="image{% if value.alignment %} prose--{{ value.alignment }}{% else %} image--full{% endif %}">
   <img class="image__img" src="{{ data.PATH_PREFIX }}assets/images/{{ value.photo_url }}">
   <figcaption class="image__caption">{{ value.caption }}{% if value.credit %} | {{ value.credit }}{% endif %}</figcaption>
 </figure>

@@ -4,7 +4,9 @@ const webpack = require('webpack');
 module.exports = {
   context: path.join(__dirname, '/app/scripts'),
   entry: {
-    main: './main.js'
+    main: './main.js',
+    scatter: './scatter.js',
+    copy: './copy.js'
   },
   output: {
     path: path.join(__dirname, '/dist/scripts'),
@@ -32,7 +34,8 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      d3: 'd3'
+      d3: 'd3',
+      chosen: 'chosen'
     })
   ],
   debug: true,

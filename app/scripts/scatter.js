@@ -1,103 +1,164 @@
-// import './includes/adLoader';
+/* global $, d3, CONFIG */
 
-/* global d3, $ */
+import './includes/chosen.jquery.js';
 
-(function() {
-  'use strict';
+var margin = {top: 10, right: 10, bottom: 40, left: 40},
+    width = parseInt(d3.select('.chart__container--scatter').style('width'), 10) - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+    
+//   // setup x 
+var xScale = d3.scale.linear().range([0, width]), // value -> display
+    xAxis = d3.svg.axis().scale(xScale).orient('bottom');
 
-  function drawChart(dataFile, location) {
-    var margin = {top: 20, right: 20, bottom: 30, left: 60},
-        width = parseInt(d3.select('.chart-container').style('width'), 10) - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+// setup y
+var yScale = d3.scale.linear().range([height, 0]), // value -> display
+    yAxis = d3.svg.axis().scale(yScale).orient('left');
 
-    /* 
-     * value accessor - returns the value to encode for a given data object.
-     * scale - maps value to a visual display encoding, such as a pixel position.
-     * map function - maps from data value to display value
-     * axis - sets up axis
-     */ 
+// add the tooltip area to the webpage
+var tooltip = d3.select('.tooltip-container').append('div')
+    .attr('class', 'tooltip')
+    .style('opacity', 0);
 
-    if (location === 'graphicAtRisk') {    
-      var yValue = function(d) { return d.atRiskPct; },
-          yLabel = '"At Risk"';
-    } else if (location === 'graphicEcoDis') {   
-      var yValue = function(d) { return d.ecoDisPct; },
-          yLabel = '"Economically Disadvantaged"'; // data -> value    
-    } else if (location === 'graphicCollegeReady') {
-      var yValue = function(d) { return d.collegeReadyBothPct; },
-          yLabel = '"College Ready"';
+d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
+  data = data.map( function (d) {
+    return { 
+      id: d.HSCode,
+      name: d.Name,
+      metro: d.Metro_Area,
+      city: d.City,
+      seniorcount: d.twelfthcount,
+      schoolcount: d.allstudentscount,
+      enrolledpct: d.enrolled2015PctSeniors,
+      minority: d.BlackHispMulti,
+      white: d.WhiteOther,
+      atrisk: d.atRiskPct,
+      ecodis: d.ecoDisPct,
+      collegeready: d.collegeReadyBothPct,
+      avgsat: d.avgSAT,
+      avgact: d.avgACT,
+      admitted: d.Admitted2015,
+      enrolled: d.Enrolled2015,
+      color: d.Color
+    };
+  });
+
+  var count = data.length;
+
+  $.each(data, function(d, i) { 
+
+    if (i.metro === 'Austin-Round Rock') {
+      $('#austin-group').append($('<option></option>')
+        .attr('value', i.id)
+        .text(i.name + ' (' + i.city + ')'));
+    } else if (i.metro === 'Dallas-Fort Worth-Arlington') {
+      $('#dallas-group').append($('<option></option>')
+        .attr('value', i.id)
+        .text(i.name + ' (' + i.city + ')'));
+    } else if (i.metro === 'Houston-The Woodlands-Sugar Land') {
+      $('#houston-group').append($('<option></option>')
+        .attr('value', i.id)
+        .text(i.name + ' (' + i.city + ')'));
+    } else if (i.metro === 'San Antonio-New Braunfels') {
+      $('#sanantonio-group').append($('<option></option>')
+        .attr('value', i.id)
+        .text(i.name + ' (' + i.city + ')'));
+    } else {
+      $('#other-group')
+        .append($('<option></option>')
+          .attr('value', i.id)
+          .text(i.name + ' (' + i.city + ')')); 
     }
 
-    // setup x 
-    var xValue = function(d) { return d.enrolled2015PctSeniors;}, // data -> value
-        xScale = d3.scale.linear().range([0, width]), // value -> display
-        xMap = function(d) { return xScale(xValue(d));}, // data -> display
-        xAxis = d3.svg.axis().scale(xScale).orient('bottom');
-
-    // setup y
-    var yScale = d3.scale.linear().range([height, 0]), // value -> display
-        yMap = function(d) { return yScale(yValue(d));}, // data -> display
-        yAxis = d3.svg.axis().scale(yScale).orient('left');
-
-    // setup fill color
-    var color = d3.scale.category10();
-
-    // add the graph canvas to the body of the webpage
-    var svg = d3.select('#' + location).append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('id', location)
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-    // add the tooltip area to the webpage
-    var tooltip = d3.select('body').append('div')
-        .attr('class', 'tooltip')
-        .style('opacity', 0);
-
-    // load data
-    d3.csv('/assets/data/' + dataFile, function(error, data) {
-
-      // change string (from CSV) into number format
-      data.forEach(function(d) {
-        d.enrolled2015PctSeniors = +d.enrolled2015PctSeniors;
-        d.atRiskPct = +d.atRiskPct;
+    if (!--count) {
+      $('#chosen-select').chosen({
+        allow_single_deselect: true // not working
       });
+    }
+  });
 
-      // don't want dots overlapping axis, so add in buffer to data domain
-      xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
-      yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
+});
 
-      // x-axis
-      svg.append('g')
-          .attr('class', 'x axis')
-          .attr('transform', 'translate(0,' + height + ')')
-          .call(xAxis
-            .scale(xScale)
-            .orient('bottom')
-            .ticks(5, '%'))
-          .append('text')
-            .attr('class', 'label')
-            .attr('x', 0)
-            .attr('y', 28)
-            .style('text-anchor', 'start')
-            .text('Percent of Seniors Enrolled at UT-Austin');
+var charts = ['ecoDis', 'collegeReady'];
 
-      // y-axis
-      svg.append('g')
-          .attr('class', 'y axis')
-          .call(yAxis
-            .scale(yScale)
-            .orient('left')
-            .ticks(10, '%'))
-          .append('text')
-            .attr('class', 'label')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', -(margin.left - 10))
-            .attr('x', 0)
-            .attr('dy', '.71em')
-            .style('text-anchor', 'end')
-            .text('Percent of School ' + yLabel);
+charts.forEach(function(chart, index) {
+
+  // Build SVG Container
+  var svg = d3.select('#' + chart).append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('id', chart)
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+  // Load Data
+  d3.csv(CONFIG.projectPath + 'assets/data/feeder100.csv', function(error, data) {
+    // Color assignments
+    var color = d3.scale.ordinal().range(['#356D97','#99cc33']);
+      
+    data = data.map( function (d) {
+      return { 
+        id: d.HSCode,
+        name: d.Name,
+        metro: d.Metro_Area,
+        city: d.City,
+        enrolledpct: d.enrolled2015PctSeniors,
+        minority: d.BlackHispMulti,
+        white: d.WhiteOther,
+        atrisk: d.atRiskPct,
+        ecodis: d.ecoDisPct,
+        collegeready: d.collegeReadyBothPct,
+        avgsat: d.avgSAT,
+        avgact: d.avgACT,
+        admitted: d.Admitted2015,
+        enrolled: d.Enrolled2015,
+        color: d.Color,
+        seniorcount: d.twelfthcount,
+        schoolcount: d.allstudentscount
+      };
+    });
+
+    var nest = d3.nest().key(function(d) { return d.metro; }).entries(data);
+
+    var austin = $.grep(nest, function(e){ return e.key === 'Austin-Round Rock'; });
+    var dallas = $.grep(nest, function(e){ return e.key === 'Dallas-Fort Worth-Arlington'; });
+    var houston = $.grep(nest, function(e){ return e.key === 'Houston-The Woodlands-Sugar Land'; });
+    var sanantonio = $.grep(nest, function(e){ return e.key === 'San Antonio-New Braunfels'; });
+
+    var austin = austin[0].values,
+        dallas = dallas[0].values,
+        houston = houston[0].values,
+        sanantonio = sanantonio[0].values;
+
+    var yValue, 
+        yLabel,
+        dataKey;
+
+    dataKey = data;
+
+    if (chart === 'atRisk') {
+      yValue = function(d) { return d.atrisk; };
+      yLabel = 'At Risk';   
+    } else if (chart === 'ecoDis') {   
+      yValue = function(d) { return d.ecodis; };
+      yLabel = 'Economically Disadvantaged';
+    } else if (chart === 'collegeReady') {
+      yValue = function(d) { return d.collegeready; };
+      yLabel = 'College Ready';
+    }
+
+    var xValue = function(d) { return d.enrolledpct;},
+        xMap = function(d) { return xScale(xValue(d));}, // data -> display
+        yMap = function(d) { return yScale(yValue(d));}; // data -> display
+
+    // Call resize() on each chart
+    d3.select(window).on('resize.' + chart, resize).transition();
+
+    function dot(data) {
+      var dots = svg.selectAll('.dot');
+      dots.remove();
+
+      xScale.domain([0, 0.18]);
+      yScale.domain([0, 1]);
 
       // draw dots
       svg.selectAll('.dot')
@@ -107,163 +168,169 @@
             .attr('r', 1.5)
             .attr('cx', xMap)
             .attr('cy', yMap)
-            .style('fill', function(d) { return color(d.Color);})
+            .style('fill', function(d) { return color(d.color); })
+            .on('click', function(d) {
+              $('#chosen-select').val(d.id);
+              $('#chosen-select').trigger('chosen:updated');
+              $('#chosen-select').trigger('change');
+            })
             .on('mouseover', function(d) {
-              tooltip.transition()
-                   .duration(200)
-                   .style('opacity', 0.9);
-              tooltip.html(d.value + '<br/> (' + xValue(d) +
-               ', ' + yValue(d) + ')')
-                   .style('left', (d3.event.pageX + 5) + 'px')
-                   .style('top', (d3.event.pageY - 28) + 'px');
-          })
-          .on('mouseout', function(d) {
-            tooltip.transition()
-                 .duration(500)
-                 .style('opacity', 0);
-          });
+              if($(window).width() > 480) {
+                 $('#chosen-select').val(d.id);
+                 $('#chosen-select').trigger('chosen:updated');
+                 $('#chosen-select').trigger('change');            
+              }     
+            });
+    }
 
-      // draw legend
-      var legend = svg.selectAll('.legend')
-          .data(color.domain())
-            .enter().append('g')
-              .attr('class', 'legend')
-              .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
+    // Call resize() on each chart
+    d3.select(window).on('resize.' + chart, resize).transition();
 
-      // var legendHeader = svg.selectAll('.legend--header')
-      //     .enter().append('g')
-      //       .attr('class', 'legend--header');
+    function resize() {
+      width = parseInt(d3.select('.chart__container--scatter').style('width'), 10) - margin.left - margin.right;
+      d3.select('#' + chart).select('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom);
 
-      // legendHeader.append('text')
-      //   .attr('x', width)
-      //   .attr('y', 60)
-      //   .attr('dy', '2em')
-      //   .style('text-anchor', 'end')
-      //   .text('School Demographics');
+      xScale.range([0, width]);
+      xAxis = d3.svg.axis().scale(xScale).orient('bottom');
 
-      legend.append('rect')
-        .attr('x', width - 10)
-        .attr('width', 10)
-        .attr('height', 10)
-        .attr('y', 92)
-        .style('fill', color);
+      svg.select('.x.axis').remove();
+      svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis
+          .scale(xScale)
+          .orient('bottom')
+          .ticks(10, '%')
+          .outerTickSize(0))
+        .append('text')
+          .attr('class', 'label')
+          .attr('x', 0)
+          .attr('y', 34)
+          .style('text-anchor', 'start')
+          .text('Percentage of high school seniors who enrolled at UT-Austin');
 
-      legend.append('text')
-        .attr('x', width - 14)
-        .attr('y', 82)
-        .attr('dy', '2em')
-        .style('text-anchor', 'end')
-        .text(function(d) { return d + ' Majority'; });
+      dot(dataKey);
+    }  
 
-      d3.select(window).on('resize.' + location, resize).transition();
-      d3.select('#all').on('click.' + location, updateData('feeder100')); 
+    yScale.domain([0, 1]);
 
-      function resize() {
-          // update width
-          width = parseInt(d3.select('.chart-container').style('width'), 10);
-          width = width - margin.left - margin.right;
+    // x-axis
+    xScale.domain([0, 0.18]);
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis
+          .scale(xScale)
+          .orient('bottom')
+          .ticks(10, '%')
+          .outerTickSize(0))
+        .append('text')
+          .attr('class', 'label')
+          .attr('x', 0)
+          .attr('y', 34)
+          .style('text-anchor', 'start')
+          .text('Percentage of high school seniors who enrolled at UT-Austin');
 
-          d3.select('#' + location).select('svg')
-            .attr('width', width + margin.left + margin.right);
+    // y-axis
+    svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis
+          .scale(yScale)
+          .orient('left')
+          .ticks(4, '%')
+          .outerTickSize(0));
 
-          // resize the chart
-          xScale.range([0, width]);
-          xMap = function(d) { return xScale(xValue(d));}; // data -> display
-          xAxis = d3.svg.axis().scale(xScale).orient('bottom');
+    dot(dataKey);
 
-          // update axes
-          svg.select('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis
-              .scale(xScale)
-              .orient('bottom')
-              .ticks(5, '%'));
+    var metroNames = ['data', 'austin', 'dallas', 'houston', 'sanantonio'];
 
-          svg.selectAll('.dot')
-            .attr('class', 'dot')
-            .attr('cx', xMap);
-
-          // legendHeader.select('text')
-          //   .attr('x', width);
-
-          legend.select('rect')
-            .attr('x', width - 10)
-            .attr('width', 10);
-
-          legend.select('text')
-            .attr('x', width - 14);    
-      }
+    $.each(metroNames, function() {
+      $('#' + this).click(function() {
+        var metro = $(this).attr('id');
+        if (metro === 'austin') {
+          dot(austin);
+          dataKey = austin;
+        } else if (metro === 'dallas') {
+          dot(dallas);
+          dataKey = dallas;
+        } else if (metro === 'houston') {
+          dot(houston);
+          dataKey = houston;
+        }  else if (metro === 'sanantonio') {
+          dot(sanantonio);
+          dataKey = sanantonio;
+        } else {
+          dot(data);
+          dataKey = data;
+        }
+        $('button').removeClass('active');
+        $(this).addClass('active');
+        resetValues();
+      });
     });
 
-    d3.selectAll('button').on('click', updateData());
-
-    // ** Update data section (Called from the onclick)
-    function updateData(changeData) {
-
-        // Get the data again
-        d3.csv('/assets/data/'+ changeData + '.csv', function(error, data) {
-          data.forEach(function(d) {
-            d.enrolled2015PctSeniors = +d.enrolled2015PctSeniors;
-            d.atRiskPct = +d.atRiskPct;
-          });
-
-        // Scale the range of the data again 
-        xScale.domain([d3.min(data, xValue), d3.max(data, xValue)]);
-        yScale.domain([d3.min(data, yValue), d3.max(data, yValue)]);
-
-        // Select the section we want to apply our changes to
-        var svg = d3.select('#' + location).transition();
-        
-        // Make the changes
-        svg.select('.y.axis').transition().duration(600).call(yAxis);
-        svg.select('.x.axis').transition().duration(600).call(xAxis);
-
-        svg.selectAll('.dot')
-          .duration(400)
-          .attr('class', 'dot')
-          .attr('cx', xMap);
-
-      });
+    function resetValues() {
+      var highlight = svg.selectAll('.highlight');
+          highlight.remove();
+      $('#chosen-select').val('').trigger('chosen:updated');
+      $('#chosen_seniorcount').empty();
+      $('#chosen_enrolledpct').empty();
+      $('#chosen_seniorsenrolled').empty();
+      $('#chosen_ecodis').empty();
+      $('#chosen_collegeready').empty();
+      $('#chosen_select_chosen').removeClass('White').removeClass('Minority');
+      $('.chart__info--box').hide();
     }
-  
-  }
 
-  function load(data) {
-    drawChart(data + '.csv', 'graphicAtRisk');
-    drawChart(data + '.csv', 'graphicEcoDis');
-    drawChart(data + '.csv', 'graphicCollegeReady');
-  }
+    // $('#reset-highlights').click(resetValues);
 
-  function reLoad(data) {
-    $('#graphicAtRisk').empty();
-    $('#graphicEcoDis').empty();
-    $('#graphicCollegeReady').empty();
+    function chosenChange(selected) {
+      function addCommas(intNum) {
+        return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+      }
+      var id = selected,
+          object = $.grep(data, function(e){ return e.id === id; }),
+          majority = object[0].color,
+          seniorcount = addCommas(object[0].seniorcount),
+          schoolcount = addCommas(object[0].schoolcount),
+          enrolled = addCommas(object[0].enrolled),
+          enrolledpct = Math.round(object[0].enrolledpct * 100),
+          ecodis = Math.round(object[0].ecodis * 100),
+          collegeready = Math.round(object[0].collegeready * 100);
 
-    load(data);
-  }
+      $('.chart__info--box').show();
+      $('#chosen_seniorcount').html(seniorcount);
+      $('#chosen_schoolcount').html(schoolcount);
+      $('#chosen_enrolledpct').html(enrolledpct+ '%');
+      $('#chosen_seniorsenrolled').html(enrolled);
+      $('#chosen_ecodis').html(ecodis + '%');
+      $('#chosen_collegeready').html(collegeready + '%');
+      $('#chosen_select_chosen').removeClass('White').removeClass('Minority').addClass(majority);
 
-  $('#all').click(function() {
-    reLoad('feeder100');
+      var highlight = svg.selectAll('.highlight');
+          highlight.remove();
+
+      xMap = function(d) { return xScale(xValue(d));}; 
+      xScale.domain([0, 0.18]);
+      yScale.domain([0, 1]);
+
+      svg.selectAll('.highlight')
+          .data(data)
+          .enter().append('circle')
+            .attr('class', 'highlight')
+            .filter(function(d){ return d.id === id; })        // <== This line
+            .style('fill', 'rgb(163, 31, 58)')                            // <== and this one
+            .attr('r', 3)
+            .attr('cx', xMap)
+            .attr('cy', yMap);
+    }
+
+    $('#chosen-select').change(function() {
+      var selected = $('option:selected').val();
+      chosenChange(selected);
+    });
   });
 
-  $('#austin').click(function() {
-    reLoad('feederAustin100');
-  });
-
-  $('#dallas').click(function() {
-    reLoad('feederDallas100');
-  });
-
-  $('#houston').click(function() {
-    reLoad('feederHouston100');
-  });
-
-  $('#sanantonio').click(function() {
-    reLoad('feederSanAntonio100');
-  });
-
-  window.onload = load('feeder100');
-
-
-})();
+});
