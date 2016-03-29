@@ -25,16 +25,16 @@ function getHeights() {
       chartTopHeight = chartHeaderHeight + chartHeaderRowHeight + maxTextHeight + 16,
       notAvailableHeight = chartTopHeight + chartBottomHeight;
 
-  $('#chart__top').height(chartTopHeight);
+  
   chartHeight = windowHeight - notAvailableHeight;
-
+  $('#chart__top').height(chartTopHeight);
 }
 
 getHeights();
 
 var margin = {top: 10, right: 0, bottom: 30, left: 30},
     width = parseInt(d3.select('.chart__container').style('width'), 10) - margin.left - margin.right,
-    height = chartHeight - margin.top - margin.bottom;
+    height = chartHeight;
 
 var parseDate = d3.time.format('%Y%m%d').parse;
 
@@ -98,7 +98,7 @@ charts.forEach(function(race, index) {
     var yDomain;
 
     // Draw initial chart w/ yAxis 0-100%;
-    y.domain([0, 1]);
+    y.domain([0, .7]);
 
     // Create various data arrays for chart stages
     var dataUT = [],
@@ -141,7 +141,7 @@ charts.forEach(function(race, index) {
     function addYAxis() {
      svg.append('g')
          .attr('class', 'y axis')
-         .call(yAxis.ticks('5', '%').outerTickSize(0));   
+         .call(yAxis.ticks('5', '%').outerTickSize(0).tickPadding(0));   
     }
 
     function addBars(data) {
@@ -246,14 +246,6 @@ charts.forEach(function(race, index) {
 
       removeYAxis();
       addYAxis();
-
-      // This checks if the chart has been rescaled
-      // so resize() will draw paths on the correct yScale
-      if(yDomain && yDomain === 1) {
-        resetScale();
-      } else if (yDomain) {
-        rescale();
-      }
 
       // Check if series exists, if yes - resize xAxis
       if (!svg.selectAll('.group').empty()) {
@@ -373,7 +365,6 @@ charts.forEach(function(race, index) {
     addBars(dataRaceTX);
     addYAxis();
     removeXAxis();
-    resize();
 
     var inview2 = new Waypoint.Inview({
       element: $('#waypoint2')[0],
@@ -397,31 +388,13 @@ charts.forEach(function(race, index) {
         if (direction === 'down') {
           addXAxis();
           addSeries(dataRace);
-          // $('.chart__enrollment--barlabels').hide();
         }
       },
       exit: function(direction) {
         if (direction === 'up') {
           addBars(dataRace);
-          // $('.chart__enrollment--barlabels').show();
           removeSeries();
           removeXAxis();
-        }
-      }
-    });
-
-    var inview4 = new Waypoint.Inview({
-      element: $('#waypoint4')[0],
-      enter: function(direction) {
-        if (direction === 'down') {
-          // rescale();
-          // $('.chart__enrollment--label').show();
-        }
-      },
-      exit: function(direction) {
-        if (direction === 'up') {
-          // resetScale();
-          // $('.chart__enrollment--label').hide();
         }
       }
     });

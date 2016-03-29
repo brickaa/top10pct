@@ -75,7 +75,7 @@
   }
 
   &--lead-art_i {
-    background-image: url(../assets/images/POA-Story1-Lead-004.jpg);
+    background-image: url(../assets/images/POA-Story1-Lead-005.jpg);
   }
 
   &--lead-art_ii {
@@ -91,7 +91,7 @@
   }
 
   &--lead-art_podcast {
-    background-image: url(../assets/images/POA-Interactive-Lead-001.jpg);
+    background-image: url(../assets/images/POA-Podcast-Lead-001.jpg);
   }
 
   &--part {
@@ -106,7 +106,7 @@
     @include susy-media($prose-width) {
       padding: 1rem 1rem 0 3rem;
       max-width: $prose-width;
-      margin: 0;
+      margin: 1rem 0 0;
     }
   }
 
@@ -345,7 +345,7 @@
   &--caption {
 
     p {
-      @include font-size($xs);
+      @include font-size($xxs);
       color: $color-gray;
       font-family: $sans-serif;
       line-height: 1.1;
