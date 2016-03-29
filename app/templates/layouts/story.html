@@ -64,8 +64,9 @@
   {% endfor %}
   {% if context.disclosure %}
   {{ prose.disclosure(context.disclosure) }}
-  {% endif %}
+  {% elif context.republish %}
   {{ prose.republish(context.slug) }}
+  {% endif %}
   </article>
   
   {{ navfooter(context.id, context.headline) }}
