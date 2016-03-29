@@ -4,8 +4,8 @@
 var config = {};
 
 config.deploy = {
-  bucket: 'moose.texastribune.org',
-  key: 'top10',
+  bucket: 'apps.texastribune.org',
+  key: 'price-of-admission',
   profile: 'newsapps'
 };
 

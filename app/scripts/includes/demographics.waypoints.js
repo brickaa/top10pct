@@ -49,6 +49,7 @@ var inview6 = new Waypoint.Inview({
       $('.chart__position--content').css('position', 'absolute');
       $('.chart__position--content').css('bottom', 0);
       $('.chart__position--content').css('width', '100%');
+      $('.chart__scroll--prompt').hide();
     }  
   },
   exit: function(direction) {
@@ -56,6 +57,7 @@ var inview6 = new Waypoint.Inview({
       $('.sticky-charts').addClass('stuck');
       $('.chart__position--content').css('position', 'relative');
       $('.chart__position--content').css('bottom', '');
+      $('.chart__scroll--prompt').show();
     }
   }
 });
@@ -136,6 +138,7 @@ var inview4 = new Waypoint.Inview({
       $('#hispanic svg').hide();
       $('.chart__lastSlide').height($('#white svg').height()).show();
       $('.chart__lastSlide').animate({ opacity: 1 });
+      $('.chart__legend').hide();
     }
   },
   exit: function(direction) {
@@ -149,6 +152,7 @@ var inview4 = new Waypoint.Inview({
       $('#hispanic svg').show();
       $('.chart__lastSlide').hide();
       $('.chart__lastSlide').css('opacity', '0');
+      $('.chart__legend').show();
     }
   }
 });

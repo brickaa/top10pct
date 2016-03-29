@@ -28,9 +28,6 @@ function getHeights() {
   $('#chart__top').height(chartTopHeight);
   chartHeight = windowHeight - notAvailableHeight;
 
-  if (chartHeight > 500) {
-    chartHeight = 500;
-  }
 }
 
 getHeights();
