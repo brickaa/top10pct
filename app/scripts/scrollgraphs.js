@@ -9,6 +9,7 @@ import './includes/demographics.waypoints.js';
 var height;
 
 function getHeight() {
+
   // // Find browser height
   var windowHeight = $(window).height();
 
@@ -22,12 +23,11 @@ function getHeight() {
       chartHeaderRowHeight = $('.chart__header--demographics').height(),
       chartBottomHeight = $('#chart__bottom').height() + 32, // Chart bottom / legend
       chartTopHeight = chartHeaderHeight + chartHeaderRowHeight + maxTextHeight + 16,
-      notAvailableHeight = chartTopHeight + chartBottomHeight;
+      notAvailableHeight = chartTopHeight + chartBottomHeight + 32;
 
   height = windowHeight - notAvailableHeight;
-  $('#chart__top').height(chartTopHeight);
 
-  console.log('getHeight: ' + height);
+  $('#chart__top').height(chartTopHeight);
 }
 
 getHeight();
