@@ -61,8 +61,8 @@
 
   </div>
   <article class="prose">
-  <ul class="storytop--shares">
-    <li><a href="{{ share.twitter(data.PATH_FULL, context.slug, context.twitter_text) }}">
+  <ul class="prose__shares">
+    <li><a href="{{ share.twitter(data.PATH_FULL, context.slug, context.twitter_text, 'highered') }}">
       <span class="fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-twitter fa-stack-1x"></i>
@@ -71,7 +71,7 @@
     <li><a href="{{ share.facebook(data.PATH_FULL, context.slug) }}"  target="_blank">
       <span class="fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x"></i>
+        <i class="fa fa-facebook fa-stack-1x"></i>
       </span>
     </a></li>
   </ul>
