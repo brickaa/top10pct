@@ -3,6 +3,8 @@
 {% from 'macros/nav.html' import nav %}
 {% from 'macros/nav.html' import navfooter %}
 {% import 'macros/prose.html' as prose %}
+{% import 'macros/share.html' as share %}
+
 {% block social %}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@texastribune">
@@ -59,6 +61,20 @@
 
   </div>
   <article class="prose">
+  <ul class="storytop--shares">
+    <li><a href="{{ share.twitter(data.PATH_FULL, context.slug, context.twitter_text) }}">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x"></i>
+      </span>
+    </a></li>
+    <li><a href="{{ share.facebook(data.PATH_FULL, context.slug) }}"  target="_blank">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x"></i>
+      </span>
+    </a></li>
+  </ul>
   {% for item in context.prose %}
   {{ prose[item.type](item.value, data) }}
   {% endfor %}
