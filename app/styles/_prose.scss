@@ -249,6 +249,44 @@
     }
   }
 
+  &__shares {
+    @include font-size($s);
+    float: none;
+    padding: 0 1rem;
+    margin: 0 0 .5rem;
+
+    @include susy-media($prose-width) {
+      padding: 0 1rem 0 3rem;
+    }
+
+    @include susy-media($page-width) {
+      padding: 0 1rem;
+      float: right;
+    }
+
+    li {
+      display: inline-block;
+      margin: 0 1rem 0 0;
+    }
+
+    a {
+      color: $white;
+
+      .fa-circle {
+        color: $color-secondary;
+      }
+
+      &:active,
+      &:hover {
+        .fa-circle {
+          color: $color-primary;
+        }
+      }
+    }
+
+
+  }
+
   .ad-slot {
     margin-bottom: 1rem;
     max-width: $prose-width;
