@@ -12,23 +12,39 @@
 
 {% block content %}
 <main class="main-body">
-  <figure class="logo">
-    <img class="logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo-stacked.svg">
-    <img class="logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo.svg">
+  <!-- Series Logo -->
+  <figure class="series--logo">
+    <!-- Mobile Series Logo -->
+    <img class="series--logo__mobile" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo-stacked.svg">
+    <!-- Desktop Series Logo -->
+    <img class="series--logo__desktop" src="{{ data.PATH_PREFIX }}assets/images/logos/tt-PoA-logo.svg">
   </figure>
+
+  <!-- Series Tagline -->
   <header>
-    <h1 class="logo__tagline">A look at the debate over the Top 10 Percent Rule and how it creates challenges for high schools and colleges.</h1>
+    <h1 class="series--logo__tagline">A series on the fight over the Top 10 Percent Rule and the quest to make Texas’ top universities look more like Texas</h1>
   </header>
+
+  <!-- Story Top: Lead Art / Headline / Byline -->
   <div class="storytop--wrapper">
+    <!-- Lead Art - Set as a background image on a specific class for each story. -->
     <div class="storytop--lead-art storytop--lead-art_{{ context.id }}"></div>
+    <div class="storytop--caption">
+      <p>{{ context.lead_art.caption }} | {{ context.lead_art.credit }}</p>
+    </div>
     <header class="storytop">
-      <div class="storytop--part">Part {{ context.id }}</div>
+      <!-- Part # -->
+      <div class="storytop--part">{% if (context.id == 'i' or context.id == 'ii' or context.id == 'iii') %}Part {% endif %}{{ context.id }}</div>
+
       <div class="storytop--headline-box">
+        <!-- Headline -->
         <h1 class="storytop--headline">{{ context.headline }}</h1>
+        <!-- Byline, Pub Date -->
         <p class="storytop--byline">by {{ authors(context.authors) }} | {{ context.pub_date }}</p>
       </div>     
     </header>
   </div>
+  
   <article class="prose prose__republish">
     <p>You’re welcome to republish our articles and graphics for free using the following ground rules. (Please let us know if you republish our stories; it makes us happy!)</p>
     <p>See a full list of multimedia republishing terms <a href="http://www.texastribune.org/republishing-guidelines/">here</a>. For questions please contact Natalie Choate, director of media relations and partnerships, at <a href="mailto:nchoate@texastribune.org">nchoate@texastribune.org</a>.</p>
