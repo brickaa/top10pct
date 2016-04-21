@@ -1,6 +1,9 @@
+// Styles for Nav Masthead, Inside Story Nav (Aside) & Nav Footer
+
 .nav {
   $nav-bp: 570px;
 
+  // Nav Masthead
   background-color: $tribune-black;
   font-family: $sans-serif;
 
@@ -14,39 +17,6 @@
   &--logo_tt {
     display: inline-block;
     padding: .5em 1em .25em 0;
-  }
-
-  &--sections {
-    display: inline-block;
-    font-family: $sans-serif;
-    color: $white;
-    
-    @include susy-media($nav-bp) {
-      float: right;
-      padding: .25em 1em;
-    }
-
-    a {
-      color: #fff;
-      padding: .25em 1em;
-      text-decoration: none;
-
-      &:active,
-      &:hover {
-        color: $tribune-yellow;
-        text-decoration: none;
-      }
-    }
-
-    li {
-      display: inline-block;
-    }
-
-    &_active {
-      span { 
-        color: $tribune-yellow;
-      }
-    }
   }
 
   // Inside Story Navigation
@@ -70,14 +40,6 @@
     &--logo {
       img {
         width: 100%;
-      }
-    }
-
-    &--reveal {
-      img {
-        float: left;
-        height: 80px;
-        margin: 0 .5rem 0 0;
       }
     }
 
@@ -122,12 +84,27 @@
       }
     }
 
+    &--story {
+      margin: 0 0 .5rem;
+    }
+
+    &--story_link {
+      @include clearfix;
+      color: #000;
+      text-decoration: none;
+
+      &.half {
+        float: left;
+        width: 50%;
+      }
+    }
+
     &--story_wrapper {
       @include clearfix;
       margin-bottom: .65rem;
     }
 
-    &--thumbnail { 
+    &--story_thumbnail { 
       background-position: center center;
       background-size: cover;
       float: left;
@@ -148,41 +125,16 @@
       }
     }
 
-    &--part-wrapper {
-      margin: 0 0 .5rem;
-    }
-
-    &--link {
-      @include clearfix;
-      color: #000;
-      text-decoration: none;
-
-      &.half {
-        float: left;
-        width: 50%;
-      }
-    }
-
-    &--part {
+    &--story_part {
       @include part-box($xxs);
       margin: 0 0 .5em 0;
       // position: absolute;
       width: 68px;
     }
 
-    &--subpart {
-      @include font-size($xs);
-      color: $color-primary;
-      font-family: $serif;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    &--headline {
+    &--story_headline {
       @include headline($base, $m);
       color: $color-secondary;
-      // position: absolute;
-      // margin: 1.75rem 0 0 88px;
 
       &:hover,
       &:active {
@@ -190,13 +142,21 @@
       }
     }
 
-    &--extra {
+    &--story_subpart {
+      @include font-size($xs);
+      color: $color-primary;
+      font-family: $serif;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
 
-      &_wrapper {
+    &--story_extra {
+
+      &-wrapper {
         padding: 0 .5em 0 0;
       }
 
-      &_subject {
+      &-subject {
         @include headline($s, $base);
         &:hover,
         &:active {
