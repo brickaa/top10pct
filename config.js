@@ -19,20 +19,12 @@ config.data = {
       name: 'story_one'
     },
     {
-      fileid: '1K8lpUd7bbprtR1It89CGEphItUiw8HMuaStxkvTCHNw',
+      fileid: '1iSsqopd2QLhlQDx0gVX9rYoUp-akX1tdZMF6910BhaU',
       name: 'story_two'
     },
     {
-      fileid: '1pvIa8mFx0z1wqSjrtCo1ZUwSHs7KFIjDYiElkiRWVwo',
+      fileid: '1iSsqopd2QLhlQDx0gVX9rYoUp-akX1tdZMF6910BhaU',
       name: 'story_three'
-    },
-    {
-      fileid: '1FlyWDzlnqPeQmh5M9cHwcCMvr85zfqdNwOIwiU1EoMQ',
-      name: 'interactive'
-    },
-    {
-      fileid: '1N6-HpWvwgLrDaLsMsmf9gC-0J4zS9NbDASqGdlqs9M8',
-      name: 'podcast'
     }
   ],
   sheets: [
