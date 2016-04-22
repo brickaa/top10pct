@@ -4,8 +4,8 @@
 var config = {};
 
 config.deploy = {
-  bucket: 'apps.texastribune.org',
-  key: 'price-of-admission',
+  bucket: 'moose.texastribune.org',
+  key: 'antlers',
   profile: 'newsapps'
 };
 
@@ -15,7 +15,7 @@ config.templateFolder = './app/templates';
 config.data = {
   docs: [
     {
-      fileid: '1ehh3ISrwq5lHNQS-eEs_i30Wi7UAF9txWgYTo56NFBI',
+      fileid: '1iSsqopd2QLhlQDx0gVX9rYoUp-akX1tdZMF6910BhaU',
       name: 'story_one'
     },
     {
@@ -37,7 +37,7 @@ config.data = {
   ],
   sheets: [
     {
-      fileid: '1fED8tkWrmr-BbjjEDiP6ZqIb49vTck73Q_nGo6wTMmE',
+      fileid: '1EAS1heGSlxEuq6Wf4y5VjaGLIp0LMH1xwnN0j8TVJIY',
       name: 'meta',
       copytext: {
         basetype: 'keyvalue'
